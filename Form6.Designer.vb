@@ -35,6 +35,8 @@ Partial Class Form6
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.TextBox7 = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.TextBox6 = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -43,8 +45,6 @@ Partial Class Form6
         Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -68,7 +68,7 @@ Partial Class Form6
         Me.Label2.Size = New System.Drawing.Size(409, 26)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Typically located :" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "C:\Users\Username\AppData\Roaming\XBMC\userdata\Database\MyV" & _
-            "ideos60.db "
+    "ideos78.db "
         '
         'TextBox1
         '
@@ -181,6 +181,22 @@ Partial Class Form6
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "MySQL"
         '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(3, 121)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(74, 26)
+        Me.Label9.TabIndex = 9
+        Me.Label9.Text = "Port:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(Default 3306)"
+        '
+        'TextBox7
+        '
+        Me.TextBox7.Location = New System.Drawing.Point(137, 127)
+        Me.TextBox7.Name = "TextBox7"
+        Me.TextBox7.Size = New System.Drawing.Size(215, 20)
+        Me.TextBox7.TabIndex = 8
+        '
         'Label8
         '
         Me.Label8.AutoSize = True
@@ -245,22 +261,6 @@ Partial Class Form6
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(215, 20)
         Me.TextBox3.TabIndex = 0
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(3, 121)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(74, 26)
-        Me.Label9.TabIndex = 9
-        Me.Label9.Text = "Port:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(Default 3306)"
-        '
-        'TextBox7
-        '
-        Me.TextBox7.Location = New System.Drawing.Point(137, 127)
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(215, 20)
-        Me.TextBox7.TabIndex = 8
         '
         'Form6
         '
