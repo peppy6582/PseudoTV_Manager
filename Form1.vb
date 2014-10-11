@@ -450,13 +450,26 @@ Public Class Form1
         TVBannerPictureBox.Refresh()
 
     End Sub
+    Private Sub TVBannerSelect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVBannerSelect.Click
+        Dim x As Integer = ListTVBanners.SelectedIndex
+        Dim MediaType As String = "banner"
 
+        DbExecute("UPDATE art SET url = '" & ListTVBanners.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
+        Status.Text = "Updated"
+    End Sub
     Private Sub ListTVPosters_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVPosters.SelectedIndexChanged
         Dim x As Integer = ListTVPosters.SelectedIndex
 
         TVPosterPictureBox.ImageLocation = ListTVPosters.Items(x)
         TVPosterPictureBox.Refresh()
 
+    End Sub
+    Private Sub TVPosterSelect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVPosterSelect.Click
+        Dim x As Integer = ListTVPosters.SelectedIndex
+        Dim MediaType As String = "poster"
+
+        DbExecute("UPDATE art SET url = '" & ListTVPosters.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
+        Status.Text = "Updated"
     End Sub
 
     Private Sub TVShowList_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVShowList.SelectedIndexChanged

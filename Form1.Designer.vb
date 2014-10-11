@@ -136,6 +136,9 @@ Partial Class Form1
         Me.AaaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.TVBannerSelect = New System.Windows.Forms.Button()
+        Me.TVPosterSelect = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -160,6 +163,7 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Controls.Add(Me.TabPage4)
+        Me.TabControl1.Controls.Add(Me.TabPage6)
         Me.TabControl1.Location = New System.Drawing.Point(0, 27)
         Me.TabControl1.MaximumSize = New System.Drawing.Size(1000, 900)
         Me.TabControl1.MinimumSize = New System.Drawing.Size(1000, 688)
@@ -171,6 +175,8 @@ Partial Class Form1
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.Gray
+        Me.TabPage1.Controls.Add(Me.TVPosterSelect)
+        Me.TabPage1.Controls.Add(Me.TVBannerSelect)
         Me.TabPage1.Controls.Add(Me.TVBannerPictureBox)
         Me.TabPage1.Controls.Add(Me.ListTVBanners)
         Me.TabPage1.Controls.Add(Me.Label20)
@@ -212,16 +218,16 @@ Partial Class Form1
         'ListTVBanners
         '
         Me.ListTVBanners.FormattingEnabled = True
-        Me.ListTVBanners.Location = New System.Drawing.Point(235, 376)
+        Me.ListTVBanners.Location = New System.Drawing.Point(235, 298)
         Me.ListTVBanners.Name = "ListTVBanners"
-        Me.ListTVBanners.Size = New System.Drawing.Size(270, 95)
+        Me.ListTVBanners.Size = New System.Drawing.Size(270, 121)
         Me.ListTVBanners.TabIndex = 22
         '
         'Label20
         '
         Me.Label20.AutoSize = True
         Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!)
-        Me.Label20.Location = New System.Drawing.Point(231, 349)
+        Me.Label20.Location = New System.Drawing.Point(232, 271)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(110, 24)
         Me.Label20.TabIndex = 21
@@ -231,7 +237,7 @@ Partial Class Form1
         '
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!)
-        Me.Label18.Location = New System.Drawing.Point(232, 474)
+        Me.Label18.Location = New System.Drawing.Point(231, 448)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(102, 24)
         Me.Label18.TabIndex = 20
@@ -240,9 +246,9 @@ Partial Class Form1
         'ListTVPosters
         '
         Me.ListTVPosters.FormattingEnabled = True
-        Me.ListTVPosters.Location = New System.Drawing.Point(236, 501)
+        Me.ListTVPosters.Location = New System.Drawing.Point(235, 475)
         Me.ListTVPosters.Name = "ListTVPosters"
-        Me.ListTVPosters.Size = New System.Drawing.Size(270, 108)
+        Me.ListTVPosters.Size = New System.Drawing.Size(270, 134)
         Me.ListTVPosters.TabIndex = 19
         '
         'Button19
@@ -296,7 +302,7 @@ Partial Class Form1
         Me.ListTVGenres.FormattingEnabled = True
         Me.ListTVGenres.Location = New System.Drawing.Point(235, 160)
         Me.ListTVGenres.Name = "ListTVGenres"
-        Me.ListTVGenres.Size = New System.Drawing.Size(282, 186)
+        Me.ListTVGenres.Size = New System.Drawing.Size(282, 108)
         Me.ListTVGenres.TabIndex = 13
         '
         'TVPosterPictureBox
@@ -1316,6 +1322,33 @@ Partial Class Form1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
+        'TabPage6
+        '
+        Me.TabPage6.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage6.Name = "TabPage6"
+        Me.TabPage6.Size = New System.Drawing.Size(992, 662)
+        Me.TabPage6.TabIndex = 5
+        Me.TabPage6.Text = "Streams"
+        Me.TabPage6.UseVisualStyleBackColor = True
+        '
+        'TVBannerSelect
+        '
+        Me.TVBannerSelect.Location = New System.Drawing.Point(311, 422)
+        Me.TVBannerSelect.Name = "TVBannerSelect"
+        Me.TVBannerSelect.Size = New System.Drawing.Size(107, 23)
+        Me.TVBannerSelect.TabIndex = 24
+        Me.TVBannerSelect.Text = "Select for XBMC"
+        Me.TVBannerSelect.UseVisualStyleBackColor = True
+        '
+        'TVPosterSelect
+        '
+        Me.TVPosterSelect.Location = New System.Drawing.Point(311, 612)
+        Me.TVPosterSelect.Name = "TVPosterSelect"
+        Me.TVPosterSelect.Size = New System.Drawing.Size(107, 23)
+        Me.TVPosterSelect.TabIndex = 25
+        Me.TVPosterSelect.Text = "Select for XBMC"
+        Me.TVPosterSelect.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1465,5 +1498,8 @@ Partial Class Form1
     Friend WithEvents TVBannerPictureBox As System.Windows.Forms.PictureBox
     Friend WithEvents ListTVBanners As System.Windows.Forms.ListBox
     Friend WithEvents Label20 As System.Windows.Forms.Label
+    Friend WithEvents TVPosterSelect As System.Windows.Forms.Button
+    Friend WithEvents TVBannerSelect As System.Windows.Forms.Button
+    Friend WithEvents TabPage6 As System.Windows.Forms.TabPage
 
 End Class
