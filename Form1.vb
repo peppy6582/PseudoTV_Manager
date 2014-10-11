@@ -452,10 +452,11 @@ Public Class Form1
     End Sub
     Private Sub TVBannerSelect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVBannerSelect.Click
         Dim x As Integer = ListTVBanners.SelectedIndex
+        Dim Type As String = "tvshow"
         Dim MediaType As String = "banner"
 
-        DbExecute("UPDATE art SET url = '" & ListTVBanners.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
-        Status.Text = "Updated"
+        DbExecute("UPDATE art SET url = '" & ListTVBanners.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & Type & "' and type = '" & MediaType & "'")
+        Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVBanners.Items(x).ToString & ""
     End Sub
     Private Sub ListTVPosters_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVPosters.SelectedIndexChanged
         Dim x As Integer = ListTVPosters.SelectedIndex
@@ -469,7 +470,8 @@ Public Class Form1
         Dim MediaType As String = "poster"
 
         DbExecute("UPDATE art SET url = '" & ListTVPosters.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
-        Status.Text = "Updated"
+        Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVPosters.Items(x).ToString & ""
+
     End Sub
 
     Private Sub TVShowList_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVShowList.SelectedIndexChanged
@@ -562,7 +564,7 @@ Public Class Form1
                     txtShowLocation.Text = "//" & txtShowLocation.Text.Substring(6)
                 End If
             End If
-
+            
             If ListTVPosters.Items.Count <= 0 Or ListTVBanners.Items.Count <= 0 Then
                 TVPosterPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
                 TVBannerPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
@@ -1936,6 +1938,24 @@ Public Class Form1
 
     End Sub
 
+    Private Sub ListMoviePosters_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListMoviePosters.SelectedIndexChanged
+        Dim x As Integer = ListMoviePosters.SelectedIndex
+
+        MoviePicture.ImageLocation = ListMoviePosters.Items(x)
+        MoviePicture.Refresh()
+
+    End Sub
+
+    Private Sub MoviePosterSelect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MoviePosterSelect.Click
+        Dim x As Integer = ListMoviePosters.SelectedIndex
+        Dim Type As String = "poster"
+        Dim MediaType As String = "movie"
+
+        DbExecute("UPDATE art SET url = '" & ListMoviePosters.Items(x).ToString & "' WHERE media_id = '" & MovieIDLabel.Text & "' and media_type = '" & MediaType & "' and type = '" & Type & "'")
+        Status.Text = "Updated " & MovieLabel.Text & " " & MovieIDLabel.Text & " Successfully with " & ListMoviePosters.Items(x).ToString & ""
+
+    End Sub
+
     Private Sub MovieList_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MovieList.SelectedIndexChanged
         If MovieList.SelectedItems.Count > 0 Then
 
@@ -1947,6 +1967,8 @@ Public Class Form1
 
             MovieID = ListItem.SubItems(1).Text
             MovieName = ListItem.SubItems(0).Text
+            MovieIDLabel.Text = MovieID
+
 
             Dim SelectArray(3)
             SelectArray(0) = 16
@@ -2009,8 +2031,11 @@ Public Class Form1
                 End If
             End If
 
-
-            MoviePicture.ImageLocation = ListMoviePosters.Items(0)
+            If ListMoviePosters.Items.Count > 0 Then
+                MoviePicture.ImageLocation = ListMoviePosters.Items(0)
+            ElseIf ListMoviePosters.Items.Count <= 0 Then
+                MoviePicture.ImageLocation = "http://netflixroulette.files.wordpress.com/2013/01/image-not-found.gif"
+            End If
 
 
         End If
