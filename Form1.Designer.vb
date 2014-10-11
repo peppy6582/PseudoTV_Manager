@@ -25,6 +25,10 @@ Partial Class Form1
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.TVBannerPictureBox = New System.Windows.Forms.PictureBox()
+        Me.ListTVBanners = New System.Windows.Forms.ListBox()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
         Me.ListTVPosters = New System.Windows.Forms.ListBox()
         Me.Button19 = New System.Windows.Forms.Button()
         Me.Button6 = New System.Windows.Forms.Button()
@@ -32,7 +36,7 @@ Partial Class Form1
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.ListTVGenres = New System.Windows.Forms.ListBox()
-        Me.TVShowPictureBox = New System.Windows.Forms.PictureBox()
+        Me.TVPosterPictureBox = New System.Windows.Forms.PictureBox()
         Me.TVShowLabel = New System.Windows.Forms.Label()
         Me.SaveTVShow = New System.Windows.Forms.Button()
         Me.txtShowLocation = New System.Windows.Forms.TextBox()
@@ -44,6 +48,8 @@ Partial Class Form1
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TVShowList = New System.Windows.Forms.ListView()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.ListMoviePosters = New System.Windows.Forms.ListBox()
         Me.Button18 = New System.Windows.Forms.Button()
         Me.MovieIDLabel = New System.Windows.Forms.Label()
         Me.Button17 = New System.Windows.Forms.Button()
@@ -132,15 +138,10 @@ Partial Class Form1
         Me.AaaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.ListMoviePosters = New System.Windows.Forms.ListBox()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.ListTVBanners = New System.Windows.Forms.ListBox()
-        Me.TVBannerPictureBox = New System.Windows.Forms.PictureBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
-        CType(Me.TVShowPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TVPosterPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage5.SuspendLayout()
         CType(Me.MoviePicture, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
@@ -149,7 +150,6 @@ Partial Class Form1
         Me.ContextMenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
-        CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -184,7 +184,7 @@ Partial Class Form1
         Me.TabPage1.Controls.Add(Me.Button4)
         Me.TabPage1.Controls.Add(Me.Button3)
         Me.TabPage1.Controls.Add(Me.ListTVGenres)
-        Me.TabPage1.Controls.Add(Me.TVShowPictureBox)
+        Me.TabPage1.Controls.Add(Me.TVPosterPictureBox)
         Me.TabPage1.Controls.Add(Me.TVShowLabel)
         Me.TabPage1.Controls.Add(Me.SaveTVShow)
         Me.TabPage1.Controls.Add(Me.txtShowLocation)
@@ -202,6 +202,43 @@ Partial Class Form1
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "TV Shows"
         '
+        'TVBannerPictureBox
+        '
+        Me.TVBannerPictureBox.Location = New System.Drawing.Point(592, 104)
+        Me.TVBannerPictureBox.Name = "TVBannerPictureBox"
+        Me.TVBannerPictureBox.Size = New System.Drawing.Size(339, 50)
+        Me.TVBannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.TVBannerPictureBox.TabIndex = 23
+        Me.TVBannerPictureBox.TabStop = False
+        '
+        'ListTVBanners
+        '
+        Me.ListTVBanners.FormattingEnabled = True
+        Me.ListTVBanners.Location = New System.Drawing.Point(235, 376)
+        Me.ListTVBanners.Name = "ListTVBanners"
+        Me.ListTVBanners.Size = New System.Drawing.Size(270, 95)
+        Me.ListTVBanners.TabIndex = 22
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!)
+        Me.Label20.Location = New System.Drawing.Point(231, 349)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(110, 24)
+        Me.Label20.TabIndex = 21
+        Me.Label20.Text = "TV Banners"
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!)
+        Me.Label18.Location = New System.Drawing.Point(232, 474)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(102, 24)
+        Me.Label18.TabIndex = 20
+        Me.Label18.Text = "TV Posters"
+        '
         'ListTVPosters
         '
         Me.ListTVPosters.FormattingEnabled = True
@@ -212,9 +249,9 @@ Partial Class Form1
         '
         'Button19
         '
-        Me.Button19.Location = New System.Drawing.Point(384, 127)
+        Me.Button19.Location = New System.Drawing.Point(243, 104)
         Me.Button19.Name = "Button19"
-        Me.Button19.Size = New System.Drawing.Size(58, 27)
+        Me.Button19.Size = New System.Drawing.Size(62, 26)
         Me.Button19.TabIndex = 18
         Me.Button19.Text = "Button19"
         Me.Button19.UseVisualStyleBackColor = True
@@ -264,14 +301,14 @@ Partial Class Form1
         Me.ListTVGenres.Size = New System.Drawing.Size(282, 186)
         Me.ListTVGenres.TabIndex = 13
         '
-        'TVShowPictureBox
+        'TVPosterPictureBox
         '
-        Me.TVShowPictureBox.Location = New System.Drawing.Point(592, 170)
-        Me.TVShowPictureBox.Name = "TVShowPictureBox"
-        Me.TVShowPictureBox.Size = New System.Drawing.Size(339, 465)
-        Me.TVShowPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.TVShowPictureBox.TabIndex = 12
-        Me.TVShowPictureBox.TabStop = False
+        Me.TVPosterPictureBox.Location = New System.Drawing.Point(592, 170)
+        Me.TVPosterPictureBox.Name = "TVPosterPictureBox"
+        Me.TVPosterPictureBox.Size = New System.Drawing.Size(339, 465)
+        Me.TVPosterPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.TVPosterPictureBox.TabIndex = 12
+        Me.TVPosterPictureBox.TabStop = False
         '
         'TVShowLabel
         '
@@ -392,6 +429,25 @@ Partial Class Form1
         Me.TabPage5.Size = New System.Drawing.Size(992, 662)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Movies"
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.25!)
+        Me.Label19.Location = New System.Drawing.Point(245, 413)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(174, 29)
+        Me.Label19.TabIndex = 27
+        Me.Label19.Text = "Movie Posters"
+        Me.Label19.Visible = False
+        '
+        'ListMoviePosters
+        '
+        Me.ListMoviePosters.FormattingEnabled = True
+        Me.ListMoviePosters.Location = New System.Drawing.Point(247, 445)
+        Me.ListMoviePosters.Name = "ListMoviePosters"
+        Me.ListMoviePosters.Size = New System.Drawing.Size(285, 134)
+        Me.ListMoviePosters.TabIndex = 26
         '
         'Button18
         '
@@ -846,12 +902,12 @@ Partial Class Form1
         Me.ContextMenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DontShowToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(129, 26)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(136, 26)
         '
         'DontShowToolStripMenuItem
         '
         Me.DontShowToolStripMenuItem.Name = "DontShowToolStripMenuItem"
-        Me.DontShowToolStripMenuItem.Size = New System.Drawing.Size(128, 22)
+        Me.DontShowToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
         Me.DontShowToolStripMenuItem.Text = "Don't Show"
         '
         'TVGuideShowName
@@ -1270,75 +1326,19 @@ Partial Class Form1
         Me.FileToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopLeft
         Me.FileToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(35, 20)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "&File"
         Me.FileToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.TopLeft
         '
         'AaaToolStripMenuItem
         '
         Me.AaaToolStripMenuItem.Name = "AaaToolStripMenuItem"
-        Me.AaaToolStripMenuItem.Size = New System.Drawing.Size(113, 22)
+        Me.AaaToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
         Me.AaaToolStripMenuItem.Text = "Settings"
         '
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!)
-        Me.Label18.Location = New System.Drawing.Point(232, 474)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(102, 24)
-        Me.Label18.TabIndex = 20
-        Me.Label18.Text = "TV Posters"
-        '
-        'ListMoviePosters
-        '
-        Me.ListMoviePosters.FormattingEnabled = True
-        Me.ListMoviePosters.Location = New System.Drawing.Point(247, 445)
-        Me.ListMoviePosters.Name = "ListMoviePosters"
-        Me.ListMoviePosters.Size = New System.Drawing.Size(285, 134)
-        Me.ListMoviePosters.TabIndex = 26
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.25!)
-        Me.Label19.Location = New System.Drawing.Point(245, 413)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(174, 29)
-        Me.Label19.TabIndex = 27
-        Me.Label19.Text = "Movie Posters"
-        Me.Label19.Visible = False
-        '
-        'Label20
-        '
-        Me.Label20.AutoSize = True
-        Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!)
-        Me.Label20.Location = New System.Drawing.Point(231, 349)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(110, 24)
-        Me.Label20.TabIndex = 21
-        Me.Label20.Text = "TV Banners"
-        '
-        'ListTVBanners
-        '
-        Me.ListTVBanners.FormattingEnabled = True
-        Me.ListTVBanners.Location = New System.Drawing.Point(235, 376)
-        Me.ListTVBanners.Name = "ListTVBanners"
-        Me.ListTVBanners.Size = New System.Drawing.Size(270, 95)
-        Me.ListTVBanners.TabIndex = 22
-        '
-        'TVBannerPictureBox
-        '
-        Me.TVBannerPictureBox.Location = New System.Drawing.Point(592, 104)
-        Me.TVBannerPictureBox.Name = "TVBannerPictureBox"
-        Me.TVBannerPictureBox.Size = New System.Drawing.Size(339, 50)
-        Me.TVBannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.TVBannerPictureBox.TabIndex = 23
-        Me.TVBannerPictureBox.TabStop = False
         '
         'Form1
         '
@@ -1354,11 +1354,12 @@ Partial Class Form1
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
-        Me.Text = "PseudoTVLive Manager"
+        Me.Text = "PseudoTV Live Manager"
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
-        CType(Me.TVShowPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TVPosterPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage5.PerformLayout()
         CType(Me.MoviePicture, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1371,7 +1372,6 @@ Partial Class Form1
         Me.StatusStrip1.PerformLayout()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
-        CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1394,7 +1394,7 @@ Partial Class Form1
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents SaveTVShow As System.Windows.Forms.Button
     Friend WithEvents TVShowLabel As System.Windows.Forms.Label
-    Friend WithEvents TVShowPictureBox As System.Windows.Forms.PictureBox
+    Friend WithEvents TVPosterPictureBox As System.Windows.Forms.PictureBox
     Friend WithEvents NetworkList As System.Windows.Forms.ListView
     Friend WithEvents NetworkListSubList As System.Windows.Forms.ListBox
     Friend WithEvents ListTVGenres As System.Windows.Forms.ListBox

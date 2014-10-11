@@ -443,6 +443,20 @@ Public Class Form1
 
     End Sub
 
+    Private Sub ListTVBanners_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVBanners.SelectedIndexChanged
+        Dim x As Integer = ListTVBanners.SelectedIndex
+
+        TVBannerPictureBox.ImageLocation = ListTVBanners.Items(x)
+
+    End Sub
+
+    Private Sub ListTVPosters_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVPosters.SelectedIndexChanged
+        Dim x As Integer = ListTVPosters.SelectedIndex
+
+        TVPosterPictureBox.ImageLocation = ListTVPosters.Items(x)
+
+    End Sub
+
     Private Sub TVShowList_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVShowList.SelectedIndexChanged
         If TVShowList.SelectedItems.Count > 0 Then
 
@@ -534,49 +548,12 @@ Public Class Form1
                 End If
             End If
 
-            TVShowPictureBox.ImageLocation = ListTVPosters.Items(0)
+            TVPosterPictureBox.ImageLocation = ListTVPosters.Items(0)
             TVBannerPictureBox.ImageLocation = ListTVBanners.Items(0)
 
 
         End If
     End Sub
-
-    Private Sub TVShowList_ColumnClick(ByVal sender As Object, ByVal e As System.Windows.Forms.ColumnClickEventArgs) Handles TVShowList.ColumnClick
-        ' Get the new sorting column. 
-        Dim new_sorting_column As ColumnHeader = TVShowList.Columns(e.Column)
-        ' Figure out the new sorting order. 
-        Dim sort_order As System.Windows.Forms.SortOrder
-        If m_SortingColumn Is Nothing Then
-            ' New column. Sort ascending. 
-            sort_order = SortOrder.Ascending
-        Else ' See if this is the same column. 
-            If new_sorting_column.Equals(m_SortingColumn) Then
-                ' Same column. Switch the sort order. 
-                If m_SortingColumn.Text.StartsWith("> ") Then
-                    sort_order = SortOrder.Descending
-                Else
-                    sort_order = SortOrder.Ascending
-                End If
-            Else
-                ' New column. Sort ascending. 
-                sort_order = SortOrder.Ascending
-            End If
-            ' Remove the old sort indicator. 
-            m_SortingColumn.Text = m_SortingColumn.Text.Substring(2)
-        End If
-        ' Display the new sort order. 
-        m_SortingColumn = new_sorting_column
-        If sort_order = SortOrder.Ascending Then
-            m_SortingColumn.Text = "> " & m_SortingColumn.Text
-        Else
-            m_SortingColumn.Text = "< " & m_SortingColumn.Text
-        End If
-        ' Create a comparer. 
-        TVShowList.ListViewItemSorter = New clsListviewSorter(e.Column, sort_order)
-        ' Sort. 
-        TVShowList.Sort()
-    End Sub
-
     Public Function ConvertGenres(ByVal Genrelist As ListBox)
         'Converts the existing ListTVGenre's contents to the proper format.
 
@@ -745,7 +722,7 @@ Public Class Form1
             RefreshGenres()
             TxtShowName.Text = ""
             txtShowLocation.Text = ""
-            TVShowPictureBox.ImageLocation = ""
+            TVPosterPictureBox.ImageLocation = ""
         End If
     End Sub
 
