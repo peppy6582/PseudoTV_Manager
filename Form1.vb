@@ -117,6 +117,9 @@ Public Class Form1
                 Dim ChannelType As String = ""
                 Dim ChannelTypeDetail As String = ""
                 Dim ChannelTime As String = ""
+                Dim ChannelTypeDetail2 As String = ""
+                Dim ChannelTypeDetail3 As String = ""
+                Dim ChannelTypeDetail4 As String = ""
 
 
                 'Grab everything that says setting id = Channel #
@@ -143,8 +146,21 @@ Public Class Form1
                         'Update the Channel type to the value of that.
                         ChannelType = RuleValue
                     ElseIf RuleType = "1" Then
-                        'Gets more information on what type the channel is, playlist location/genre/etc.
+                        'Gets more information on what type the channel is, playlist location/genre/zap2it/etc.
                         ChannelTypeDetail = RuleValue
+                    ElseIf RuleType = "2" Then
+                        'Gets (LiveTV-8)stream source/(IPTV-9)iptv source/(Youtube-10)youtube channel type/
+                        '(Rss-11)reserved/(LastFM-13)LastFM User/(BTP/Cinema Experience14)filter types or smart playlist/
+                        '(Direct/SF-15, Direct Playon-16)exclude list/
+                        ChannelTypeDetail2 = RuleValue
+                    ElseIf RuleType = "3" Then
+                        'Gets (LiveTV-8)xmltv filename/(IPTV-9)show titles/(Youtube-10, Rss-11, LastFM-13)media limits/
+                        '(BTP/Cinema Experience-14)parsing resolution/(Direct/SF-15, Direct Playon-16)file limit
+                        ChannelTypeDetail3 = RuleValue
+                    ElseIf RuleType = "4" Then
+                        'Gets (IPTV-9)show description/(Youtube-10, Rss-11, LastFM-13)sort ordering/
+                        '(BTP/Cinema Experience-14)years to parse by or unused/(Direct/SF-15, Direct Playon-16)sort ordering
+                        ChannelTypeDetail4 = RuleValue
                     ElseIf InStr(RuleType, "rule", CompareMethod.Text) Then
                         'Okay, It's rule information.
 
@@ -184,7 +200,7 @@ Public Class Form1
 
                 Next
 
-                Dim str(6) As String
+                Dim str(10) As String
 
 
                 str(0) = ChannelArray(x)  'Channel #.
@@ -193,6 +209,9 @@ Public Class Form1
                 str(3) = ChannelTime
                 str(4) = ChannelRules
                 str(5) = ChannelRulesCount
+                str(6) = ChannelTypeDetail2
+                str(7) = ChannelTypeDetail3
+                str(8) = ChannelTypeDetail4
 
                 Dim itm As ListViewItem
                 itm = New ListViewItem(str)
@@ -424,6 +443,22 @@ Public Class Form1
 
     End Sub
 
+    Private Sub ListTVBanners_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVBanners.SelectedIndexChanged
+        Dim x As Integer = ListTVBanners.SelectedIndex
+
+        TVBannerPictureBox.ImageLocation = ListTVBanners.Items(x)
+        TVBannerPictureBox.Refresh()
+
+    End Sub
+
+    Private Sub ListTVPosters_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVPosters.SelectedIndexChanged
+        Dim x As Integer = ListTVPosters.SelectedIndex
+
+        TVPosterPictureBox.ImageLocation = ListTVPosters.Items(x)
+        TVPosterPictureBox.Refresh()
+
+    End Sub
+
     Private Sub TVShowList_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVShowList.SelectedIndexChanged
         If TVShowList.SelectedItems.Count > 0 Then
 
@@ -438,11 +473,12 @@ Public Class Form1
 
             TVShowLabel.Text = TVShowID
 
-            Dim SelectArray(3)
+            Dim SelectArray(4)
             SelectArray(0) = 1
             SelectArray(1) = 9
             SelectArray(2) = 15
             SelectArray(3) = 17
+            SelectArray(4) = 7
 
             'Shoot it over to the ReadRecord sub, 
             Dim ReturnArray() As String = DbReadRecord(VideoDatabaseLocation, "SELECT * FROM tvshow WHERE idShow='" & TVShowID & "'", SelectArray)
@@ -465,6 +501,36 @@ Public Class Form1
 
             txtShowLocation.Text = ReturnArraySplit(3)
 
+            Dim TVPoster As String = ReturnArraySplit(4)
+            ListTVPosters.Items.Clear()
+
+            If InStr(TVPoster, "<thumb aspect=""poster""") > 0 Then
+                Dim TVPosterSplit() As String = Split(TVPoster, "<thumb aspect=""poster"">")
+
+                For X = 1 To UBound(TVPosterSplit)
+                    Dim i As Integer = TVPosterSplit(X).IndexOf("<thumb aspect=""poster"">")
+                    TVPosterSplit(X) = TVPosterSplit(X).Substring(i + 1, TVPosterSplit(X).IndexOf("</thumb>"))
+                    ListTVPosters.Items.Add(TVPosterSplit(X))
+                Next
+            ElseIf TVPoster <> "" Then
+                ListTVPosters.Items.Add(TVPoster)
+            End If
+
+            Dim TVBanner As String = ReturnArraySplit(4)
+            ListTVBanners.Items.Clear()
+
+            If InStr(TVBanner, "<thumb aspect=""banner""") > 0 Then
+                Dim TVBannerSplit() As String = Split(TVBanner, "<thumb aspect=""banner"">")
+
+                For X = 1 To UBound(TVBannerSplit)
+                    Dim i As Integer = TVBannerSplit(X).IndexOf("<thumb aspect=""banner"">")
+                    TVBannerSplit(X) = TVBannerSplit(X).Substring(i + 1, TVBannerSplit(X).IndexOf("</thumb>"))
+                    ListTVBanners.Items.Add(TVBannerSplit(X))
+                Next
+            ElseIf TVBanner <> "" Then
+                ListTVBanners.Items.Add(TVBanner)
+            End If
+
             'Loop through each TV Genre, if there more than one.
             ListTVGenres.Items.Clear()
             If InStr(TVGenres, " / ") > 0 Then
@@ -484,12 +550,14 @@ Public Class Form1
                 End If
             End If
 
-            If System.IO.File.Exists(txtShowLocation.Text & "poster.jpg") Then
-                TVShowPictureBox.ImageLocation = txtShowLocation.Text & "poster.jpg"
-            ElseIf System.IO.File.Exists(txtShowLocation.Text & "folder.jpg") Then
-                TVShowPictureBox.ImageLocation = txtShowLocation.Text & "folder.jpg"
-            Else
-                TVShowPictureBox.ImageLocation = Nothing
+            If ListTVPosters.Items.Count <= 0 Or ListTVBanners.Items.Count <= 0 Then
+                TVPosterPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
+                TVBannerPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
+            ElseIf ListTVPosters.Items.Count > 0 And ListTVBanners.Items.Count > 0 Then
+
+                TVPosterPictureBox.ImageLocation = ListTVPosters.Items(0)
+                TVBannerPictureBox.ImageLocation = ListTVBanners.Items(0)
+
             End If
         End If
     End Sub
@@ -664,7 +732,7 @@ Public Class Form1
             RefreshGenres()
             TxtShowName.Text = ""
             txtShowLocation.Text = ""
-            TVShowPictureBox.ImageLocation = ""
+            TVPosterPictureBox.ImageLocation = ""
         End If
     End Sub
 
@@ -1048,13 +1116,13 @@ Public Class Form1
 
                 PlayListType.SelectedIndex = PlayListNumber
 
-                Dim NoOption As Boolean = False
+                Dim Option1 As Integer = 0
 
                 Dim TVChannelTypeValue = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
 
                 If PlayListNumber = 0 Then
                     'Playlist
-                    NoOption = True
+                    Option1 = 1
 
                     'Add Info for PlayList editing/loading.
 
@@ -1095,7 +1163,16 @@ Public Class Form1
                     Next
                 ElseIf PlayListNumber = 7 Then
                     'Directory
-                    NoOption = True
+                    Option1 = 1
+                ElseIf PlayListNumber = 8 Then
+                    'LiveTV XML
+                    Option1 = 2
+                ElseIf PlayListNumber = 9 Then
+                    'IPTV
+                    Option1 = 3
+                ElseIf PlayListNumber = 10 Or PlayListNumber = 11 Then
+                    'YoutubeTV or RSS
+                    Option1 = 4
 
                 End If
 
@@ -1211,8 +1288,38 @@ Public Class Form1
 
                 RefreshTVGuideSublist(PlayListNumber, TVChannelTypeValue)
 
-                If NoOption = True Then
+                If Option1 = 1 Then
                     PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
+                ElseIf Option1 = 2 Then
+                    PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
+                    StrmUrlBox.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text
+                    ShowTitleBox.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text
+                ElseIf Option1 = 3 Then
+                    PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
+                    StrmUrlBox.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text
+                    ShowTitleBox.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text
+                    ShowDescBox.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
+                ElseIf Option1 = 4 Then
+                    PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
+                    YouTubeType.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text - 1
+                    If TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 25 Then
+                        MediaLimitBox.SelectedIndex = 0
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 50 Then
+                        MediaLimitBox.SelectedIndex = 1
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 100 Then
+                        MediaLimitBox.SelectedIndex = 2
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 150 Then
+                        MediaLimitBox.SelectedIndex = 3
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 200 Then
+                        MediaLimitBox.SelectedIndex = 4
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 250 Then
+                        MediaLimitBox.SelectedIndex = 5
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 500 Then
+                        MediaLimitBox.SelectedIndex = 6
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 1000 Then
+                        MediaLimitBox.SelectedIndex = 7
+                    End If
+                    SortTypeBox.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
                 Else
                     Option2.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
                 End If
@@ -1236,14 +1343,112 @@ Public Class Form1
 
         If PlayListType.SelectedIndex = 0 Or PlayListType.SelectedIndex = 7 Then
             Button5.Visible = True
+            Label6.Text = "Location:"
             Label6.Visible = True
             PlayListLocation.Visible = True
+            StrmUrl.Visible = False
+            StrmUrlBox.Visible = False
             Option2.Visible = False
+            YouTubeType.Visible = False
+            ShowTitle.Visible = False
+            ShowTitleBox.Visible = False
+            ShowDesc.Visible = False
+            ShowDescBox.Visible = False
+            MediaLimit.Visible = False
+            MediaLimitBox.Visible = False
+            SortType.Visible = False
+            SortTypeBox.Visible = False
+        ElseIf PlayListType.SelectedIndex = 8 Then
+            Button5.Visible = False
+            Label6.Text = "Zap2It Url:"
+            Label6.Visible = True
+            PlayListLocation.Visible = True
+            StrmUrl.Visible = True
+            StrmUrlBox.Visible = True
+            Option2.Visible = False
+            YouTubeType.Visible = False
+            ShowTitle.Text = "Name of XML:"
+            ShowTitle.Visible = True
+            ShowTitleBox.Visible = True
+            ShowDesc.Visible = False
+            ShowDescBox.Visible = False
+            MediaLimit.Visible = False
+            MediaLimitBox.Visible = False
+            SortType.Visible = False
+            SortTypeBox.Visible = False
+        ElseIf PlayListType.SelectedIndex = 9 Then
+            Button5.Visible = False
+            Label6.Text = "Run Time:"
+            Label6.Visible = True
+            PlayListLocation.Visible = True
+            StrmUrl.Text = "Stream Url:"
+            StrmUrl.Visible = True
+            StrmUrlBox.Visible = True
+            Option2.Visible = False
+            YouTubeType.Visible = False
+            ShowTitle.Visible = False
+            ShowTitleBox.Visible = False
+            ShowDesc.Visible = False
+            ShowDescBox.Visible = False
+            MediaLimit.Visible = False
+            MediaLimitBox.Visible = False
+            SortType.Visible = False
+            SortTypeBox.Visible = False
+        ElseIf PlayListType.SelectedIndex = 10 Then
+            Button5.Visible = False
+            YouTubeType.SelectedIndex = 0
+            YouTubeType.Visible = True
+            Label6.Text = "Channel Info:"
+            Label6.Visible = True
+            PlayListLocation.Visible = True
+            MediaLimit.Visible = True
+            MediaLimitBox.SelectedIndex = 0
+            MediaLimitBox.Visible = True
+            SortType.Visible = True
+            SortTypeBox.SelectedIndex = 0
+            SortTypeBox.Visible = True
+            StrmUrl.Visible = False
+            StrmUrlBox.Visible = False
+            Option2.Visible = False
+            ShowTitle.Visible = False
+            ShowTitleBox.Visible = False
+            ShowDesc.Visible = False
+            ShowDescBox.Visible = False
+        ElseIf PlayListType.SelectedIndex = 11 Then
+            Button5.Visible = False
+            Label6.Text = "Stream Url:"
+            Label6.Visible = True
+            PlayListLocation.Visible = True
+            StrmUrl.Visible = False
+            StrmUrlBox.Visible = False
+            Option2.Visible = False
+            YouTubeType.Visible = False
+            ShowTitle.Visible = False
+            ShowTitleBox.Visible = False
+            ShowDesc.Visible = False
+            ShowDescBox.Visible = False
+            MediaLimit.Visible = True
+            MediaLimitBox.SelectedIndex = 0
+            MediaLimitBox.Visible = True
+            SortType.Visible = True
+            SortTypeBox.SelectedIndex = 0
+            SortTypeBox.Visible = True
         Else
             Button5.Visible = False
             Label6.Visible = False
             PlayListLocation.Visible = False
+            StrmUrl.Visible = False
+            StrmUrlBox.Visible = False
             Option2.Visible = True
+            YouTubeType.Visible = False
+            ShowTitle.Visible = False
+            ShowTitleBox.Visible = False
+            ShowDesc.Visible = False
+            ShowDescBox.Visible = False
+            MediaLimit.Visible = False
+            MediaLimitBox.Visible = False
+            SortType.Visible = False
+            SortTypeBox.Visible = False
         End If
 
         Option2.Items.Clear()
@@ -1293,6 +1498,50 @@ Public Class Form1
         End If
 
 
+    End Sub
+
+    Private Sub RefreshButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RefreshButton.Click
+        'Loop through config file.
+        'Grab all comments MINUS the ones for selected #
+        'Append this & our new content to the file.
+
+        If TVGuideList.SelectedItems.Count > 0 Then
+
+            Dim FILE_NAME As String = PseudoTvSettingsLocation
+            Dim TextFile As String = ""
+
+            Dim ChannelNum = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(0).Text
+
+
+            'Loop through config file.
+            'Grab all comments MINUS the ones for selected #
+            If System.IO.File.Exists(FILE_NAME) = True Then
+
+                Dim objReader As New System.IO.StreamReader(FILE_NAME)
+
+                Do While objReader.Peek() <> -1
+
+                    Dim SingleLine = objReader.ReadLine()
+
+                    If InStr(SingleLine, "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_") Or InStr(SingleLine, "</settings", CompareMethod.Text) Then
+                    Else
+                        TextFile = TextFile & SingleLine & vbNewLine
+                    End If
+
+                Loop
+
+                objReader.Close()
+            Else
+
+                MsgBox("File Does Not Exist")
+
+            End If
+
+            Dim returnindex = TVGuideList.SelectedIndices(0)
+            RefreshTVGuide()
+            TVGuideList.Items(returnindex).Selected = True
+
+        End If
     End Sub
 
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
@@ -1468,6 +1717,12 @@ Public Class Form1
 
             If PlayListType.SelectedIndex = 0 Or PlayListType.SelectedIndex = 7 Then
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />"
+            ElseIf PlayListType.SelectedIndex = 8 Or PlayListType.SelectedIndex = 9 Then
+                TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & StrmUrlBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & ShowTitleBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & ShowDescBox.Text & Chr(34) & " />"
+            ElseIf PlayListType.SelectedIndex = 10 Then
+                TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & YouTubeType.SelectedIndex + 1 & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
+            ElseIf PlayListType.SelectedIndex = 11 Then
+                TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & "1" & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
             Else
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & Option2.Text & Chr(34) & " />"
             End If
@@ -1680,11 +1935,11 @@ Public Class Form1
             MovieID = ListItem.SubItems(1).Text
             MovieName = ListItem.SubItems(0).Text
 
-            Dim SelectArray(2)
+            Dim SelectArray(3)
             SelectArray(0) = 16
             SelectArray(1) = 24
             SelectArray(2) = 20
-
+            SelectArray(3) = 10
 
 
             'Shoot it over to the ReadRecord sub, 
@@ -1695,6 +1950,20 @@ Public Class Form1
             'We only have 1 response, since it searches by ID. So, just break it into parts. 
             ReturnArraySplit = Split(ReturnArray(0), "~")
 
+            Dim MoviePoster As String = ReturnArraySplit(3)
+            ListMoviePosters.Items.Clear()
+
+            If InStr(MoviePoster, "<thumb aspect=""poster"" preview=""http:/") > 0 Then
+                Dim MoviePosterSplit() As String = Split(MoviePoster, "<thumb aspect=""poster"" preview=""")
+
+                For X = 1 To UBound(MoviePosterSplit)
+                    Dim i As Integer = MoviePosterSplit(X).IndexOf("<thumb aspect=""poster"" preview=""http:/")
+                    MoviePosterSplit(X) = MoviePosterSplit(X).Substring(i + 1, MoviePosterSplit(X).IndexOf(""">"))
+                    ListMoviePosters.Items.Add(MoviePosterSplit(X))
+                Next
+            ElseIf MoviePoster <> "" Then
+                ListMoviePosters.Items.Add(MoviePoster)
+            End If
 
 
             Dim MovieGenres As String = ReturnArraySplit(0)
@@ -1727,11 +1996,8 @@ Public Class Form1
                 End If
             End If
 
-            If System.IO.File.Exists(MovieLocation.Text & "folder.jpg") Then
-                MoviePicture.ImageLocation = MovieLocation.Text & "folder.jpg"
-            Else
-                MoviePicture.ImageLocation = Nothing
-            End If
+
+            MoviePicture.ImageLocation = ListMoviePosters.Items(0)
 
 
         End If
@@ -1780,7 +2046,7 @@ Public Class Form1
             ReturnArraySplit = Split(ReturnArray(x), "~")
 
             ShowName = ReturnArraySplit(0)
-            ShowNetwork = ReturnArraySplit(1)
+            ShowNetwork = ReturnArraySplit(0)
 
             Dim NetworkListed As Boolean = False
 
@@ -1799,7 +2065,7 @@ Public Class Form1
 
                 str(0) = ShowNetwork
                 str(1) = 1
-
+                'test
                 itm = New ListViewItem(str)
 
                 'Add the item to the TV show list.
@@ -1976,5 +2242,25 @@ Public Class Form1
 
     Private Sub Button19_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button19.Click
         LookUpGenre("aaccc")
+    End Sub
+
+    Private Sub Location_Click(sender As Object, e As EventArgs) Handles Label6.Click
+
+    End Sub
+
+    Private Sub TabPage4_Click(sender As Object, e As EventArgs) Handles TabPage4.Click
+
+    End Sub
+
+    Private Sub Label18_Click(sender As Object, e As EventArgs) Handles MediaLimit.Click
+
+    End Sub
+
+    Private Sub YouTubeType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles YouTubeType.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub TxtShowName_TextChanged(sender As Object, e As EventArgs) Handles TxtShowName.TextChanged
+
     End Sub
 End Class
