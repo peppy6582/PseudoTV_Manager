@@ -2301,4 +2301,8 @@ Public Class Form1
     Private Sub TxtShowName_TextChanged(sender As Object, e As EventArgs) Handles TxtShowName.TextChanged
 
     End Sub
+
+    Private Sub TabPage6_Click(sender As Object, e As EventArgs) Handles TabPage6.Click
+
+    End Sub
 End Class

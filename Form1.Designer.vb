@@ -50,6 +50,7 @@ Partial Class Form1
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TVShowList = New System.Windows.Forms.ListView()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.MoviePosterSelect = New System.Windows.Forms.Button()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.ListMoviePosters = New System.Windows.Forms.ListBox()
         Me.Button18 = New System.Windows.Forms.Button()
@@ -139,7 +140,12 @@ Partial Class Form1
         Me.AaaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.MoviePosterSelect = New System.Windows.Forms.Button()
+        Me.YouTubeUrlLabel = New System.Windows.Forms.Label()
+        Me.YouTubeUrlBox = New System.Windows.Forms.TextBox()
+        Me.YouTubeArtistLabel = New System.Windows.Forms.Label()
+        Me.YouTubeArtistBox = New System.Windows.Forms.TextBox()
+        Me.YouTubeThumbnailUrlLabel = New System.Windows.Forms.Label()
+        Me.YouTubeThumbnailUrlBox = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -150,6 +156,7 @@ Partial Class Form1
         Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
+        Me.TabPage6.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -453,6 +460,15 @@ Partial Class Form1
         Me.TabPage5.Size = New System.Drawing.Size(992, 662)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Movies"
+        '
+        'MoviePosterSelect
+        '
+        Me.MoviePosterSelect.Location = New System.Drawing.Point(247, 611)
+        Me.MoviePosterSelect.Name = "MoviePosterSelect"
+        Me.MoviePosterSelect.Size = New System.Drawing.Size(107, 23)
+        Me.MoviePosterSelect.TabIndex = 28
+        Me.MoviePosterSelect.Text = "Select for XBMC"
+        Me.MoviePosterSelect.UseVisualStyleBackColor = True
         '
         'Label19
         '
@@ -1294,12 +1310,18 @@ Partial Class Form1
         '
         'TabPage6
         '
+        Me.TabPage6.BackColor = System.Drawing.Color.Gray
+        Me.TabPage6.Controls.Add(Me.YouTubeThumbnailUrlBox)
+        Me.TabPage6.Controls.Add(Me.YouTubeThumbnailUrlLabel)
+        Me.TabPage6.Controls.Add(Me.YouTubeArtistBox)
+        Me.TabPage6.Controls.Add(Me.YouTubeArtistLabel)
+        Me.TabPage6.Controls.Add(Me.YouTubeUrlBox)
+        Me.TabPage6.Controls.Add(Me.YouTubeUrlLabel)
         Me.TabPage6.Location = New System.Drawing.Point(4, 22)
         Me.TabPage6.Name = "TabPage6"
         Me.TabPage6.Size = New System.Drawing.Size(992, 662)
         Me.TabPage6.TabIndex = 5
-        Me.TabPage6.Text = "Streams"
-        Me.TabPage6.UseVisualStyleBackColor = True
+        Me.TabPage6.Text = "Music Videos"
         '
         'StatusStrip1
         '
@@ -1351,14 +1373,56 @@ Partial Class Form1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
-        'MoviePosterSelect
+        'YouTubeUrlLabel
         '
-        Me.MoviePosterSelect.Location = New System.Drawing.Point(247, 611)
-        Me.MoviePosterSelect.Name = "MoviePosterSelect"
-        Me.MoviePosterSelect.Size = New System.Drawing.Size(107, 23)
-        Me.MoviePosterSelect.TabIndex = 28
-        Me.MoviePosterSelect.Text = "Select for XBMC"
-        Me.MoviePosterSelect.UseVisualStyleBackColor = True
+        Me.YouTubeUrlLabel.AutoSize = True
+        Me.YouTubeUrlLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.YouTubeUrlLabel.Location = New System.Drawing.Point(8, 17)
+        Me.YouTubeUrlLabel.Name = "YouTubeUrlLabel"
+        Me.YouTubeUrlLabel.Size = New System.Drawing.Size(122, 24)
+        Me.YouTubeUrlLabel.TabIndex = 0
+        Me.YouTubeUrlLabel.Text = "YouTube Url:"
+        '
+        'YouTubeUrlBox
+        '
+        Me.YouTubeUrlBox.Location = New System.Drawing.Point(12, 44)
+        Me.YouTubeUrlBox.Name = "YouTubeUrlBox"
+        Me.YouTubeUrlBox.Size = New System.Drawing.Size(273, 20)
+        Me.YouTubeUrlBox.TabIndex = 1
+        '
+        'YouTubeArtistLabel
+        '
+        Me.YouTubeArtistLabel.AutoSize = True
+        Me.YouTubeArtistLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.YouTubeArtistLabel.Location = New System.Drawing.Point(333, 17)
+        Me.YouTubeArtistLabel.Name = "YouTubeArtistLabel"
+        Me.YouTubeArtistLabel.Size = New System.Drawing.Size(55, 24)
+        Me.YouTubeArtistLabel.TabIndex = 2
+        Me.YouTubeArtistLabel.Text = "Artist:"
+        '
+        'YouTubeArtistBox
+        '
+        Me.YouTubeArtistBox.Location = New System.Drawing.Point(337, 44)
+        Me.YouTubeArtistBox.Name = "YouTubeArtistBox"
+        Me.YouTubeArtistBox.Size = New System.Drawing.Size(273, 20)
+        Me.YouTubeArtistBox.TabIndex = 3
+        '
+        'YouTubeThumbnailUrlLabel
+        '
+        Me.YouTubeThumbnailUrlLabel.AutoSize = True
+        Me.YouTubeThumbnailUrlLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.YouTubeThumbnailUrlLabel.Location = New System.Drawing.Point(8, 79)
+        Me.YouTubeThumbnailUrlLabel.Name = "YouTubeThumbnailUrlLabel"
+        Me.YouTubeThumbnailUrlLabel.Size = New System.Drawing.Size(133, 24)
+        Me.YouTubeThumbnailUrlLabel.TabIndex = 4
+        Me.YouTubeThumbnailUrlLabel.Text = "Thumbnail Url:"
+        '
+        'YouTubeThumbnailUrlBox
+        '
+        Me.YouTubeThumbnailUrlBox.Location = New System.Drawing.Point(12, 106)
+        Me.YouTubeThumbnailUrlBox.Name = "YouTubeThumbnailUrlBox"
+        Me.YouTubeThumbnailUrlBox.Size = New System.Drawing.Size(273, 20)
+        Me.YouTubeThumbnailUrlBox.TabIndex = 5
         '
         'Form1
         '
@@ -1388,6 +1452,8 @@ Partial Class Form1
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage4.PerformLayout()
         Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.TabPage6.ResumeLayout(False)
+        Me.TabPage6.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         Me.MenuStrip1.ResumeLayout(False)
@@ -1513,5 +1579,11 @@ Partial Class Form1
     Friend WithEvents TVBannerSelect As System.Windows.Forms.Button
     Friend WithEvents TabPage6 As System.Windows.Forms.TabPage
     Friend WithEvents MoviePosterSelect As System.Windows.Forms.Button
+    Friend WithEvents YouTubeArtistBox As System.Windows.Forms.TextBox
+    Friend WithEvents YouTubeArtistLabel As System.Windows.Forms.Label
+    Friend WithEvents YouTubeUrlBox As System.Windows.Forms.TextBox
+    Friend WithEvents YouTubeUrlLabel As System.Windows.Forms.Label
+    Friend WithEvents YouTubeThumbnailUrlBox As System.Windows.Forms.TextBox
+    Friend WithEvents YouTubeThumbnailUrlLabel As System.Windows.Forms.Label
 
 End Class
