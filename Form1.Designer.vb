@@ -119,6 +119,8 @@ Partial Class Form1
         Me.ChkWatched = New System.Windows.Forms.CheckBox()
         Me.ChkUnwatched = New System.Windows.Forms.CheckBox()
         Me.ChkIceLibrary = New System.Windows.Forms.CheckBox()
+        Me.ChkExcludeBCT = New System.Windows.Forms.CheckBox()
+        Me.ChkPopup = New System.Windows.Forms.CheckBox()
         Me.ChkResume = New System.Windows.Forms.CheckBox()
         Me.ChkRealTime = New System.Windows.Forms.CheckBox()
         Me.ChkRandom = New System.Windows.Forms.CheckBox()
@@ -781,6 +783,8 @@ Partial Class Form1
         Me.TabPage4.Controls.Add(Me.ChkWatched)
         Me.TabPage4.Controls.Add(Me.ChkUnwatched)
         Me.TabPage4.Controls.Add(Me.ChkIceLibrary)
+        Me.TabPage4.Controls.Add(Me.ChkExcludeBCT)
+        Me.TabPage4.Controls.Add(Me.ChkPopup)
         Me.TabPage4.Controls.Add(Me.ChkResume)
         Me.TabPage4.Controls.Add(Me.ChkRealTime)
         Me.TabPage4.Controls.Add(Me.ChkRandom)
@@ -1107,7 +1111,7 @@ Partial Class Form1
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(105, 13)
         Me.Label10.TabIndex = 24
-        Me.Label10.Text = "Reset Every X Days:"
+        Me.Label10.Text = "Reset Every X"
         '
         'ChannelName
         '
@@ -1173,8 +1177,28 @@ Partial Class Form1
         Me.ChkIceLibrary.Name = "ChkIceLibrary"
         Me.ChkIceLibrary.Size = New System.Drawing.Size(119, 17)
         Me.ChkIceLibrary.TabIndex = 17
-        Me.ChkIceLibrary.Text = "IceLibrary Streams?"
+        Me.ChkIceLibrary.Text = "Exclude Strms?"
         Me.ChkIceLibrary.UseVisualStyleBackColor = True
+        '
+        'ChkExcludeBCT
+        '
+        Me.ChkExcludeBCT.AutoSize = True
+        Me.ChkExcludeBCT.Location = New System.Drawing.Point(716, 151)
+        Me.ChkExcludeBCT.Name = "ChkExcludeBCT"
+        Me.ChkExcludeBCT.Size = New System.Drawing.Size(119, 17)
+        Me.ChkExcludeBCT.TabIndex = 17
+        Me.ChkExcludeBCT.Text = "Exclude BCT's?"
+        Me.ChkExcludeBCT.UseVisualStyleBackColor = True
+        '
+        'ChkPopup
+        '
+        Me.ChkPopup.AutoSize = True
+        Me.ChkPopup.Location = New System.Drawing.Point(716, 174)
+        Me.ChkPopup.Name = "ChkPopup"
+        Me.ChkPopup.Size = New System.Drawing.Size(119, 17)
+        Me.ChkPopup.TabIndex = 17
+        Me.ChkPopup.Text = "Disable ComingUp Popup?"
+        Me.ChkPopup.UseVisualStyleBackColor = True
         '
         'ChkResume
         '
@@ -1438,7 +1462,7 @@ Partial Class Form1
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
-        Me.Text = "PseudoTVLive Manager"
+        Me.Text = "PseudoTV Live Manager"
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
@@ -1507,6 +1531,8 @@ Partial Class Form1
     Friend WithEvents ChkWatched As System.Windows.Forms.CheckBox
     Friend WithEvents ChkUnwatched As System.Windows.Forms.CheckBox
     Friend WithEvents ChkIceLibrary As System.Windows.Forms.CheckBox
+    Friend WithEvents ChkExcludeBCT As System.Windows.Forms.CheckBox
+    Friend WithEvents ChkPopup As System.Windows.Forms.CheckBox
     Friend WithEvents ChkResume As System.Windows.Forms.CheckBox
     Friend WithEvents ChkRealTime As System.Windows.Forms.CheckBox
     Friend WithEvents ChkRandom As System.Windows.Forms.CheckBox

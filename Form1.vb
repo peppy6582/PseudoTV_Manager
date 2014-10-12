@@ -1109,6 +1109,8 @@ Public Class Form1
             ChkRealTime.Checked = False
             ChkResume.Checked = False
             ChkIceLibrary.Checked = False
+            ChkExcludeBCT.Checked = False
+            ChkPopup.Checked = False
             ChkUnwatched.Checked = False
             ChkWatched.Checked = False
             ChkPause.Checked = False
@@ -1255,8 +1257,14 @@ Public Class Form1
                             ElseIf RuleValue = 15 And OptionValue = "Yes" Then
                                 ChkLogo.Checked = True
                                 Exit For
-                            ElseIf RuleValue = 14 And OptionValue = "Yes" Then
+                            ElseIf RuleValue = 14 And OptionValue = "No" Then
                                 ChkIceLibrary.Checked = True
+                                Exit For
+                            ElseIf RuleValue = 17 And OptionValue = "No" Then
+                                ChkExcludeBCT.Checked = True
+                                Exit For
+                            ElseIf RuleValue = 18 And OptionValue = "No" Then
+                                ChkPopup.Checked = True
                                 Exit For
                             ElseIf RuleValue = 2 Then
                                 NotShows.Items.Add(OptionValue)
@@ -1651,12 +1659,28 @@ Public Class Form1
                 AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "4" & Chr(34) & " />"
             End If
 
-            'IceLibrary Support?
+            'Exclude Strms?
             '<setting id="Channel_1_rule_1_id" value="14" />
             If ChkIceLibrary.Checked = True Then
                 rulecount = rulecount + 1
                 AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "14" & Chr(34) & " />"
-                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & "Yes" & Chr(34) & " />"
+                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & "No" & Chr(34) & " />"
+            End If
+            
+            'Exclude BCT?
+            '<setting id="Channel_1_rule_1_id" value="17" />
+            If ChkExcludeBCT.Checked = True Then
+                rulecount = rulecount + 1
+                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "17" & Chr(34) & " />"
+                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & "No" & Chr(34) & " />"
+            End If
+
+            'Disable Popup?
+            '<setting id="Channel_1_rule_1_id" value="18" />
+            If ChkPopup.Checked = True Then
+                rulecount = rulecount + 1
+                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "18" & Chr(34) & " />"
+                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & "No" & Chr(34) & " />"
             End If
 
             'Pause when not watching
@@ -1896,6 +1920,8 @@ Public Class Form1
             ChkRealTime.Checked = False
             ChkResume.Checked = False
             ChkIceLibrary.Checked = False
+            ChkExcludeBCT.Checked = False
+            ChkPopup.Checked = False
             ChkUnwatched.Checked = False
             ChkWatched.Checked = False
             ChkPause.Checked = False
