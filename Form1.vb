@@ -468,7 +468,7 @@ Public Class Form1
         saveFileDialog1.FileName = "banner.jpg"
         saveFileDialog1.ShowDialog()
 
-        Dim FileToSaveAs As String = System.IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, saveFileDialog1.FileName)
+        Dim FileToSaveAs As String = System.IO.Path.Combine(txtShowLocation.Text, saveFileDialog1.FileName)
         TVBannerPictureBox.Image.Save(FileToSaveAs, System.Drawing.Imaging.ImageFormat.Jpeg)
 
         DbExecute("UPDATE art SET url = '" & ListTVBanners.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & Type & "' and type = '" & MediaType & "'")
@@ -789,6 +789,8 @@ Public Class Form1
             TxtShowName.Text = ""
             txtShowLocation.Text = ""
             TVPosterPictureBox.ImageLocation = ""
+            MovieLocation.Text = ""
+            MoviePicture.ImageLocation = ""
         End If
     End Sub
 
@@ -2018,10 +2020,26 @@ Public Class Form1
         Dim Type As String = "poster"
         Dim MediaType As String = "movie"
 
+        Dim directoryName As String = ""
+        directoryName = Path.GetDirectoryName(MovieLocation.Text)
+
+        ' Displays a SaveFileDialog so the user can save the Image
+        ' assigned to TVPosterSelect.
+        Dim saveFileDialog1 As New SaveFileDialog()
+        saveFileDialog1.InitialDirectory = directoryName
+        saveFileDialog1.Filter = "JPeg Image|*.jpg"
+        saveFileDialog1.Title = "Save an Image File"
+        saveFileDialog1.FileName = "poster.jpg"
+        saveFileDialog1.ShowDialog()
+
+        Dim FileToSaveAs As String = System.IO.Path.Combine(saveFileDialog1.InitialDirectory, saveFileDialog1.FileName)
+        MoviePicture.Image.Save(FileToSaveAs, System.Drawing.Imaging.ImageFormat.Jpeg)
+
         DbExecute("UPDATE art SET url = '" & ListMoviePosters.Items(x).ToString & "' WHERE media_id = '" & MovieIDLabel.Text & "' and media_type = '" & MediaType & "' and type = '" & Type & "'")
         Status.Text = "Updated " & MovieLabel.Text & " " & MovieIDLabel.Text & " Successfully with " & ListMoviePosters.Items(x).ToString & ""
 
     End Sub
+
 
     Private Sub MovieList_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MovieList.SelectedIndexChanged
         If MovieList.SelectedItems.Count > 0 Then
@@ -2107,15 +2125,21 @@ Public Class Form1
                 End If
             End If
 
-            If ListMoviePosters.Items.Count > 0 Then
+            Dim directoryName As String = ""
+            directoryName = Path.GetDirectoryName(MovieLocation.Text)
+
+            If System.IO.File.Exists(directoryName & "poster.jpg") Then
+                MoviePicture.ImageLocation = directoryName & "poster.jpg"
+            ElseIf ListMoviePosters.Items.Count > 0 Then
                 MoviePicture.ImageLocation = ListMoviePosters.Items(0)
             ElseIf ListMoviePosters.Items.Count <= 0 Then
                 MoviePicture.ImageLocation = "http://netflixroulette.files.wordpress.com/2013/01/image-not-found.gif"
             End If
 
-
         End If
     End Sub
+
+
 
     Private Sub Button16_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button16.Click
         Form7.Visible = True
