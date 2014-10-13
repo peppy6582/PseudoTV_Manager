@@ -564,6 +564,9 @@ Public Class Form1
             Dim TVPoster As String = ReturnArraySplit(4)
             ListTVPosters.Items.Clear()
 
+            Dim TVBanner As String = ReturnArraySplit(4)
+            ListTVBanners.Items.Clear()
+
             If InStr(TVPoster, "<thumb aspect=""poster"">") > 0 Then
                 Dim TVPosterSplit() As String = Split(TVPoster, "<thumb aspect=""poster"">")
 
@@ -572,12 +575,9 @@ Public Class Form1
                     TVPosterSplit(X) = TVPosterSplit(X).Substring(i + 1, TVPosterSplit(X).IndexOf("</thumb>"))
                     ListTVPosters.Items.Add(TVPosterSplit(X))
                 Next
-            ElseIf TVPoster <> "" Then
-                ListTVPosters.Items.Add(TVPoster)
+            Else
+                ListTVPosters.Items.Add("Nothing Found")
             End If
-
-            Dim TVBanner As String = ReturnArraySplit(4)
-            ListTVBanners.Items.Clear()
 
             If InStr(TVBanner, "<thumb aspect=""banner"">") > 0 Then
                 Dim TVBannerSplit() As String = Split(TVBanner, "<thumb aspect=""banner"">")
@@ -587,8 +587,8 @@ Public Class Form1
                     TVBannerSplit(X) = TVBannerSplit(X).Substring(i + 1, TVBannerSplit(X).IndexOf("</thumb>"))
                     ListTVBanners.Items.Add(TVBannerSplit(X))
                 Next
-            ElseIf TVBanner <> "" Then
-                ListTVBanners.Items.Add(TVBanner)
+            Else
+                ListTVBanners.Items.Add("Nothing Found")
             End If
 
             'Loop through each TV Genre, if there more than one.
