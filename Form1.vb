@@ -2027,6 +2027,13 @@ Public Class Form1
         Dim Type As String = "poster"
         Dim MediaType As String = "movie"
 
+
+        If MovieLocation.TextLength >= 6 Then
+            If MovieLocation.Text.Substring(0, 6) = "smb://" Then
+                MovieLocation.Text = "//" & MovieLocation.Text.Substring(6)
+            End If
+        End If
+
         Dim directoryName As String = ""
         directoryName = Path.GetDirectoryName(MovieLocation.Text)
 
@@ -2097,8 +2104,8 @@ Public Class Form1
                     MoviePosterSplit(X) = MoviePosterSplit(X).Substring(i + 1, MoviePosterSplit(X).IndexOf("</thumb>"))
                     ListMoviePosters.Items.Add(MoviePosterSplit(X))
                 Next
-            ElseIf MoviePoster <> "" Then
-                ListMoviePosters.Items.Add(MoviePoster)
+            Else
+                ListMoviePosters.Items.Add("Nothing Found")
             End If
 
 
