@@ -453,14 +453,28 @@ Public Class Form1
             TVBannerPictureBox.Refresh()
         End If
     End Sub
+
     Private Sub TVBannerSelect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVBannerSelect.Click
         Dim x As Integer = ListTVBanners.SelectedIndex
         Dim Type As String = "tvshow"
         Dim MediaType As String = "banner"
 
+        ' Displays a SaveFileDialog so the user can save the Image
+        ' assigned to TVBannerSelect.
+        Dim saveFileDialog1 As New SaveFileDialog()
+        saveFileDialog1.InitialDirectory = txtShowLocation.Text
+        saveFileDialog1.Filter = "JPeg Image|*.jpg"
+        saveFileDialog1.Title = "Save an Image File"
+        saveFileDialog1.FileName = "banner.jpg"
+        saveFileDialog1.ShowDialog()
+
+        Dim FileToSaveAs As String = System.IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, saveFileDialog1.FileName)
+        TVBannerPictureBox.Image.Save(FileToSaveAs, System.Drawing.Imaging.ImageFormat.Jpeg)
+
         DbExecute("UPDATE art SET url = '" & ListTVBanners.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & Type & "' and type = '" & MediaType & "'")
         Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVBanners.Items(x).ToString & ""
     End Sub
+
     Private Sub ListTVPosters_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVPosters.SelectedIndexChanged
         Dim x As Integer = ListTVPosters.SelectedIndex
         If ListTVPosters.Items.Count = 0 Then
@@ -475,8 +489,20 @@ Public Class Form1
         Dim x As Integer = ListTVPosters.SelectedIndex
         Dim MediaType As String = "poster"
 
-        DbExecute("UPDATE art SET url = '" & ListTVPosters.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
-        Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVPosters.Items(x).ToString & ""
+        ' Displays a SaveFileDialog so the user can save the Image
+        ' assigned to TVPosterSelect.
+        Dim saveFileDialog1 As New SaveFileDialog()
+        saveFileDialog1.InitialDirectory = txtShowLocation.Text
+        saveFileDialog1.Filter = "JPeg Image|*.jpg"
+        saveFileDialog1.Title = "Save an Image File"
+        saveFileDialog1.FileName = "poster.jpg"
+        saveFileDialog1.ShowDialog()
+
+        Dim FileToSaveAs As String = System.IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, saveFileDialog1.FileName)
+        TVPosterPictureBox.Image.Save(FileToSaveAs, System.Drawing.Imaging.ImageFormat.Jpeg)
+
+            DbExecute("UPDATE art SET url = '" & ListTVPosters.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
+            Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVPosters.Items(x).ToString & ""
 
     End Sub
 
@@ -571,15 +597,18 @@ Public Class Form1
                 End If
             End If
 
-            If ListTVPosters.Items.Count <= 0 Then
+            If System.IO.File.Exists(txtShowLocation.Text & "poster.jpg") Then
+                TVPosterPictureBox.ImageLocation = txtShowLocation.Text & "poster.jpg"
+            ElseIf ListTVPosters.Items.Count <= 0 Then
                 TVPosterPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
-
             Else
                 TVPosterPictureBox.ImageLocation = ListTVPosters.Items(0)
                 TVPosterPictureBox.Refresh()
             End If
 
-            If ListTVBanners.Items.Count <= 0 Then
+            If System.IO.File.Exists(txtShowLocation.Text & "banner.jpg") Then
+                TVBannerPictureBox.ImageLocation = txtShowLocation.Text & "banner.jpg"
+            ElseIf ListTVBanners.Items.Count <= 0 Then
                 TVBannerPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
             Else
                 TVBannerPictureBox.ImageLocation = ListTVBanners.Items(0)
