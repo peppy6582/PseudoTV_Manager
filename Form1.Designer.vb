@@ -119,6 +119,8 @@ Partial Class Form1
         Me.ChkWatched = New System.Windows.Forms.CheckBox()
         Me.ChkUnwatched = New System.Windows.Forms.CheckBox()
         Me.ChkIceLibrary = New System.Windows.Forms.CheckBox()
+        Me.ChkExcludeBCT = New System.Windows.Forms.CheckBox()
+        Me.ChkPopup = New System.Windows.Forms.CheckBox()
         Me.ChkResume = New System.Windows.Forms.CheckBox()
         Me.ChkRealTime = New System.Windows.Forms.CheckBox()
         Me.ChkRandom = New System.Windows.Forms.CheckBox()
@@ -133,6 +135,12 @@ Partial Class Form1
         Me.PlayListType = New System.Windows.Forms.ComboBox()
         Me.TVGuideList = New System.Windows.Forms.ListView()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.YouTubeThumbnailUrlBox = New System.Windows.Forms.TextBox()
+        Me.YouTubeThumbnailUrlLabel = New System.Windows.Forms.Label()
+        Me.YouTubeArtistBox = New System.Windows.Forms.TextBox()
+        Me.YouTubeArtistLabel = New System.Windows.Forms.Label()
+        Me.YouTubeUrlBox = New System.Windows.Forms.TextBox()
+        Me.YouTubeUrlLabel = New System.Windows.Forms.Label()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.Status = New System.Windows.Forms.ToolStripStatusLabel()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
@@ -140,12 +148,6 @@ Partial Class Form1
         Me.AaaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.YouTubeUrlLabel = New System.Windows.Forms.Label()
-        Me.YouTubeUrlBox = New System.Windows.Forms.TextBox()
-        Me.YouTubeArtistLabel = New System.Windows.Forms.Label()
-        Me.YouTubeArtistBox = New System.Windows.Forms.TextBox()
-        Me.YouTubeThumbnailUrlLabel = New System.Windows.Forms.Label()
-        Me.YouTubeThumbnailUrlBox = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -274,7 +276,7 @@ Partial Class Form1
         Me.ListTVPosters.FormattingEnabled = True
         Me.ListTVPosters.Location = New System.Drawing.Point(235, 475)
         Me.ListTVPosters.Name = "ListTVPosters"
-        Me.ListTVPosters.Size = New System.Drawing.Size(270, 134)
+        Me.ListTVPosters.Size = New System.Drawing.Size(351, 134)
         Me.ListTVPosters.TabIndex = 19
         '
         'Button19
@@ -781,6 +783,8 @@ Partial Class Form1
         Me.TabPage4.Controls.Add(Me.ChkWatched)
         Me.TabPage4.Controls.Add(Me.ChkUnwatched)
         Me.TabPage4.Controls.Add(Me.ChkIceLibrary)
+        Me.TabPage4.Controls.Add(Me.ChkExcludeBCT)
+        Me.TabPage4.Controls.Add(Me.ChkPopup)
         Me.TabPage4.Controls.Add(Me.ChkResume)
         Me.TabPage4.Controls.Add(Me.ChkRealTime)
         Me.TabPage4.Controls.Add(Me.ChkRandom)
@@ -1105,9 +1109,9 @@ Partial Class Form1
         Me.Label10.AutoSize = True
         Me.Label10.Location = New System.Drawing.Point(860, 109)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(105, 13)
+        Me.Label10.Size = New System.Drawing.Size(75, 13)
         Me.Label10.TabIndex = 24
-        Me.Label10.Text = "Reset Every X Days:"
+        Me.Label10.Text = "Reset Every X"
         '
         'ChannelName
         '
@@ -1171,10 +1175,30 @@ Partial Class Form1
         Me.ChkIceLibrary.AutoSize = True
         Me.ChkIceLibrary.Location = New System.Drawing.Point(716, 128)
         Me.ChkIceLibrary.Name = "ChkIceLibrary"
-        Me.ChkIceLibrary.Size = New System.Drawing.Size(119, 17)
+        Me.ChkIceLibrary.Size = New System.Drawing.Size(99, 17)
         Me.ChkIceLibrary.TabIndex = 17
-        Me.ChkIceLibrary.Text = "IceLibrary Streams?"
+        Me.ChkIceLibrary.Text = "Exclude Strms?"
         Me.ChkIceLibrary.UseVisualStyleBackColor = True
+        '
+        'ChkExcludeBCT
+        '
+        Me.ChkExcludeBCT.AutoSize = True
+        Me.ChkExcludeBCT.Location = New System.Drawing.Point(716, 151)
+        Me.ChkExcludeBCT.Name = "ChkExcludeBCT"
+        Me.ChkExcludeBCT.Size = New System.Drawing.Size(101, 17)
+        Me.ChkExcludeBCT.TabIndex = 17
+        Me.ChkExcludeBCT.Text = "Exclude BCT's?"
+        Me.ChkExcludeBCT.UseVisualStyleBackColor = True
+        '
+        'ChkPopup
+        '
+        Me.ChkPopup.AutoSize = True
+        Me.ChkPopup.Location = New System.Drawing.Point(716, 174)
+        Me.ChkPopup.Name = "ChkPopup"
+        Me.ChkPopup.Size = New System.Drawing.Size(153, 17)
+        Me.ChkPopup.TabIndex = 17
+        Me.ChkPopup.Text = "Disable ComingUp Popup?"
+        Me.ChkPopup.UseVisualStyleBackColor = True
         '
         'ChkResume
         '
@@ -1323,6 +1347,57 @@ Partial Class Form1
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Music Videos"
         '
+        'YouTubeThumbnailUrlBox
+        '
+        Me.YouTubeThumbnailUrlBox.Location = New System.Drawing.Point(12, 106)
+        Me.YouTubeThumbnailUrlBox.Name = "YouTubeThumbnailUrlBox"
+        Me.YouTubeThumbnailUrlBox.Size = New System.Drawing.Size(273, 20)
+        Me.YouTubeThumbnailUrlBox.TabIndex = 5
+        '
+        'YouTubeThumbnailUrlLabel
+        '
+        Me.YouTubeThumbnailUrlLabel.AutoSize = True
+        Me.YouTubeThumbnailUrlLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.YouTubeThumbnailUrlLabel.Location = New System.Drawing.Point(8, 79)
+        Me.YouTubeThumbnailUrlLabel.Name = "YouTubeThumbnailUrlLabel"
+        Me.YouTubeThumbnailUrlLabel.Size = New System.Drawing.Size(133, 24)
+        Me.YouTubeThumbnailUrlLabel.TabIndex = 4
+        Me.YouTubeThumbnailUrlLabel.Text = "Thumbnail Url:"
+        '
+        'YouTubeArtistBox
+        '
+        Me.YouTubeArtistBox.Location = New System.Drawing.Point(337, 44)
+        Me.YouTubeArtistBox.Name = "YouTubeArtistBox"
+        Me.YouTubeArtistBox.Size = New System.Drawing.Size(273, 20)
+        Me.YouTubeArtistBox.TabIndex = 3
+        '
+        'YouTubeArtistLabel
+        '
+        Me.YouTubeArtistLabel.AutoSize = True
+        Me.YouTubeArtistLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.YouTubeArtistLabel.Location = New System.Drawing.Point(333, 17)
+        Me.YouTubeArtistLabel.Name = "YouTubeArtistLabel"
+        Me.YouTubeArtistLabel.Size = New System.Drawing.Size(55, 24)
+        Me.YouTubeArtistLabel.TabIndex = 2
+        Me.YouTubeArtistLabel.Text = "Artist:"
+        '
+        'YouTubeUrlBox
+        '
+        Me.YouTubeUrlBox.Location = New System.Drawing.Point(12, 44)
+        Me.YouTubeUrlBox.Name = "YouTubeUrlBox"
+        Me.YouTubeUrlBox.Size = New System.Drawing.Size(273, 20)
+        Me.YouTubeUrlBox.TabIndex = 1
+        '
+        'YouTubeUrlLabel
+        '
+        Me.YouTubeUrlLabel.AutoSize = True
+        Me.YouTubeUrlLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.YouTubeUrlLabel.Location = New System.Drawing.Point(8, 17)
+        Me.YouTubeUrlLabel.Name = "YouTubeUrlLabel"
+        Me.YouTubeUrlLabel.Size = New System.Drawing.Size(122, 24)
+        Me.YouTubeUrlLabel.TabIndex = 0
+        Me.YouTubeUrlLabel.Text = "YouTube Url:"
+        '
         'StatusStrip1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
@@ -1373,57 +1448,6 @@ Partial Class Form1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
-        'YouTubeUrlLabel
-        '
-        Me.YouTubeUrlLabel.AutoSize = True
-        Me.YouTubeUrlLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
-        Me.YouTubeUrlLabel.Location = New System.Drawing.Point(8, 17)
-        Me.YouTubeUrlLabel.Name = "YouTubeUrlLabel"
-        Me.YouTubeUrlLabel.Size = New System.Drawing.Size(122, 24)
-        Me.YouTubeUrlLabel.TabIndex = 0
-        Me.YouTubeUrlLabel.Text = "YouTube Url:"
-        '
-        'YouTubeUrlBox
-        '
-        Me.YouTubeUrlBox.Location = New System.Drawing.Point(12, 44)
-        Me.YouTubeUrlBox.Name = "YouTubeUrlBox"
-        Me.YouTubeUrlBox.Size = New System.Drawing.Size(273, 20)
-        Me.YouTubeUrlBox.TabIndex = 1
-        '
-        'YouTubeArtistLabel
-        '
-        Me.YouTubeArtistLabel.AutoSize = True
-        Me.YouTubeArtistLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
-        Me.YouTubeArtistLabel.Location = New System.Drawing.Point(333, 17)
-        Me.YouTubeArtistLabel.Name = "YouTubeArtistLabel"
-        Me.YouTubeArtistLabel.Size = New System.Drawing.Size(55, 24)
-        Me.YouTubeArtistLabel.TabIndex = 2
-        Me.YouTubeArtistLabel.Text = "Artist:"
-        '
-        'YouTubeArtistBox
-        '
-        Me.YouTubeArtistBox.Location = New System.Drawing.Point(337, 44)
-        Me.YouTubeArtistBox.Name = "YouTubeArtistBox"
-        Me.YouTubeArtistBox.Size = New System.Drawing.Size(273, 20)
-        Me.YouTubeArtistBox.TabIndex = 3
-        '
-        'YouTubeThumbnailUrlLabel
-        '
-        Me.YouTubeThumbnailUrlLabel.AutoSize = True
-        Me.YouTubeThumbnailUrlLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
-        Me.YouTubeThumbnailUrlLabel.Location = New System.Drawing.Point(8, 79)
-        Me.YouTubeThumbnailUrlLabel.Name = "YouTubeThumbnailUrlLabel"
-        Me.YouTubeThumbnailUrlLabel.Size = New System.Drawing.Size(133, 24)
-        Me.YouTubeThumbnailUrlLabel.TabIndex = 4
-        Me.YouTubeThumbnailUrlLabel.Text = "Thumbnail Url:"
-        '
-        'YouTubeThumbnailUrlBox
-        '
-        Me.YouTubeThumbnailUrlBox.Location = New System.Drawing.Point(12, 106)
-        Me.YouTubeThumbnailUrlBox.Name = "YouTubeThumbnailUrlBox"
-        Me.YouTubeThumbnailUrlBox.Size = New System.Drawing.Size(273, 20)
-        Me.YouTubeThumbnailUrlBox.TabIndex = 5
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1438,7 +1462,7 @@ Partial Class Form1
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
-        Me.Text = "PseudoTVLive Manager"
+        Me.Text = "PseudoTV Live Manager"
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
@@ -1507,6 +1531,8 @@ Partial Class Form1
     Friend WithEvents ChkWatched As System.Windows.Forms.CheckBox
     Friend WithEvents ChkUnwatched As System.Windows.Forms.CheckBox
     Friend WithEvents ChkIceLibrary As System.Windows.Forms.CheckBox
+    Friend WithEvents ChkExcludeBCT As System.Windows.Forms.CheckBox
+    Friend WithEvents ChkPopup As System.Windows.Forms.CheckBox
     Friend WithEvents ChkResume As System.Windows.Forms.CheckBox
     Friend WithEvents ChkRealTime As System.Windows.Forms.CheckBox
     Friend WithEvents ChkRandom As System.Windows.Forms.CheckBox

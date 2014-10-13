@@ -446,31 +446,63 @@ Public Class Form1
     Private Sub ListTVBanners_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVBanners.SelectedIndexChanged
         Dim x As Integer = ListTVBanners.SelectedIndex
 
-        TVBannerPictureBox.ImageLocation = ListTVBanners.Items(x)
-        TVBannerPictureBox.Refresh()
-
+        If ListTVBanners.Items.Count = 0 Then
+            TVBannerPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
+        Else
+            TVBannerPictureBox.ImageLocation = ListTVBanners.Items(x)
+            TVBannerPictureBox.Refresh()
+        End If
     End Sub
+
     Private Sub TVBannerSelect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVBannerSelect.Click
         Dim x As Integer = ListTVBanners.SelectedIndex
         Dim Type As String = "tvshow"
         Dim MediaType As String = "banner"
 
+        ' Displays a SaveFileDialog so the user can save the Image
+        ' assigned to TVPosterSelect.
+        Dim saveFileDialog1 As New SaveFileDialog()
+        saveFileDialog1.InitialDirectory = txtShowLocation.Text
+        saveFileDialog1.Filter = "JPeg Image|*.jpg"
+        saveFileDialog1.Title = "Save an Image File"
+        saveFileDialog1.FileName = "banner.jpg"
+        saveFileDialog1.ShowDialog()
+
+        Dim FileToSaveAs As String = System.IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, saveFileDialog1.FileName)
+        TVBannerPictureBox.Image.Save(FileToSaveAs, System.Drawing.Imaging.ImageFormat.Jpeg)
+
         DbExecute("UPDATE art SET url = '" & ListTVBanners.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & Type & "' and type = '" & MediaType & "'")
         Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVBanners.Items(x).ToString & ""
     End Sub
+
     Private Sub ListTVPosters_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVPosters.SelectedIndexChanged
         Dim x As Integer = ListTVPosters.SelectedIndex
-
-        TVPosterPictureBox.ImageLocation = ListTVPosters.Items(x)
-        TVPosterPictureBox.Refresh()
+        If ListTVPosters.Items.Count = 0 Then
+            TVPosterPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
+        Else
+            TVPosterPictureBox.ImageLocation = ListTVPosters.Items(x)
+            TVPosterPictureBox.Refresh()
+        End If
 
     End Sub
     Private Sub TVPosterSelect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVPosterSelect.Click
         Dim x As Integer = ListTVPosters.SelectedIndex
         Dim MediaType As String = "poster"
 
-        DbExecute("UPDATE art SET url = '" & ListTVPosters.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
-        Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVPosters.Items(x).ToString & ""
+        ' Displays a SaveFileDialog so the user can save the Image
+        ' assigned to TVPosterSelect.
+        Dim saveFileDialog1 As New SaveFileDialog()
+        saveFileDialog1.InitialDirectory = txtShowLocation.Text
+        saveFileDialog1.Filter = "JPeg Image|*.jpg"
+        saveFileDialog1.Title = "Save an Image File"
+        saveFileDialog1.FileName = "poster.jpg"
+        saveFileDialog1.ShowDialog()
+
+        Dim FileToSaveAs As String = System.IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, saveFileDialog1.FileName)
+        TVPosterPictureBox.Image.Save(FileToSaveAs, System.Drawing.Imaging.ImageFormat.Jpeg)
+
+            DbExecute("UPDATE art SET url = '" & ListTVPosters.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
+            Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVPosters.Items(x).ToString & ""
 
     End Sub
 
@@ -519,7 +551,7 @@ Public Class Form1
             Dim TVPoster As String = ReturnArraySplit(4)
             ListTVPosters.Items.Clear()
 
-            If InStr(TVPoster, "<thumb aspect=""poster""") > 0 Then
+            If InStr(TVPoster, "<thumb aspect=""poster"">") > 0 Then
                 Dim TVPosterSplit() As String = Split(TVPoster, "<thumb aspect=""poster"">")
 
                 For X = 1 To UBound(TVPosterSplit)
@@ -534,7 +566,7 @@ Public Class Form1
             Dim TVBanner As String = ReturnArraySplit(4)
             ListTVBanners.Items.Clear()
 
-            If InStr(TVBanner, "<thumb aspect=""banner""") > 0 Then
+            If InStr(TVBanner, "<thumb aspect=""banner"">") > 0 Then
                 Dim TVBannerSplit() As String = Split(TVBanner, "<thumb aspect=""banner"">")
 
                 For X = 1 To UBound(TVBannerSplit)
@@ -564,17 +596,26 @@ Public Class Form1
                     txtShowLocation.Text = "//" & txtShowLocation.Text.Substring(6)
                 End If
             End If
-            
-            If ListTVPosters.Items.Count <= 0 Or ListTVBanners.Items.Count <= 0 Then
+
+            If System.IO.File.Exists(txtShowLocation.Text & "poster.jpg") Then
+                TVPosterPictureBox.ImageLocation = txtShowLocation.Text & "poster.jpg"
+            ElseIf ListTVPosters.Items.Count <= 0 Then
                 TVPosterPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
-                TVBannerPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
-            ElseIf ListTVPosters.Items.Count > 0 And ListTVBanners.Items.Count > 0 Then
-
+            Else
                 TVPosterPictureBox.ImageLocation = ListTVPosters.Items(0)
-                TVBannerPictureBox.ImageLocation = ListTVBanners.Items(0)
+                TVPosterPictureBox.Refresh()
+            End If
 
+            If System.IO.File.Exists(txtShowLocation.Text & "banner.jpg") Then
+                TVBannerPictureBox.ImageLocation = txtShowLocation.Text & "banner.jpg"
+            ElseIf ListTVBanners.Items.Count <= 0 Then
+                TVBannerPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
+            Else
+                TVBannerPictureBox.ImageLocation = ListTVBanners.Items(0)
+                TVBannerPictureBox.Refresh()
             End If
         End If
+
     End Sub
 
 
@@ -1109,6 +1150,8 @@ Public Class Form1
             ChkRealTime.Checked = False
             ChkResume.Checked = False
             ChkIceLibrary.Checked = False
+            ChkExcludeBCT.Checked = False
+            ChkPopup.Checked = False
             ChkUnwatched.Checked = False
             ChkWatched.Checked = False
             ChkPause.Checked = False
@@ -1255,8 +1298,14 @@ Public Class Form1
                             ElseIf RuleValue = 15 And OptionValue = "Yes" Then
                                 ChkLogo.Checked = True
                                 Exit For
-                            ElseIf RuleValue = 14 And OptionValue = "Yes" Then
+                            ElseIf RuleValue = 14 And OptionValue = "No" Then
                                 ChkIceLibrary.Checked = True
+                                Exit For
+                            ElseIf RuleValue = 17 And OptionValue = "No" Then
+                                ChkExcludeBCT.Checked = True
+                                Exit For
+                            ElseIf RuleValue = 18 And OptionValue = "No" Then
+                                ChkPopup.Checked = True
                                 Exit For
                             ElseIf RuleValue = 2 Then
                                 NotShows.Items.Add(OptionValue)
@@ -1651,12 +1700,28 @@ Public Class Form1
                 AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "4" & Chr(34) & " />"
             End If
 
-            'IceLibrary Support?
+            'Exclude Strms?
             '<setting id="Channel_1_rule_1_id" value="14" />
             If ChkIceLibrary.Checked = True Then
                 rulecount = rulecount + 1
                 AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "14" & Chr(34) & " />"
-                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & "Yes" & Chr(34) & " />"
+                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & "No" & Chr(34) & " />"
+            End If
+
+            'Exclude BCT?
+            '<setting id="Channel_1_rule_1_id" value="17" />
+            If ChkExcludeBCT.Checked = True Then
+                rulecount = rulecount + 1
+                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "17" & Chr(34) & " />"
+                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & "No" & Chr(34) & " />"
+            End If
+
+            'Disable Popup?
+            '<setting id="Channel_1_rule_1_id" value="18" />
+            If ChkPopup.Checked = True Then
+                rulecount = rulecount + 1
+                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "18" & Chr(34) & " />"
+                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & "No" & Chr(34) & " />"
             End If
 
             'Pause when not watching
@@ -1896,6 +1961,8 @@ Public Class Form1
             ChkRealTime.Checked = False
             ChkResume.Checked = False
             ChkIceLibrary.Checked = False
+            ChkExcludeBCT.Checked = False
+            ChkPopup.Checked = False
             ChkUnwatched.Checked = False
             ChkWatched.Checked = False
             ChkPause.Checked = False
@@ -1958,6 +2025,7 @@ Public Class Form1
 
     Private Sub MovieList_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MovieList.SelectedIndexChanged
         If MovieList.SelectedItems.Count > 0 Then
+            MoviePicture.Update()
 
             Dim ListItem As ListViewItem
             ListItem = MovieList.SelectedItems.Item(0)
@@ -1988,12 +2056,20 @@ Public Class Form1
             Dim MoviePoster As String = ReturnArraySplit(3)
             ListMoviePosters.Items.Clear()
 
-            If InStr(MoviePoster, "<thumb aspect=""poster"" preview=""http:/") > 0 Then
+            If InStr(MoviePoster, "<thumb aspect=""poster"" preview=""") > 0 Then
                 Dim MoviePosterSplit() As String = Split(MoviePoster, "<thumb aspect=""poster"" preview=""")
 
                 For X = 1 To UBound(MoviePosterSplit)
-                    Dim i As Integer = MoviePosterSplit(X).IndexOf("<thumb aspect=""poster"" preview=""http:/")
+                    Dim i As Integer = MoviePosterSplit(X).IndexOf("<thumb aspect=""poster"" preview=""")
                     MoviePosterSplit(X) = MoviePosterSplit(X).Substring(i + 1, MoviePosterSplit(X).IndexOf(""">"))
+                    ListMoviePosters.Items.Add(MoviePosterSplit(X))
+                Next
+            ElseIf InStr(MoviePoster, "<thumb>") > 0 Then
+                Dim MoviePosterSplit() As String = Split(MoviePoster, "<thumb>")
+
+                For X = 1 To UBound(MoviePosterSplit)
+                    Dim i As Integer = MoviePosterSplit(X).IndexOf("<thumb>")
+                    MoviePosterSplit(X) = MoviePosterSplit(X).Substring(i + 1, MoviePosterSplit(X).IndexOf("</thumb>"))
                     ListMoviePosters.Items.Add(MoviePosterSplit(X))
                 Next
             ElseIf MoviePoster <> "" Then
