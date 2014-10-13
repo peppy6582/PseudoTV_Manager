@@ -2119,6 +2119,7 @@ Public Class Form1
                 MovieGenresList.Items.Add(MovieGenres)
             End If
 
+
             If MovieLocation.TextLength >= 6 Then
                 If MovieLocation.Text.Substring(0, 6) = "smb://" Then
                     MovieLocation.Text = "//" & MovieLocation.Text.Substring(6)
@@ -2128,8 +2129,8 @@ Public Class Form1
             Dim directoryName As String = ""
             directoryName = Path.GetDirectoryName(MovieLocation.Text)
 
-            If System.IO.File.Exists(directoryName & "poster.jpg") Then
-                MoviePicture.ImageLocation = directoryName & "poster.jpg"
+            If System.IO.File.Exists(directoryName & "\" & "poster.jpg") Then
+                MoviePicture.ImageLocation = (directoryName & "\" & "poster.jpg")
             ElseIf ListMoviePosters.Items.Count > 0 Then
                 MoviePicture.ImageLocation = ListMoviePosters.Items(0)
             ElseIf ListMoviePosters.Items.Count <= 0 Then

@@ -531,7 +531,7 @@ Partial Class Form1
         '
         'MovieLocation
         '
-        Me.MovieLocation.Location = New System.Drawing.Point(247, 94)
+        Me.MovieLocation.Location = New System.Drawing.Point(247, 81)
         Me.MovieLocation.Name = "MovieLocation"
         Me.MovieLocation.Size = New System.Drawing.Size(282, 20)
         Me.MovieLocation.TabIndex = 21
