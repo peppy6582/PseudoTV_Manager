@@ -447,7 +447,7 @@ Public Class Form1
         Dim x As Integer = ListTVBanners.SelectedIndex
 
         If ListTVBanners.Items.Count = 0 Then
-            TVBannerPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
+            TVBannerPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/banner.png"
         Else
             TVBannerPictureBox.ImageLocation = ListTVBanners.Items(x)
             TVBannerPictureBox.Refresh()
@@ -458,6 +458,12 @@ Public Class Form1
         Dim x As Integer = ListTVBanners.SelectedIndex
         Dim Type As String = "tvshow"
         Dim MediaType As String = "banner"
+
+        If txtShowLocation.TextLength >= 6 Then
+            If txtShowLocation.Text.Substring(0, 6) = "smb://" Then
+                txtShowLocation.Text = "//" & txtShowLocation.Text.Substring(6)
+            End If
+        End If
 
         ' Displays a SaveFileDialog so the user can save the Image
         ' assigned to TVBannerSelect.
@@ -477,8 +483,9 @@ Public Class Form1
 
     Private Sub ListTVPosters_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVPosters.SelectedIndexChanged
         Dim x As Integer = ListTVPosters.SelectedIndex
+
         If ListTVPosters.Items.Count = 0 Then
-            TVPosterPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
+            TVPosterPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
         Else
             TVPosterPictureBox.ImageLocation = ListTVPosters.Items(x)
             TVPosterPictureBox.Refresh()
@@ -488,6 +495,12 @@ Public Class Form1
     Private Sub TVPosterSelect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVPosterSelect.Click
         Dim x As Integer = ListTVPosters.SelectedIndex
         Dim MediaType As String = "poster"
+
+        If txtShowLocation.TextLength >= 6 Then
+            If txtShowLocation.Text.Substring(0, 6) = "smb://" Then
+                txtShowLocation.Text = "//" & txtShowLocation.Text.Substring(6)
+            End If
+        End If
 
         ' Displays a SaveFileDialog so the user can save the Image
         ' assigned to TVPosterSelect.
