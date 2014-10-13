@@ -600,13 +600,13 @@ Public Class Form1
             If System.IO.File.Exists(txtShowLocation.Text & "poster.jpg") Then
                 TVPosterPictureBox.ImageLocation = txtShowLocation.Text & "poster.jpg"
             Else
-                TVPosterPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/master/resources/skins/Default/media/poster.png"
+                TVPosterPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
             End If
 
             If System.IO.File.Exists(txtShowLocation.Text & "banner.jpg") Then
                 TVBannerPictureBox.ImageLocation = txtShowLocation.Text & "banner.jpg"
             Else
-                TVBannerPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/master/resources/skins/Default/media/banner.png"
+                TVBannerPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/banner.png"
             End If
         End If
 
