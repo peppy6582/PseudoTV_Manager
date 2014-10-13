@@ -459,9 +459,11 @@ Public Class Form1
         Dim Type As String = "tvshow"
         Dim MediaType As String = "banner"
 
+
         If txtShowLocation.TextLength >= 6 Then
             If txtShowLocation.Text.Substring(0, 6) = "smb://" Then
-                txtShowLocation.Text = "//" & txtShowLocation.Text.Substring(6)
+                txtShowLocation.Text = txtShowLocation.Text.Replace("/", "\")
+                txtShowLocation.Text = "\\" & txtShowLocation.Text.Substring(6)
             End If
         End If
 
@@ -496,9 +498,11 @@ Public Class Form1
         Dim x As Integer = ListTVPosters.SelectedIndex
         Dim MediaType As String = "poster"
 
+
         If txtShowLocation.TextLength >= 6 Then
             If txtShowLocation.Text.Substring(0, 6) = "smb://" Then
-                txtShowLocation.Text = "//" & txtShowLocation.Text.Substring(6)
+                txtShowLocation.Text = txtShowLocation.Text.Replace("/", "\")
+                txtShowLocation.Text = "\\" & txtShowLocation.Text.Substring(6)
             End If
         End If
 
@@ -606,9 +610,12 @@ Public Class Form1
 
             If txtShowLocation.TextLength >= 6 Then
                 If txtShowLocation.Text.Substring(0, 6) = "smb://" Then
-                    txtShowLocation.Text = "//" & txtShowLocation.Text.Substring(6)
+                    txtShowLocation.Text = txtShowLocation.Text.Replace("/", "\")
+                    txtShowLocation.Text = "\\" & txtShowLocation.Text.Substring(6)
                 End If
             End If
+
+
 
             If System.IO.File.Exists(txtShowLocation.Text & "poster.jpg") Then
                 TVPosterPictureBox.ImageLocation = txtShowLocation.Text & "poster.jpg"
@@ -2030,7 +2037,8 @@ Public Class Form1
 
         If MovieLocation.TextLength >= 6 Then
             If MovieLocation.Text.Substring(0, 6) = "smb://" Then
-                MovieLocation.Text = "//" & MovieLocation.Text.Substring(6)
+                MovieLocation.Text = MovieLocation.Text.Replace("/", "\")
+                MovieLocation.Text = "\\" & MovieLocation.Text.Substring(6)
             End If
         End If
 
@@ -2136,7 +2144,8 @@ Public Class Form1
 
             If MovieLocation.TextLength >= 6 Then
                 If MovieLocation.Text.Substring(0, 6) = "smb://" Then
-                    MovieLocation.Text = "//" & MovieLocation.Text.Substring(6)
+                    MovieLocation.Text = MovieLocation.Text.Replace("/", "\")
+                    MovieLocation.Text = "\\" & MovieLocation.Text.Substring(6)
                 End If
             End If
 
