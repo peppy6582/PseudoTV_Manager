@@ -599,20 +599,14 @@ Public Class Form1
 
             If System.IO.File.Exists(txtShowLocation.Text & "poster.jpg") Then
                 TVPosterPictureBox.ImageLocation = txtShowLocation.Text & "poster.jpg"
-            ElseIf ListTVPosters.Items.Count <= 0 Then
-                TVPosterPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
             Else
-                TVPosterPictureBox.ImageLocation = ListTVPosters.Items(0)
-                TVPosterPictureBox.Refresh()
+                TVPosterPictureBox.ImageLocation = "http://i61.tinypic.com/k3vdj5.jpg"
             End If
 
             If System.IO.File.Exists(txtShowLocation.Text & "banner.jpg") Then
                 TVBannerPictureBox.ImageLocation = txtShowLocation.Text & "banner.jpg"
-            ElseIf ListTVBanners.Items.Count <= 0 Then
-                TVBannerPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
             Else
-                TVBannerPictureBox.ImageLocation = ListTVBanners.Items(0)
-                TVBannerPictureBox.Refresh()
+                TVBannerPictureBox.ImageLocation = "http://i57.tinypic.com/35mnllw.jpg"
             End If
         End If
 
@@ -2131,10 +2125,8 @@ Public Class Form1
 
             If System.IO.File.Exists(directoryName & "\" & "poster.jpg") Then
                 MoviePicture.ImageLocation = (directoryName & "\" & "poster.jpg")
-            ElseIf ListMoviePosters.Items.Count > 0 Then
-                MoviePicture.ImageLocation = ListMoviePosters.Items(0)
-            ElseIf ListMoviePosters.Items.Count <= 0 Then
-                MoviePicture.ImageLocation = "http://netflixroulette.files.wordpress.com/2013/01/image-not-found.gif"
+            Else
+                MoviePicture.ImageLocation = "http://i61.tinypic.com/k3vdj5.jpg"
             End If
 
         End If
