@@ -446,7 +446,7 @@ Public Class Form1
     Private Sub ListTVBanners_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVBanners.SelectedIndexChanged
         Dim x As Integer = ListTVBanners.SelectedIndex
 
-        If ListTVBanners.Items.Count = 0 Then
+        If ListTVBanners.Items.Count <= 0 Then
             TVBannerPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/banner.png"
         Else
             TVBannerPictureBox.ImageLocation = ListTVBanners.Items(x)
@@ -518,8 +518,8 @@ Public Class Form1
         Dim FileToSaveAs As String = System.IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, saveFileDialog1.FileName)
         TVPosterPictureBox.Image.Save(FileToSaveAs, System.Drawing.Imaging.ImageFormat.Jpeg)
 
-            DbExecute("UPDATE art SET url = '" & ListTVPosters.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
-            Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVPosters.Items(x).ToString & ""
+        DbExecute("UPDATE art SET url = '" & ListTVPosters.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
+        Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVPosters.Items(x).ToString & ""
 
     End Sub
 
@@ -632,6 +632,9 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Form9_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load, AddBanner.Click
+
+    End Sub
 
 
     Public Function ConvertGenres(ByVal Genrelist As ListBox)
@@ -2155,7 +2158,7 @@ Public Class Form1
             If System.IO.File.Exists(directoryName & "\" & "poster.jpg") Then
                 MoviePicture.ImageLocation = (directoryName & "\" & "poster.jpg")
             Else
-                MoviePicture.ImageLocation = "http://i61.tinypic.com/k3vdj5.jpg"
+                MoviePicture.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
             End If
 
         End If
@@ -2426,5 +2429,15 @@ Public Class Form1
 
     Private Sub TabPage6_Click(sender As Object, e As EventArgs) Handles TabPage6.Click
 
+    End Sub
+
+    Private Sub TVPosterPictureBox_Click(sender As Object, e As EventArgs) Handles TVPosterPictureBox.Click
+
+    End Sub
+
+    Private Sub AddBanner_Click(sender As Object, e As EventArgs) Handles AddBanner.Click
+        Form9.Visible = True
+        Form9.Focus()
+        Form9.AddBannerPictureBox.ImageLocation = "http://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/banner.png"
     End Sub
 End Class
