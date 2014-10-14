@@ -1515,8 +1515,11 @@ Public Class Form1
             Button5.Visible = False
             YouTubeType.SelectedIndex = 0
             YouTubeType.Visible = True
-            Label6.Text = "Channel Info:"
+            Label6.Text = "Channel/User:"
             Label6.Visible = True
+            With PlayListLocation
+                .Location = New System.Drawing.Point(270, 120)
+            End With
             PlayListLocation.Visible = True
             With MediaLimit
                 .Location = New System.Drawing.Point(160, 160)
@@ -1698,7 +1701,6 @@ Public Class Form1
 
     End Sub
 
-
     Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
 
 
@@ -1719,7 +1721,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub RefreshButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RefreshButton.Click
+    Private Sub RefreshButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         'Loop through config file.
         'Grab all comments MINUS the ones for selected #
         'Append this & our new content to the file.
@@ -2558,6 +2560,46 @@ Public Class Form1
     End Sub
 
     Private Sub YouTubeType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles YouTubeType.SelectedIndexChanged
+        If YouTubeType.SelectedIndex = 0 Then
+            Label6.Text = "Channel/User:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(270, 120)
+            End With
+            PlayListLocation.Visible = True
+        ElseIf YouTubeType.SelectedIndex = 1 Then
+            Label6.Text = "Playlist:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(220, 120)
+            End With
+            PlayListLocation.Visible = True
+        ElseIf YouTubeType.SelectedIndex = 2 Or YouTubeType.SelectedIndex = 3 Then
+            Label6.Text = "Username:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(245, 120)
+            End With
+            PlayListLocation.Visible = True
+        ElseIf YouTubeType.SelectedIndex = 4 Then
+            Label6.Text = "Search String:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(270, 120)
+            End With
+            PlayListLocation.Visible = True
+        ElseIf YouTubeType.SelectedIndex = 7 Then
+            Label6.Text = "Channel|Channel:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(295, 120)
+            End With
+            PlayListLocation.Visible = True
+        ElseIf YouTubeType.SelectedIndex = 8 Then
+            Label6.Text = "GData Url:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(245, 120)
+            End With
+            PlayListLocation.Visible = True
+        Else
+            Label6.Text = "Nothing Here"
+            PlayListLocation.Visible = False
+        End If
 
     End Sub
 
@@ -2580,7 +2622,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub TabPage6_Click(sender As Object, e As EventArgs) Handles TabPage6.Click
+    Private Sub TabPage6_Click(sender As Object, e As EventArgs)
 
     End Sub
 
@@ -2605,6 +2647,10 @@ Public Class Form1
         Form11.Visible = True
         Form11.Focus()
         Form11.AddMoviePosterPictureBox.ImageLocation = "http://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Close()
     End Sub
 
 End Class
