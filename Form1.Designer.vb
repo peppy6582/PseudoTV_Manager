@@ -52,6 +52,7 @@ Partial Class Form1
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TVShowList = New System.Windows.Forms.ListView()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.AddMoviePosterButton = New System.Windows.Forms.Button()
         Me.MoviePosterSelect = New System.Windows.Forms.Button()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.ListMoviePosters = New System.Windows.Forms.ListBox()
@@ -81,6 +82,7 @@ Partial Class Form1
         Me.GenresListSubList = New System.Windows.Forms.ListBox()
         Me.GenresList = New System.Windows.Forms.ListView()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.SubChannelType = New System.Windows.Forms.ComboBox()
         Me.SortTypeBox = New System.Windows.Forms.ComboBox()
         Me.SortType = New System.Windows.Forms.Label()
         Me.MediaLimitBox = New System.Windows.Forms.ComboBox()
@@ -150,7 +152,7 @@ Partial Class Form1
         Me.AaaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.AddMoviePosterButton = New System.Windows.Forms.Button()
+        Me.DropDownOutputText = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -487,6 +489,15 @@ Partial Class Form1
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Movies"
         '
+        'AddMoviePosterButton
+        '
+        Me.AddMoviePosterButton.Location = New System.Drawing.Point(492, 586)
+        Me.AddMoviePosterButton.Name = "AddMoviePosterButton"
+        Me.AddMoviePosterButton.Size = New System.Drawing.Size(39, 23)
+        Me.AddMoviePosterButton.TabIndex = 29
+        Me.AddMoviePosterButton.Text = "Add"
+        Me.AddMoviePosterButton.UseVisualStyleBackColor = True
+        '
         'MoviePosterSelect
         '
         Me.MoviePosterSelect.Location = New System.Drawing.Point(244, 586)
@@ -769,6 +780,8 @@ Partial Class Form1
         'TabPage4
         '
         Me.TabPage4.BackColor = System.Drawing.Color.Gray
+        Me.TabPage4.Controls.Add(Me.DropDownOutputText)
+        Me.TabPage4.Controls.Add(Me.SubChannelType)
         Me.TabPage4.Controls.Add(Me.SortTypeBox)
         Me.TabPage4.Controls.Add(Me.SortType)
         Me.TabPage4.Controls.Add(Me.MediaLimitBox)
@@ -828,6 +841,17 @@ Partial Class Form1
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "TV Guide"
         '
+        'SubChannelType
+        '
+        Me.SubChannelType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.SubChannelType.FormattingEnabled = True
+        Me.SubChannelType.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.SubChannelType.Location = New System.Drawing.Point(227, 86)
+        Me.SubChannelType.Name = "SubChannelType"
+        Me.SubChannelType.Size = New System.Drawing.Size(211, 21)
+        Me.SubChannelType.TabIndex = 55
+        Me.SubChannelType.Visible = False
+        '
         'SortTypeBox
         '
         Me.SortTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -856,7 +880,6 @@ Partial Class Form1
         Me.MediaLimitBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.MediaLimitBox.FormattingEnabled = True
         Me.MediaLimitBox.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.MediaLimitBox.Items.AddRange(New Object() {"25", "50", "100", "150", "200", "250", "500", "1000"})
         Me.MediaLimitBox.Location = New System.Drawing.Point(413, 222)
         Me.MediaLimitBox.Name = "MediaLimitBox"
         Me.MediaLimitBox.Size = New System.Drawing.Size(61, 21)
@@ -1472,14 +1495,13 @@ Partial Class Form1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
-        'AddMoviePosterButton
+        'DropDownOutputText
         '
-        Me.AddMoviePosterButton.Location = New System.Drawing.Point(492, 586)
-        Me.AddMoviePosterButton.Name = "AddMoviePosterButton"
-        Me.AddMoviePosterButton.Size = New System.Drawing.Size(39, 23)
-        Me.AddMoviePosterButton.TabIndex = 29
-        Me.AddMoviePosterButton.Text = "Add"
-        Me.AddMoviePosterButton.UseVisualStyleBackColor = True
+        Me.DropDownOutputText.Location = New System.Drawing.Point(163, 350)
+        Me.DropDownOutputText.Name = "DropDownOutputText"
+        Me.DropDownOutputText.Size = New System.Drawing.Size(468, 20)
+        Me.DropDownOutputText.TabIndex = 56
+        Me.DropDownOutputText.Visible = False
         '
         'Form1
         '
@@ -1647,5 +1669,7 @@ Partial Class Form1
     Friend WithEvents AddPoster As System.Windows.Forms.Button
     Friend WithEvents AddBanner As System.Windows.Forms.Button
     Friend WithEvents AddMoviePosterButton As System.Windows.Forms.Button
+    Friend WithEvents SubChannelType As System.Windows.Forms.ComboBox
+    Friend WithEvents DropDownOutputText As System.Windows.Forms.TextBox
 
 End Class

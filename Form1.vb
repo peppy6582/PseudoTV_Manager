@@ -1254,7 +1254,12 @@ Public Class Form1
                 ElseIf PlayListNumber = 10 Or PlayListNumber = 11 Then
                     'YoutubeTV or RSS
                     Option1 = 4
-
+                ElseIf PlayListNumber = 13 Then
+                    'Music Videos
+                    Option1 = 5
+                ElseIf PlayListNumber = 14 Then
+                    'Extras
+                    Option1 = 6
                 End If
 
                 'Now, we loop through the advanced rules to populate those properly.
@@ -1407,6 +1412,27 @@ Public Class Form1
                         MediaLimitBox.SelectedIndex = 7
                     End If
                     SortTypeBox.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
+                ElseIf Option1 = 5 Then
+                    PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text
+                    SubChannelType.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text - 1
+                    If TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 25 Then
+                        MediaLimitBox.SelectedIndex = 0
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 50 Then
+                        MediaLimitBox.SelectedIndex = 1
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 100 Then
+                        MediaLimitBox.SelectedIndex = 2
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 150 Then
+                        MediaLimitBox.SelectedIndex = 3
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 200 Then
+                        MediaLimitBox.SelectedIndex = 4
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 250 Then
+                        MediaLimitBox.SelectedIndex = 5
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 500 Then
+                        MediaLimitBox.SelectedIndex = 6
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 1000 Then
+                        MediaLimitBox.SelectedIndex = 7
+                    End If
+                    SortTypeBox.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
                 Else
                     Option2.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
                 End If
@@ -1421,6 +1447,7 @@ Public Class Form1
         If PlayListType.SelectedIndex >= 0 And Option2.Text <> "" Then
             RefreshTVGuideSublist(PlayListType.SelectedIndex, Option2.Text)
         End If
+
     End Sub
 
     Private Sub PlayListType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PlayListType.SelectedIndexChanged
@@ -1445,6 +1472,7 @@ Public Class Form1
             MediaLimitBox.Visible = False
             SortType.Visible = False
             SortTypeBox.Visible = False
+            SubChannelType.Visible = False
         ElseIf PlayListType.SelectedIndex = 8 Then
             Button5.Visible = False
             Label6.Text = "Zap2It Url:"
@@ -1463,6 +1491,7 @@ Public Class Form1
             MediaLimitBox.Visible = False
             SortType.Visible = False
             SortTypeBox.Visible = False
+            SubChannelType.Visible = False
         ElseIf PlayListType.SelectedIndex = 9 Then
             Button5.Visible = False
             Label6.Text = "Run Time:"
@@ -1481,6 +1510,7 @@ Public Class Form1
             MediaLimitBox.Visible = False
             SortType.Visible = False
             SortTypeBox.Visible = False
+            SubChannelType.Visible = False
         ElseIf PlayListType.SelectedIndex = 10 Then
             Button5.Visible = False
             YouTubeType.SelectedIndex = 0
@@ -1488,10 +1518,22 @@ Public Class Form1
             Label6.Text = "Channel Info:"
             Label6.Visible = True
             PlayListLocation.Visible = True
+            With MediaLimit
+                .Location = New System.Drawing.Point(160, 160)
+            End With
             MediaLimit.Visible = True
+            With MediaLimitBox
+                .Location = New System.Drawing.Point(162, 180)
+            End With
             MediaLimitBox.SelectedIndex = 0
             MediaLimitBox.Visible = True
+            With SortType
+                .Location = New System.Drawing.Point(225, 160)
+            End With
             SortType.Visible = True
+            With SortTypeBox
+                .Location = New System.Drawing.Point(227, 180)
+            End With
             SortTypeBox.SelectedIndex = 0
             SortTypeBox.Visible = True
             StrmUrl.Visible = False
@@ -1501,6 +1543,7 @@ Public Class Form1
             ShowTitleBox.Visible = False
             ShowDesc.Visible = False
             ShowDescBox.Visible = False
+            SubChannelType.Visible = False
         ElseIf PlayListType.SelectedIndex = 11 Then
             Button5.Visible = False
             Label6.Text = "Stream Url:"
@@ -1514,12 +1557,98 @@ Public Class Form1
             ShowTitleBox.Visible = False
             ShowDesc.Visible = False
             ShowDescBox.Visible = False
+            With MediaLimit
+                .Location = New System.Drawing.Point(160, 160)
+            End With
             MediaLimit.Visible = True
+            With MediaLimitBox
+                .Location = New System.Drawing.Point(162, 180)
+            End With
             MediaLimitBox.SelectedIndex = 0
             MediaLimitBox.Visible = True
+            With SortType
+                .Location = New System.Drawing.Point(225, 160)
+            End With
             SortType.Visible = True
+            With SortTypeBox
+                .Location = New System.Drawing.Point(227, 180)
+            End With
             SortTypeBox.SelectedIndex = 0
             SortTypeBox.Visible = True
+            SubChannelType.Visible = False
+        ElseIf PlayListType.SelectedIndex = 13 Then
+            Button5.Visible = False
+            Label6.Text = "LastFM User:"
+            Label6.Visible = True
+            PlayListLocation.Visible = True
+            StrmUrl.Visible = False
+            StrmUrlBox.Visible = False
+            Option2.Visible = False
+            ShowTitle.Visible = False
+            ShowTitleBox.Visible = False
+            ShowDesc.Visible = False
+            ShowDescBox.Visible = False
+            With MediaLimit
+                .Location = New System.Drawing.Point(160, 160)
+            End With
+            MediaLimit.Visible = True
+            With MediaLimitBox
+                .Location = New System.Drawing.Point(162, 180)
+            End With
+            MediaLimitBox.SelectedIndex = 0
+            MediaLimitBox.Visible = True
+            With SortType
+                .Location = New System.Drawing.Point(225, 160)
+            End With
+            SortType.Visible = True
+            With SortTypeBox
+                .Location = New System.Drawing.Point(227, 180)
+            End With
+            SortTypeBox.SelectedIndex = 0
+            SortTypeBox.Visible = True
+            SubChannelType.Items.Clear()
+            With SubChannelType.Items
+                .Add("LastFM")
+                .Add("MyMusicTV")
+            End With
+            SubChannelType.Visible = True
+            SubChannelType.SelectedIndex = 0
+        ElseIf PlayListType.SelectedIndex = 14 Then
+            Button5.Visible = False
+            Label6.Visible = False
+            PlayListLocation.Visible = True
+            StrmUrl.Visible = False
+            StrmUrlBox.Visible = False
+            Option2.Visible = False
+            ShowTitle.Visible = False
+            ShowTitleBox.Visible = False
+            ShowDesc.Visible = False
+            ShowDescBox.Visible = False
+            With MediaLimit
+                .Location = New System.Drawing.Point(160, 160)
+            End With
+            MediaLimit.Visible = True
+            With MediaLimitBox
+                .Location = New System.Drawing.Point(162, 180)
+            End With
+            MediaLimitBox.SelectedIndex = 0
+            MediaLimitBox.Visible = True
+            With SortType
+                .Location = New System.Drawing.Point(225, 160)
+            End With
+            SortType.Visible = True
+            With SortTypeBox
+                .Location = New System.Drawing.Point(227, 180)
+            End With
+            SortTypeBox.SelectedIndex = 0
+            SortTypeBox.Visible = True
+            SubChannelType.Items.Clear()
+            With SubChannelType.Items
+                .Add("popcorn")
+                .Add("cinema")
+            End With
+            SubChannelType.Visible = True
+            SubChannelType.SelectedIndex = 0
         Else
             Button5.Visible = False
             Label6.Visible = False
@@ -1536,10 +1665,12 @@ Public Class Form1
             MediaLimitBox.Visible = False
             SortType.Visible = False
             SortTypeBox.Visible = False
+            SubChannelType.Visible = False
         End If
 
         Option2.Items.Clear()
         Option2.Text = ""
+
 
         If PlayListType.SelectedIndex = 0 Then
             For x = 0 To NetworkList.Items.Count - 1
@@ -1566,6 +1697,7 @@ Public Class Form1
         End If
 
     End Sub
+
 
     Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
 
@@ -1826,6 +1958,8 @@ Public Class Form1
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & YouTubeType.SelectedIndex + 1 & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
             ElseIf PlayListType.SelectedIndex = 11 Then
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & "1" & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
+            ElseIf PlayListType.SelectedIndex = 13 Then
+                TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & SubChannelType.SelectedIndex + 1 & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
             Else
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & Option2.Text & Chr(34) & " />"
             End If
@@ -2426,6 +2560,21 @@ Public Class Form1
     Private Sub YouTubeType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles YouTubeType.SelectedIndexChanged
 
     End Sub
+
+    Private Sub SubChannelType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles SubChannelType.SelectedIndexChanged
+        If PlayListType.SelectedIndex = 13 And SubChannelType.SelectedIndex = 0 Then
+            Label6.Text = "LastFM User:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(270, 120)
+            End With
+        ElseIf PlayListType.SelectedIndex = 13 And SubChannelType.SelectedIndex = 1 Then
+            Label6.Text = "Channel Number:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(295, 120)
+            End With
+        End If
+    End Sub
+
 
     Private Sub TxtShowName_TextChanged(sender As Object, e As EventArgs) Handles TxtShowName.TextChanged
 

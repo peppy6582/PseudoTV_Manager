@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PseudoTV Manager.exe" size="921088">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PseudoTV Manager.exe" size="925184">
       <assemblyIdentity name="PseudoTV Manager" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>DZDld+6WSES12YtPqP5gq9Sj5eY=</dsig:DigestValue>
+        <dsig:DigestValue>zN+78/0y8EKGykeaPK8wBwUXOFA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
