@@ -142,9 +142,10 @@ Partial Class Form1
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AaaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GDataDemoLink = New System.Windows.Forms.LinkLabel()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -770,6 +771,7 @@ Partial Class Form1
         'TabPage4
         '
         Me.TabPage4.BackColor = System.Drawing.Color.Gray
+        Me.TabPage4.Controls.Add(Me.GDataDemoLink)
         Me.TabPage4.Controls.Add(Me.SubChannelType)
         Me.TabPage4.Controls.Add(Me.SortTypeBox)
         Me.TabPage4.Controls.Add(Me.SortType)
@@ -847,7 +849,7 @@ Partial Class Form1
         Me.SortTypeBox.FormattingEnabled = True
         Me.SortTypeBox.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.SortTypeBox.Items.AddRange(New Object() {"Default", "Random", "Reverse"})
-        Me.SortTypeBox.Location = New System.Drawing.Point(522, 227)
+        Me.SortTypeBox.Location = New System.Drawing.Point(522, 222)
         Me.SortTypeBox.Name = "SortTypeBox"
         Me.SortTypeBox.Size = New System.Drawing.Size(103, 21)
         Me.SortTypeBox.TabIndex = 54
@@ -857,7 +859,7 @@ Partial Class Form1
         '
         Me.SortType.AutoSize = True
         Me.SortType.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
-        Me.SortType.Location = New System.Drawing.Point(522, 206)
+        Me.SortType.Location = New System.Drawing.Point(518, 201)
         Me.SortType.Name = "SortType"
         Me.SortType.Size = New System.Drawing.Size(93, 20)
         Me.SortType.TabIndex = 53
@@ -1385,7 +1387,7 @@ Partial Class Form1
         Me.MenuStrip1.Location = New System.Drawing.Point(1, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.MenuStrip1.Size = New System.Drawing.Size(137, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(45, 24)
         Me.MenuStrip1.TabIndex = 2
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -1406,15 +1408,26 @@ Partial Class Form1
         Me.AaaToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.AaaToolStripMenuItem.Text = "Settings"
         '
-        'OpenFileDialog1
-        '
-        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
-        '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
         Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        '
+        'GDataDemoLink
+        '
+        Me.GDataDemoLink.AutoSize = True
+        Me.GDataDemoLink.Location = New System.Drawing.Point(444, 89)
+        Me.GDataDemoLink.Name = "GDataDemoLink"
+        Me.GDataDemoLink.Size = New System.Drawing.Size(69, 13)
+        Me.GDataDemoLink.TabIndex = 56
+        Me.GDataDemoLink.TabStop = True
+        Me.GDataDemoLink.Text = "GData Demo"
+        Me.GDataDemoLink.Visible = False
         '
         'Form1
         '
@@ -1574,5 +1587,6 @@ Partial Class Form1
     Friend WithEvents AddMoviePosterButton As System.Windows.Forms.Button
     Friend WithEvents SubChannelType As System.Windows.Forms.ComboBox
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents GDataDemoLink As System.Windows.Forms.LinkLabel
 
 End Class

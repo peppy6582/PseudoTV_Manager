@@ -3,6 +3,7 @@
 
 Imports System
 Imports System.IO
+Imports System.Diagnostics
 
 Public Class Form1
     'For sorting columns in listviews
@@ -2596,6 +2597,9 @@ Public Class Form1
                 .Location = New System.Drawing.Point(245, 120)
             End With
             PlayListLocation.Visible = True
+            GDataDemoLink.Links.Remove(GDataDemoLink.Links(0))
+            GDataDemoLink.Links.Add(0, GDataDemoLink.Text = "GDataDemo", "http://gdata.youtube.com/demo/index.html")
+            GDataDemoLink.Visible = True
         Else
             Label6.Text = "Nothing Here"
             PlayListLocation.Visible = False
@@ -2653,4 +2657,8 @@ Public Class Form1
         Close()
     End Sub
 
+    Private Sub GDataDemoLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles GDataDemoLink.LinkClicked
+        Dim sInfo As New ProcessStartInfo(e.Link.LinkData.ToString())
+        Process.Start(sInfo)
+    End Sub
 End Class
