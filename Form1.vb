@@ -636,6 +636,10 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Form10_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load, AddPoster.Click
+
+    End Sub
+
 
     Public Function ConvertGenres(ByVal Genrelist As ListBox)
         'Converts the existing ListTVGenre's contents to the proper format.
@@ -2099,7 +2103,7 @@ Public Class Form1
             Dim MoviePoster As String = ReturnArraySplit(3)
             ListMoviePosters.Items.Clear()
 
-            If InStr(MoviePoster, "<thumb aspect=""poster"" preview=""") > 0 Then
+            If InStr(MoviePoster, "<thumb aspect=""poster"" preview=""") > 0 Or InStr(MoviePoster, "<thumb>") > 0 Then
                 Dim MoviePosterSplit() As String = Split(MoviePoster, "<thumb aspect=""poster"" preview=""")
 
                 For X = 1 To UBound(MoviePosterSplit)
@@ -2107,13 +2111,13 @@ Public Class Form1
                     MoviePosterSplit(X) = MoviePosterSplit(X).Substring(i + 1, MoviePosterSplit(X).IndexOf(""">"))
                     ListMoviePosters.Items.Add(MoviePosterSplit(X))
                 Next
-            ElseIf InStr(MoviePoster, "<thumb>") > 0 Then
-                Dim MoviePosterSplit() As String = Split(MoviePoster, "<thumb>")
 
-                For X = 1 To UBound(MoviePosterSplit)
-                    Dim i As Integer = MoviePosterSplit(X).IndexOf("<thumb>")
-                    MoviePosterSplit(X) = MoviePosterSplit(X).Substring(i + 1, MoviePosterSplit(X).IndexOf("</thumb>"))
-                    ListMoviePosters.Items.Add(MoviePosterSplit(X))
+                Dim MoviePosterSplit2() As String = Split(MoviePoster, "<thumb>")
+
+                For X = 1 To UBound(MoviePosterSplit2)
+                    Dim i As Integer = MoviePosterSplit2(X).IndexOf("<thumb>")
+                    MoviePosterSplit2(X) = MoviePosterSplit2(X).Substring(i + 1, MoviePosterSplit2(X).IndexOf("</thumb>"))
+                    ListMoviePosters.Items.Add(MoviePosterSplit2(X))
                 Next
             Else
                 ListMoviePosters.Items.Add("Nothing Found")
@@ -2440,4 +2444,18 @@ Public Class Form1
         Form9.Focus()
         Form9.AddBannerPictureBox.ImageLocation = "http://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/banner.png"
     End Sub
+
+    Private Sub AddPoster_Click(sender As Object, e As EventArgs) Handles AddPoster.Click
+        Form10.Visible = True
+        Form10.Focus()
+        Form10.AddPosterPictureBox.ImageLocation = "http://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
+    End Sub
+
+
+    Private Sub AddMoviePosterButton_Click(sender As Object, e As EventArgs) Handles AddMoviePosterButton.Click
+        Form11.Visible = True
+        Form11.Focus()
+        Form11.AddMoviePosterPictureBox.ImageLocation = "http://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
+    End Sub
+
 End Class

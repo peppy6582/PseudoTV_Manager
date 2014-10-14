@@ -25,6 +25,8 @@ Partial Class Form1
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.AddPoster = New System.Windows.Forms.Button()
+        Me.AddBanner = New System.Windows.Forms.Button()
         Me.TVPosterSelect = New System.Windows.Forms.Button()
         Me.TVBannerSelect = New System.Windows.Forms.Button()
         Me.TVBannerPictureBox = New System.Windows.Forms.PictureBox()
@@ -148,8 +150,7 @@ Partial Class Form1
         Me.AaaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.AddBanner = New System.Windows.Forms.Button()
-        Me.AddPoster = New System.Windows.Forms.Button()
+        Me.AddMoviePosterButton = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -220,20 +221,38 @@ Partial Class Form1
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "TV Shows"
         '
+        'AddPoster
+        '
+        Me.AddPoster.Location = New System.Drawing.Point(547, 612)
+        Me.AddPoster.Name = "AddPoster"
+        Me.AddPoster.Size = New System.Drawing.Size(39, 21)
+        Me.AddPoster.TabIndex = 27
+        Me.AddPoster.Text = "Add"
+        Me.AddPoster.UseVisualStyleBackColor = True
+        '
+        'AddBanner
+        '
+        Me.AddBanner.Location = New System.Drawing.Point(547, 422)
+        Me.AddBanner.Name = "AddBanner"
+        Me.AddBanner.Size = New System.Drawing.Size(39, 21)
+        Me.AddBanner.TabIndex = 26
+        Me.AddBanner.Text = "Add"
+        Me.AddBanner.UseVisualStyleBackColor = True
+        '
         'TVPosterSelect
         '
         Me.TVPosterSelect.Location = New System.Drawing.Point(235, 612)
         Me.TVPosterSelect.Name = "TVPosterSelect"
-        Me.TVPosterSelect.Size = New System.Drawing.Size(107, 23)
+        Me.TVPosterSelect.Size = New System.Drawing.Size(98, 23)
         Me.TVPosterSelect.TabIndex = 25
         Me.TVPosterSelect.Text = "Select for PTVL"
         Me.TVPosterSelect.UseVisualStyleBackColor = True
         '
         'TVBannerSelect
         '
-        Me.TVBannerSelect.Location = New System.Drawing.Point(243, 422)
+        Me.TVBannerSelect.Location = New System.Drawing.Point(235, 420)
         Me.TVBannerSelect.Name = "TVBannerSelect"
-        Me.TVBannerSelect.Size = New System.Drawing.Size(107, 23)
+        Me.TVBannerSelect.Size = New System.Drawing.Size(98, 23)
         Me.TVBannerSelect.TabIndex = 24
         Me.TVBannerSelect.Text = "Select for PTVL"
         Me.TVBannerSelect.UseVisualStyleBackColor = True
@@ -446,6 +465,7 @@ Partial Class Form1
         'TabPage5
         '
         Me.TabPage5.BackColor = System.Drawing.Color.Gray
+        Me.TabPage5.Controls.Add(Me.AddMoviePosterButton)
         Me.TabPage5.Controls.Add(Me.MoviePosterSelect)
         Me.TabPage5.Controls.Add(Me.Label19)
         Me.TabPage5.Controls.Add(Me.ListMoviePosters)
@@ -469,9 +489,9 @@ Partial Class Form1
         '
         'MoviePosterSelect
         '
-        Me.MoviePosterSelect.Location = New System.Drawing.Point(249, 496)
+        Me.MoviePosterSelect.Location = New System.Drawing.Point(244, 586)
         Me.MoviePosterSelect.Name = "MoviePosterSelect"
-        Me.MoviePosterSelect.Size = New System.Drawing.Size(107, 23)
+        Me.MoviePosterSelect.Size = New System.Drawing.Size(99, 23)
         Me.MoviePosterSelect.TabIndex = 28
         Me.MoviePosterSelect.Text = "Select for PTVL"
         Me.MoviePosterSelect.UseVisualStyleBackColor = True
@@ -492,7 +512,7 @@ Partial Class Form1
         Me.ListMoviePosters.FormattingEnabled = True
         Me.ListMoviePosters.Location = New System.Drawing.Point(244, 330)
         Me.ListMoviePosters.Name = "ListMoviePosters"
-        Me.ListMoviePosters.Size = New System.Drawing.Size(285, 160)
+        Me.ListMoviePosters.Size = New System.Drawing.Size(285, 251)
         Me.ListMoviePosters.TabIndex = 26
         '
         'Button18
@@ -599,9 +619,9 @@ Partial Class Form1
         '
         'MoviePicture
         '
-        Me.MoviePicture.Location = New System.Drawing.Point(593, 67)
+        Me.MoviePicture.Location = New System.Drawing.Point(573, 67)
         Me.MoviePicture.Name = "MoviePicture"
-        Me.MoviePicture.Size = New System.Drawing.Size(384, 542)
+        Me.MoviePicture.Size = New System.Drawing.Size(404, 542)
         Me.MoviePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.MoviePicture.TabIndex = 13
         Me.MoviePicture.TabStop = False
@@ -1452,23 +1472,14 @@ Partial Class Form1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
-        'AddBanner
+        'AddMoviePosterButton
         '
-        Me.AddBanner.Location = New System.Drawing.Point(547, 422)
-        Me.AddBanner.Name = "AddBanner"
-        Me.AddBanner.Size = New System.Drawing.Size(39, 21)
-        Me.AddBanner.TabIndex = 26
-        Me.AddBanner.Text = "Add"
-        Me.AddBanner.UseVisualStyleBackColor = True
-        '
-        'AddPoster
-        '
-        Me.AddPoster.Location = New System.Drawing.Point(547, 612)
-        Me.AddPoster.Name = "AddPoster"
-        Me.AddPoster.Size = New System.Drawing.Size(39, 21)
-        Me.AddPoster.TabIndex = 27
-        Me.AddPoster.Text = "Add"
-        Me.AddPoster.UseVisualStyleBackColor = True
+        Me.AddMoviePosterButton.Location = New System.Drawing.Point(492, 586)
+        Me.AddMoviePosterButton.Name = "AddMoviePosterButton"
+        Me.AddMoviePosterButton.Size = New System.Drawing.Size(39, 23)
+        Me.AddMoviePosterButton.TabIndex = 29
+        Me.AddMoviePosterButton.Text = "Add"
+        Me.AddMoviePosterButton.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -1635,5 +1646,6 @@ Partial Class Form1
     Friend WithEvents YouTubeThumbnailUrlLabel As System.Windows.Forms.Label
     Friend WithEvents AddPoster As System.Windows.Forms.Button
     Friend WithEvents AddBanner As System.Windows.Forms.Button
+    Friend WithEvents AddMoviePosterButton As System.Windows.Forms.Button
 
 End Class
