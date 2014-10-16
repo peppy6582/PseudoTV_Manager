@@ -3,6 +3,7 @@
 
 Imports System
 Imports System.IO
+Imports System.Diagnostics
 
 Public Class Form1
     'For sorting columns in listviews
@@ -446,8 +447,8 @@ Public Class Form1
     Private Sub ListTVBanners_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVBanners.SelectedIndexChanged
         Dim x As Integer = ListTVBanners.SelectedIndex
 
-        If ListTVBanners.Items.Count = 0 Then
-            TVBannerPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
+        If ListTVBanners.Items.Count <= 0 Then
+            TVBannerPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/banner.png"
         Else
             TVBannerPictureBox.ImageLocation = ListTVBanners.Items(x)
             TVBannerPictureBox.Refresh()
@@ -459,8 +460,16 @@ Public Class Form1
         Dim Type As String = "tvshow"
         Dim MediaType As String = "banner"
 
+
+        If txtShowLocation.TextLength >= 6 Then
+            If txtShowLocation.Text.Substring(0, 6) = "smb://" Then
+                txtShowLocation.Text = txtShowLocation.Text.Replace("/", "\")
+                txtShowLocation.Text = "\\" & txtShowLocation.Text.Substring(6)
+            End If
+        End If
+
         ' Displays a SaveFileDialog so the user can save the Image
-        ' assigned to TVPosterSelect.
+        ' assigned to TVBannerSelect.
         Dim saveFileDialog1 As New SaveFileDialog()
         saveFileDialog1.InitialDirectory = txtShowLocation.Text
         saveFileDialog1.Filter = "JPeg Image|*.jpg"
@@ -468,7 +477,7 @@ Public Class Form1
         saveFileDialog1.FileName = "banner.jpg"
         saveFileDialog1.ShowDialog()
 
-        Dim FileToSaveAs As String = System.IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, saveFileDialog1.FileName)
+        Dim FileToSaveAs As String = System.IO.Path.Combine(txtShowLocation.Text, saveFileDialog1.FileName)
         TVBannerPictureBox.Image.Save(FileToSaveAs, System.Drawing.Imaging.ImageFormat.Jpeg)
 
         DbExecute("UPDATE art SET url = '" & ListTVBanners.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & Type & "' and type = '" & MediaType & "'")
@@ -477,8 +486,9 @@ Public Class Form1
 
     Private Sub ListTVPosters_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListTVPosters.SelectedIndexChanged
         Dim x As Integer = ListTVPosters.SelectedIndex
+
         If ListTVPosters.Items.Count = 0 Then
-            TVPosterPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
+            TVPosterPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
         Else
             TVPosterPictureBox.ImageLocation = ListTVPosters.Items(x)
             TVPosterPictureBox.Refresh()
@@ -488,6 +498,14 @@ Public Class Form1
     Private Sub TVPosterSelect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TVPosterSelect.Click
         Dim x As Integer = ListTVPosters.SelectedIndex
         Dim MediaType As String = "poster"
+
+
+        If txtShowLocation.TextLength >= 6 Then
+            If txtShowLocation.Text.Substring(0, 6) = "smb://" Then
+                txtShowLocation.Text = txtShowLocation.Text.Replace("/", "\")
+                txtShowLocation.Text = "\\" & txtShowLocation.Text.Substring(6)
+            End If
+        End If
 
         ' Displays a SaveFileDialog so the user can save the Image
         ' assigned to TVPosterSelect.
@@ -501,8 +519,8 @@ Public Class Form1
         Dim FileToSaveAs As String = System.IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, saveFileDialog1.FileName)
         TVPosterPictureBox.Image.Save(FileToSaveAs, System.Drawing.Imaging.ImageFormat.Jpeg)
 
-            DbExecute("UPDATE art SET url = '" & ListTVPosters.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
-            Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVPosters.Items(x).ToString & ""
+        DbExecute("UPDATE art SET url = '" & ListTVPosters.Items(x).ToString & "' WHERE media_id = '" & TVShowLabel.Text & "' and type = '" & MediaType & "'")
+        Status.Text = "Updated " & TxtShowName.Text & " Successfully with " & ListTVPosters.Items(x).ToString & ""
 
     End Sub
 
@@ -551,6 +569,9 @@ Public Class Form1
             Dim TVPoster As String = ReturnArraySplit(4)
             ListTVPosters.Items.Clear()
 
+            Dim TVBanner As String = ReturnArraySplit(4)
+            ListTVBanners.Items.Clear()
+
             If InStr(TVPoster, "<thumb aspect=""poster"">") > 0 Then
                 Dim TVPosterSplit() As String = Split(TVPoster, "<thumb aspect=""poster"">")
 
@@ -559,12 +580,9 @@ Public Class Form1
                     TVPosterSplit(X) = TVPosterSplit(X).Substring(i + 1, TVPosterSplit(X).IndexOf("</thumb>"))
                     ListTVPosters.Items.Add(TVPosterSplit(X))
                 Next
-            ElseIf TVPoster <> "" Then
-                ListTVPosters.Items.Add(TVPoster)
+            Else
+                ListTVPosters.Items.Add("Nothing Found")
             End If
-
-            Dim TVBanner As String = ReturnArraySplit(4)
-            ListTVBanners.Items.Clear()
 
             If InStr(TVBanner, "<thumb aspect=""banner"">") > 0 Then
                 Dim TVBannerSplit() As String = Split(TVBanner, "<thumb aspect=""banner"">")
@@ -574,8 +592,8 @@ Public Class Form1
                     TVBannerSplit(X) = TVBannerSplit(X).Substring(i + 1, TVBannerSplit(X).IndexOf("</thumb>"))
                     ListTVBanners.Items.Add(TVBannerSplit(X))
                 Next
-            ElseIf TVBanner <> "" Then
-                ListTVBanners.Items.Add(TVBanner)
+            Else
+                ListTVBanners.Items.Add("Nothing Found")
             End If
 
             'Loop through each TV Genre, if there more than one.
@@ -593,31 +611,35 @@ Public Class Form1
 
             If txtShowLocation.TextLength >= 6 Then
                 If txtShowLocation.Text.Substring(0, 6) = "smb://" Then
-                    txtShowLocation.Text = "//" & txtShowLocation.Text.Substring(6)
+                    txtShowLocation.Text = txtShowLocation.Text.Replace("/", "\")
+                    txtShowLocation.Text = "\\" & txtShowLocation.Text.Substring(6)
                 End If
             End If
 
+
+
             If System.IO.File.Exists(txtShowLocation.Text & "poster.jpg") Then
                 TVPosterPictureBox.ImageLocation = txtShowLocation.Text & "poster.jpg"
-            ElseIf ListTVPosters.Items.Count <= 0 Then
-                TVPosterPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
             Else
-                TVPosterPictureBox.ImageLocation = ListTVPosters.Items(0)
-                TVPosterPictureBox.Refresh()
+                TVPosterPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
             End If
 
             If System.IO.File.Exists(txtShowLocation.Text & "banner.jpg") Then
                 TVBannerPictureBox.ImageLocation = txtShowLocation.Text & "banner.jpg"
-            ElseIf ListTVBanners.Items.Count <= 0 Then
-                TVBannerPictureBox.ImageLocation = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
             Else
-                TVBannerPictureBox.ImageLocation = ListTVBanners.Items(0)
-                TVBannerPictureBox.Refresh()
+                TVBannerPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/banner.png"
             End If
         End If
 
     End Sub
 
+    Private Sub Form9_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load, AddBanner.Click
+
+    End Sub
+
+    Private Sub Form10_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load, AddPoster.Click
+
+    End Sub
 
 
     Public Function ConvertGenres(ByVal Genrelist As ListBox)
@@ -789,6 +811,8 @@ Public Class Form1
             TxtShowName.Text = ""
             txtShowLocation.Text = ""
             TVPosterPictureBox.ImageLocation = ""
+            MovieLocation.Text = ""
+            MoviePicture.ImageLocation = ""
         End If
     End Sub
 
@@ -1231,7 +1255,12 @@ Public Class Form1
                 ElseIf PlayListNumber = 10 Or PlayListNumber = 11 Then
                     'YoutubeTV or RSS
                     Option1 = 4
-
+                ElseIf PlayListNumber = 13 Then
+                    'Music Videos
+                    Option1 = 5
+                ElseIf PlayListNumber = 14 Then
+                    'Extras
+                    Option1 = 6
                 End If
 
                 'Now, we loop through the advanced rules to populate those properly.
@@ -1384,6 +1413,27 @@ Public Class Form1
                         MediaLimitBox.SelectedIndex = 7
                     End If
                     SortTypeBox.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
+                ElseIf Option1 = 5 Then
+                    PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text
+                    SubChannelType.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text - 1
+                    If TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 25 Then
+                        MediaLimitBox.SelectedIndex = 0
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 50 Then
+                        MediaLimitBox.SelectedIndex = 1
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 100 Then
+                        MediaLimitBox.SelectedIndex = 2
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 150 Then
+                        MediaLimitBox.SelectedIndex = 3
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 200 Then
+                        MediaLimitBox.SelectedIndex = 4
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 250 Then
+                        MediaLimitBox.SelectedIndex = 5
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 500 Then
+                        MediaLimitBox.SelectedIndex = 6
+                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 1000 Then
+                        MediaLimitBox.SelectedIndex = 7
+                    End If
+                    SortTypeBox.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
                 Else
                     Option2.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
                 End If
@@ -1398,6 +1448,7 @@ Public Class Form1
         If PlayListType.SelectedIndex >= 0 And Option2.Text <> "" Then
             RefreshTVGuideSublist(PlayListType.SelectedIndex, Option2.Text)
         End If
+
     End Sub
 
     Private Sub PlayListType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PlayListType.SelectedIndexChanged
@@ -1422,6 +1473,7 @@ Public Class Form1
             MediaLimitBox.Visible = False
             SortType.Visible = False
             SortTypeBox.Visible = False
+            SubChannelType.Visible = False
         ElseIf PlayListType.SelectedIndex = 8 Then
             Button5.Visible = False
             Label6.Text = "Zap2It Url:"
@@ -1440,6 +1492,7 @@ Public Class Form1
             MediaLimitBox.Visible = False
             SortType.Visible = False
             SortTypeBox.Visible = False
+            SubChannelType.Visible = False
         ElseIf PlayListType.SelectedIndex = 9 Then
             Button5.Visible = False
             Label6.Text = "Run Time:"
@@ -1458,17 +1511,33 @@ Public Class Form1
             MediaLimitBox.Visible = False
             SortType.Visible = False
             SortTypeBox.Visible = False
+            SubChannelType.Visible = False
         ElseIf PlayListType.SelectedIndex = 10 Then
             Button5.Visible = False
             YouTubeType.SelectedIndex = 0
             YouTubeType.Visible = True
-            Label6.Text = "Channel Info:"
+            Label6.Text = "Channel/User:"
             Label6.Visible = True
+            With PlayListLocation
+                .Location = New System.Drawing.Point(270, 120)
+            End With
             PlayListLocation.Visible = True
+            With MediaLimit
+                .Location = New System.Drawing.Point(160, 160)
+            End With
             MediaLimit.Visible = True
+            With MediaLimitBox
+                .Location = New System.Drawing.Point(162, 180)
+            End With
             MediaLimitBox.SelectedIndex = 0
             MediaLimitBox.Visible = True
+            With SortType
+                .Location = New System.Drawing.Point(225, 160)
+            End With
             SortType.Visible = True
+            With SortTypeBox
+                .Location = New System.Drawing.Point(227, 180)
+            End With
             SortTypeBox.SelectedIndex = 0
             SortTypeBox.Visible = True
             StrmUrl.Visible = False
@@ -1478,6 +1547,7 @@ Public Class Form1
             ShowTitleBox.Visible = False
             ShowDesc.Visible = False
             ShowDescBox.Visible = False
+            SubChannelType.Visible = False
         ElseIf PlayListType.SelectedIndex = 11 Then
             Button5.Visible = False
             Label6.Text = "Stream Url:"
@@ -1491,12 +1561,98 @@ Public Class Form1
             ShowTitleBox.Visible = False
             ShowDesc.Visible = False
             ShowDescBox.Visible = False
+            With MediaLimit
+                .Location = New System.Drawing.Point(160, 160)
+            End With
             MediaLimit.Visible = True
+            With MediaLimitBox
+                .Location = New System.Drawing.Point(162, 180)
+            End With
             MediaLimitBox.SelectedIndex = 0
             MediaLimitBox.Visible = True
+            With SortType
+                .Location = New System.Drawing.Point(225, 160)
+            End With
             SortType.Visible = True
+            With SortTypeBox
+                .Location = New System.Drawing.Point(227, 180)
+            End With
             SortTypeBox.SelectedIndex = 0
             SortTypeBox.Visible = True
+            SubChannelType.Visible = False
+        ElseIf PlayListType.SelectedIndex = 13 Then
+            Button5.Visible = False
+            Label6.Text = "LastFM User:"
+            Label6.Visible = True
+            PlayListLocation.Visible = True
+            StrmUrl.Visible = False
+            StrmUrlBox.Visible = False
+            Option2.Visible = False
+            ShowTitle.Visible = False
+            ShowTitleBox.Visible = False
+            ShowDesc.Visible = False
+            ShowDescBox.Visible = False
+            With MediaLimit
+                .Location = New System.Drawing.Point(160, 160)
+            End With
+            MediaLimit.Visible = True
+            With MediaLimitBox
+                .Location = New System.Drawing.Point(162, 180)
+            End With
+            MediaLimitBox.SelectedIndex = 0
+            MediaLimitBox.Visible = True
+            With SortType
+                .Location = New System.Drawing.Point(225, 160)
+            End With
+            SortType.Visible = True
+            With SortTypeBox
+                .Location = New System.Drawing.Point(227, 180)
+            End With
+            SortTypeBox.SelectedIndex = 0
+            SortTypeBox.Visible = True
+            SubChannelType.Items.Clear()
+            With SubChannelType.Items
+                .Add("LastFM")
+                .Add("MyMusicTV")
+            End With
+            SubChannelType.Visible = True
+            SubChannelType.SelectedIndex = 0
+        ElseIf PlayListType.SelectedIndex = 14 Then
+            Button5.Visible = False
+            Label6.Visible = False
+            PlayListLocation.Visible = True
+            StrmUrl.Visible = False
+            StrmUrlBox.Visible = False
+            Option2.Visible = False
+            ShowTitle.Visible = False
+            ShowTitleBox.Visible = False
+            ShowDesc.Visible = False
+            ShowDescBox.Visible = False
+            With MediaLimit
+                .Location = New System.Drawing.Point(160, 160)
+            End With
+            MediaLimit.Visible = True
+            With MediaLimitBox
+                .Location = New System.Drawing.Point(162, 180)
+            End With
+            MediaLimitBox.SelectedIndex = 0
+            MediaLimitBox.Visible = True
+            With SortType
+                .Location = New System.Drawing.Point(225, 160)
+            End With
+            SortType.Visible = True
+            With SortTypeBox
+                .Location = New System.Drawing.Point(227, 180)
+            End With
+            SortTypeBox.SelectedIndex = 0
+            SortTypeBox.Visible = True
+            SubChannelType.Items.Clear()
+            With SubChannelType.Items
+                .Add("popcorn")
+                .Add("cinema")
+            End With
+            SubChannelType.Visible = True
+            SubChannelType.SelectedIndex = 0
         Else
             Button5.Visible = False
             Label6.Visible = False
@@ -1513,10 +1669,12 @@ Public Class Form1
             MediaLimitBox.Visible = False
             SortType.Visible = False
             SortTypeBox.Visible = False
+            SubChannelType.Visible = False
         End If
 
         Option2.Items.Clear()
         Option2.Text = ""
+
 
         If PlayListType.SelectedIndex = 0 Then
             For x = 0 To NetworkList.Items.Count - 1
@@ -1564,7 +1722,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub RefreshButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RefreshButton.Click
+    Private Sub RefreshButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         'Loop through config file.
         'Grab all comments MINUS the ones for selected #
         'Append this & our new content to the file.
@@ -1803,6 +1961,8 @@ Public Class Form1
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & YouTubeType.SelectedIndex + 1 & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
             ElseIf PlayListType.SelectedIndex = 11 Then
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & "1" & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
+            ElseIf PlayListType.SelectedIndex = 13 Then
+                TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & SubChannelType.SelectedIndex + 1 & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
             Else
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & Option2.Text & Chr(34) & " />"
             End If
@@ -2018,10 +2178,34 @@ Public Class Form1
         Dim Type As String = "poster"
         Dim MediaType As String = "movie"
 
+
+        If MovieLocation.TextLength >= 6 Then
+            If MovieLocation.Text.Substring(0, 6) = "smb://" Then
+                MovieLocation.Text = MovieLocation.Text.Replace("/", "\")
+                MovieLocation.Text = "\\" & MovieLocation.Text.Substring(6)
+            End If
+        End If
+
+        Dim directoryName As String = ""
+        directoryName = Path.GetDirectoryName(MovieLocation.Text)
+
+        ' Displays a SaveFileDialog so the user can save the Image
+        ' assigned to TVPosterSelect.
+        Dim saveFileDialog1 As New SaveFileDialog()
+        saveFileDialog1.InitialDirectory = directoryName
+        saveFileDialog1.Filter = "JPeg Image|*.jpg"
+        saveFileDialog1.Title = "Save an Image File"
+        saveFileDialog1.FileName = "poster.jpg"
+        saveFileDialog1.ShowDialog()
+
+        Dim FileToSaveAs As String = System.IO.Path.Combine(saveFileDialog1.InitialDirectory, saveFileDialog1.FileName)
+        MoviePicture.Image.Save(FileToSaveAs, System.Drawing.Imaging.ImageFormat.Jpeg)
+
         DbExecute("UPDATE art SET url = '" & ListMoviePosters.Items(x).ToString & "' WHERE media_id = '" & MovieIDLabel.Text & "' and media_type = '" & MediaType & "' and type = '" & Type & "'")
         Status.Text = "Updated " & MovieLabel.Text & " " & MovieIDLabel.Text & " Successfully with " & ListMoviePosters.Items(x).ToString & ""
 
     End Sub
+
 
     Private Sub MovieList_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MovieList.SelectedIndexChanged
         If MovieList.SelectedItems.Count > 0 Then
@@ -2056,7 +2240,7 @@ Public Class Form1
             Dim MoviePoster As String = ReturnArraySplit(3)
             ListMoviePosters.Items.Clear()
 
-            If InStr(MoviePoster, "<thumb aspect=""poster"" preview=""") > 0 Then
+            If InStr(MoviePoster, "<thumb aspect=""poster"" preview=""") > 0 Or InStr(MoviePoster, "<thumb>") > 0 Then
                 Dim MoviePosterSplit() As String = Split(MoviePoster, "<thumb aspect=""poster"" preview=""")
 
                 For X = 1 To UBound(MoviePosterSplit)
@@ -2064,16 +2248,16 @@ Public Class Form1
                     MoviePosterSplit(X) = MoviePosterSplit(X).Substring(i + 1, MoviePosterSplit(X).IndexOf(""">"))
                     ListMoviePosters.Items.Add(MoviePosterSplit(X))
                 Next
-            ElseIf InStr(MoviePoster, "<thumb>") > 0 Then
-                Dim MoviePosterSplit() As String = Split(MoviePoster, "<thumb>")
 
-                For X = 1 To UBound(MoviePosterSplit)
-                    Dim i As Integer = MoviePosterSplit(X).IndexOf("<thumb>")
-                    MoviePosterSplit(X) = MoviePosterSplit(X).Substring(i + 1, MoviePosterSplit(X).IndexOf("</thumb>"))
-                    ListMoviePosters.Items.Add(MoviePosterSplit(X))
+                Dim MoviePosterSplit2() As String = Split(MoviePoster, "<thumb>")
+
+                For X = 1 To UBound(MoviePosterSplit2)
+                    Dim i As Integer = MoviePosterSplit2(X).IndexOf("<thumb>")
+                    MoviePosterSplit2(X) = MoviePosterSplit2(X).Substring(i + 1, MoviePosterSplit2(X).IndexOf("</thumb>"))
+                    ListMoviePosters.Items.Add(MoviePosterSplit2(X))
                 Next
-            ElseIf MoviePoster <> "" Then
-                ListMoviePosters.Items.Add(MoviePoster)
+            Else
+                ListMoviePosters.Items.Add("Nothing Found")
             End If
 
 
@@ -2101,21 +2285,27 @@ Public Class Form1
                 MovieGenresList.Items.Add(MovieGenres)
             End If
 
+
             If MovieLocation.TextLength >= 6 Then
                 If MovieLocation.Text.Substring(0, 6) = "smb://" Then
-                    MovieLocation.Text = "//" & MovieLocation.Text.Substring(6)
+                    MovieLocation.Text = MovieLocation.Text.Replace("/", "\")
+                    MovieLocation.Text = "\\" & MovieLocation.Text.Substring(6)
                 End If
             End If
 
-            If ListMoviePosters.Items.Count > 0 Then
-                MoviePicture.ImageLocation = ListMoviePosters.Items(0)
-            ElseIf ListMoviePosters.Items.Count <= 0 Then
-                MoviePicture.ImageLocation = "http://netflixroulette.files.wordpress.com/2013/01/image-not-found.gif"
-            End If
+            Dim directoryName As String = ""
+            directoryName = Path.GetDirectoryName(MovieLocation.Text)
 
+            If System.IO.File.Exists(directoryName & "\" & "poster.jpg") Then
+                MoviePicture.ImageLocation = (directoryName & "\" & "poster.jpg")
+            Else
+                MoviePicture.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
+            End If
 
         End If
     End Sub
+
+
 
     Private Sub Button16_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button16.Click
         Form7.Visible = True
@@ -2371,14 +2561,104 @@ Public Class Form1
     End Sub
 
     Private Sub YouTubeType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles YouTubeType.SelectedIndexChanged
+        If YouTubeType.SelectedIndex = 0 Then
+            Label6.Text = "Channel/User:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(270, 120)
+            End With
+            PlayListLocation.Visible = True
+        ElseIf YouTubeType.SelectedIndex = 1 Then
+            Label6.Text = "Playlist:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(220, 120)
+            End With
+            PlayListLocation.Visible = True
+        ElseIf YouTubeType.SelectedIndex = 2 Or YouTubeType.SelectedIndex = 3 Then
+            Label6.Text = "Username:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(245, 120)
+            End With
+            PlayListLocation.Visible = True
+        ElseIf YouTubeType.SelectedIndex = 4 Then
+            Label6.Text = "Search String:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(270, 120)
+            End With
+            PlayListLocation.Visible = True
+        ElseIf YouTubeType.SelectedIndex = 7 Then
+            Label6.Text = "Channel|Channel:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(295, 120)
+            End With
+            PlayListLocation.Visible = True
+        ElseIf YouTubeType.SelectedIndex = 8 Then
+            Label6.Text = "GData Url:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(245, 120)
+            End With
+            PlayListLocation.Visible = True
+            GDataDemoLink.Links.Remove(GDataDemoLink.Links(0))
+            GDataDemoLink.Links.Add(0, GDataDemoLink.Text = "GDataDemo", "http://gdata.youtube.com/demo/index.html")
+            GDataDemoLink.Visible = True
+        Else
+            Label6.Text = "Nothing Here"
+            PlayListLocation.Visible = False
+        End If
 
     End Sub
+
+    Private Sub SubChannelType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles SubChannelType.SelectedIndexChanged
+        If PlayListType.SelectedIndex = 13 And SubChannelType.SelectedIndex = 0 Then
+            Label6.Text = "LastFM User:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(270, 120)
+            End With
+        ElseIf PlayListType.SelectedIndex = 13 And SubChannelType.SelectedIndex = 1 Then
+            Label6.Text = "Channel Number:"
+            With PlayListLocation
+                .Location = New System.Drawing.Point(295, 120)
+            End With
+        End If
+    End Sub
+
 
     Private Sub TxtShowName_TextChanged(sender As Object, e As EventArgs) Handles TxtShowName.TextChanged
 
     End Sub
 
-    Private Sub TabPage6_Click(sender As Object, e As EventArgs) Handles TabPage6.Click
+    Private Sub TabPage6_Click(sender As Object, e As EventArgs)
 
+    End Sub
+
+    Private Sub TVPosterPictureBox_Click(sender As Object, e As EventArgs) Handles TVPosterPictureBox.Click
+
+    End Sub
+
+    Private Sub AddBanner_Click(sender As Object, e As EventArgs) Handles AddBanner.Click
+        Form9.Visible = True
+        Form9.Focus()
+        Form9.AddBannerPictureBox.ImageLocation = "http://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/banner.png"
+    End Sub
+
+    Private Sub AddPoster_Click(sender As Object, e As EventArgs) Handles AddPoster.Click
+        Form10.Visible = True
+        Form10.Focus()
+        Form10.AddPosterPictureBox.ImageLocation = "http://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
+    End Sub
+
+
+    Private Sub AddMoviePosterButton_Click(sender As Object, e As EventArgs) Handles AddMoviePosterButton.Click
+        Form11.Visible = True
+        Form11.Focus()
+        Form11.AddMoviePosterPictureBox.ImageLocation = "http://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Close()
+    End Sub
+
+    Private Sub GDataDemoLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles GDataDemoLink.LinkClicked
+        Dim sInfo As New ProcessStartInfo(e.Link.LinkData.ToString())
+        Process.Start(sInfo)
     End Sub
 End Class
