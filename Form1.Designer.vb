@@ -82,6 +82,7 @@ Partial Class Form1
         Me.GenresListSubList = New System.Windows.Forms.ListBox()
         Me.GenresList = New System.Windows.Forms.ListView()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.GDataDemoLink = New System.Windows.Forms.LinkLabel()
         Me.SubChannelType = New System.Windows.Forms.ComboBox()
         Me.SortTypeBox = New System.Windows.Forms.ComboBox()
         Me.SortType = New System.Windows.Forms.Label()
@@ -137,6 +138,14 @@ Partial Class Form1
         Me.Label5 = New System.Windows.Forms.Label()
         Me.PlayListType = New System.Windows.Forms.ComboBox()
         Me.TVGuideList = New System.Windows.Forms.ListView()
+        Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.LunaDonatePic = New System.Windows.Forms.PictureBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.PeppyDonatePic = New System.Windows.Forms.PictureBox()
+        Me.PeppyDonate = New System.Windows.Forms.Label()
+        Me.HelpLink = New System.Windows.Forms.LinkLabel()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.HelpList = New System.Windows.Forms.ComboBox()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.Status = New System.Windows.Forms.ToolStripStatusLabel()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
@@ -145,7 +154,8 @@ Partial Class Form1
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.GDataDemoLink = New System.Windows.Forms.LinkLabel()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.Label24 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -156,6 +166,9 @@ Partial Class Form1
         Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
+        Me.TabPage6.SuspendLayout()
+        CType(Me.LunaDonatePic, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PeppyDonatePic, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -170,6 +183,7 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Controls.Add(Me.TabPage4)
+        Me.TabControl1.Controls.Add(Me.TabPage6)
         Me.TabControl1.Location = New System.Drawing.Point(0, 27)
         Me.TabControl1.MaximumSize = New System.Drawing.Size(1000, 900)
         Me.TabControl1.MinimumSize = New System.Drawing.Size(1000, 688)
@@ -238,7 +252,7 @@ Partial Class Form1
         Me.TVPosterSelect.Name = "TVPosterSelect"
         Me.TVPosterSelect.Size = New System.Drawing.Size(98, 23)
         Me.TVPosterSelect.TabIndex = 25
-        Me.TVPosterSelect.Text = "Select for PTVL"
+        Me.TVPosterSelect.Text = "Save image"
         Me.TVPosterSelect.UseVisualStyleBackColor = True
         '
         'TVBannerSelect
@@ -247,7 +261,7 @@ Partial Class Form1
         Me.TVBannerSelect.Name = "TVBannerSelect"
         Me.TVBannerSelect.Size = New System.Drawing.Size(98, 23)
         Me.TVBannerSelect.TabIndex = 24
-        Me.TVBannerSelect.Text = "Select for PTVL"
+        Me.TVBannerSelect.Text = "Save image"
         Me.TVBannerSelect.UseVisualStyleBackColor = True
         '
         'TVBannerPictureBox
@@ -832,6 +846,17 @@ Partial Class Form1
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "TV Guide"
         '
+        'GDataDemoLink
+        '
+        Me.GDataDemoLink.AutoSize = True
+        Me.GDataDemoLink.Location = New System.Drawing.Point(444, 89)
+        Me.GDataDemoLink.Name = "GDataDemoLink"
+        Me.GDataDemoLink.Size = New System.Drawing.Size(69, 13)
+        Me.GDataDemoLink.TabIndex = 56
+        Me.GDataDemoLink.TabStop = True
+        Me.GDataDemoLink.Text = "GData Demo"
+        Me.GDataDemoLink.Visible = False
+        '
         'SubChannelType
         '
         Me.SubChannelType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -891,7 +916,7 @@ Partial Class Form1
         '
         'ShowDescBox
         '
-        Me.ShowDescBox.Location = New System.Drawing.Point(158, 249)
+        Me.ShowDescBox.Location = New System.Drawing.Point(158, 247)
         Me.ShowDescBox.Name = "ShowDescBox"
         Me.ShowDescBox.Size = New System.Drawing.Size(468, 20)
         Me.ShowDescBox.TabIndex = 49
@@ -912,7 +937,7 @@ Partial Class Form1
         '
         Me.ShowTitleBox.Location = New System.Drawing.Point(157, 203)
         Me.ShowTitleBox.Name = "ShowTitleBox"
-        Me.ShowTitleBox.Size = New System.Drawing.Size(143, 20)
+        Me.ShowTitleBox.Size = New System.Drawing.Size(129, 20)
         Me.ShowTitleBox.TabIndex = 47
         Me.ShowTitleBox.Visible = False
         '
@@ -941,9 +966,9 @@ Partial Class Form1
         '
         'StrmUrlBox
         '
-        Me.StrmUrlBox.Location = New System.Drawing.Point(332, 144)
+        Me.StrmUrlBox.Location = New System.Drawing.Point(267, 144)
         Me.StrmUrlBox.Name = "StrmUrlBox"
-        Me.StrmUrlBox.Size = New System.Drawing.Size(309, 20)
+        Me.StrmUrlBox.Size = New System.Drawing.Size(374, 20)
         Me.StrmUrlBox.TabIndex = 44
         Me.StrmUrlBox.Visible = False
         '
@@ -952,11 +977,11 @@ Partial Class Form1
         Me.StrmUrl.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.StrmUrl.AutoSize = True
         Me.StrmUrl.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
-        Me.StrmUrl.Location = New System.Drawing.Point(155, 142)
+        Me.StrmUrl.Location = New System.Drawing.Point(154, 142)
         Me.StrmUrl.Name = "StrmUrl"
-        Me.StrmUrl.Size = New System.Drawing.Size(95, 20)
+        Me.StrmUrl.Size = New System.Drawing.Size(106, 20)
         Me.StrmUrl.TabIndex = 43
-        Me.StrmUrl.Text = "Stream Url:"
+        Me.StrmUrl.Text = "Source Path:"
         Me.StrmUrl.Visible = False
         '
         'TVGuideSubMenu
@@ -1083,7 +1108,7 @@ Partial Class Form1
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(777, 270)
+        Me.Label12.Location = New System.Drawing.Point(797, 270)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(135, 13)
         Me.Label12.TabIndex = 30
@@ -1102,7 +1127,7 @@ Partial Class Form1
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(621, 270)
+        Me.Label11.Location = New System.Drawing.Point(620, 270)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(102, 13)
         Me.Label11.TabIndex = 28
@@ -1129,19 +1154,19 @@ Partial Class Form1
         '
         'ResetDays
         '
-        Me.ResetDays.Location = New System.Drawing.Point(913, 125)
+        Me.ResetDays.Location = New System.Drawing.Point(862, 149)
         Me.ResetDays.Name = "ResetDays"
-        Me.ResetDays.Size = New System.Drawing.Size(45, 20)
+        Me.ResetDays.Size = New System.Drawing.Size(112, 20)
         Me.ResetDays.TabIndex = 25
         '
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(860, 109)
+        Me.Label10.Location = New System.Drawing.Point(860, 132)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(75, 13)
+        Me.Label10.Size = New System.Drawing.Size(115, 13)
         Me.Label10.TabIndex = 24
-        Me.Label10.Text = "Reset Every X"
+        Me.Label10.Text = "Reset Every X Minutes"
         '
         'ChannelName
         '
@@ -1310,9 +1335,9 @@ Partial Class Form1
         '
         'PlayListLocation
         '
-        Me.PlayListLocation.Location = New System.Drawing.Point(277, 120)
+        Me.PlayListLocation.Location = New System.Drawing.Point(267, 120)
         Me.PlayListLocation.Name = "PlayListLocation"
-        Me.PlayListLocation.Size = New System.Drawing.Size(284, 20)
+        Me.PlayListLocation.Size = New System.Drawing.Size(315, 20)
         Me.PlayListLocation.TabIndex = 5
         Me.PlayListLocation.Visible = False
         '
@@ -1344,8 +1369,8 @@ Partial Class Form1
         '
         Me.PlayListType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.PlayListType.FormattingEnabled = True
-        Me.PlayListType.Items.AddRange(New Object() {"Playlist", "TV Network", "Movie Studio", "TV Genre", "Movie Genre", "Mixed Genre (Tv & Movie)", "TV Show", "Directory", "LiveTV XML", "IPTV", "YouTubeTV", "RSS", "Blank", "Music Videos", "Extras (BTP or Cinema Exp)", "Direct Plugin or Super Favs", "Direct Playon"})
-        Me.PlayListType.Location = New System.Drawing.Point(227, 59)
+        Me.PlayListType.Items.AddRange(New Object() {"Playlist", "TV Network", "Movie Studio", "TV Genre", "Movie Genre", "Mixed Genre (TV & Movie)", "TV Show", "Directory", "LiveTV", "InternetTV", "YouTubeTV", "RSS", "Music (WIP)", "Music Videos", "Extras (VIP Exclusive)", "Direct Plugin (WIP)", "Direct Playon (WIP)"})
+        Me.PlayListType.Location = New System.Drawing.Point(227, 61)
         Me.PlayListType.Name = "PlayListType"
         Me.PlayListType.Size = New System.Drawing.Size(211, 21)
         Me.PlayListType.TabIndex = 2
@@ -1361,6 +1386,101 @@ Partial Class Form1
         Me.TVGuideList.TabIndex = 1
         Me.TVGuideList.UseCompatibleStateImageBehavior = False
         Me.TVGuideList.View = System.Windows.Forms.View.Details
+        '
+        'TabPage6
+        '
+        Me.TabPage6.BackColor = System.Drawing.Color.Gray
+        Me.TabPage6.Controls.Add(Me.Label24)
+        Me.TabPage6.Controls.Add(Me.Label23)
+        Me.TabPage6.Controls.Add(Me.LunaDonatePic)
+        Me.TabPage6.Controls.Add(Me.Label22)
+        Me.TabPage6.Controls.Add(Me.PeppyDonatePic)
+        Me.TabPage6.Controls.Add(Me.PeppyDonate)
+        Me.TabPage6.Controls.Add(Me.HelpLink)
+        Me.TabPage6.Controls.Add(Me.Label21)
+        Me.TabPage6.Controls.Add(Me.HelpList)
+        Me.TabPage6.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage6.Name = "TabPage6"
+        Me.TabPage6.Size = New System.Drawing.Size(992, 662)
+        Me.TabPage6.TabIndex = 5
+        Me.TabPage6.Text = "About/Help"
+        '
+        'LunaDonatePic
+        '
+        Me.LunaDonatePic.ImageLocation = "https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
+        Me.LunaDonatePic.InitialImage = Nothing
+        Me.LunaDonatePic.Location = New System.Drawing.Point(696, 136)
+        Me.LunaDonatePic.Name = "LunaDonatePic"
+        Me.LunaDonatePic.Size = New System.Drawing.Size(134, 28)
+        Me.LunaDonatePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.LunaDonatePic.TabIndex = 6
+        Me.LunaDonatePic.TabStop = False
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.Label22.ForeColor = System.Drawing.Color.Navy
+        Me.Label22.Location = New System.Drawing.Point(721, 109)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(79, 24)
+        Me.Label22.TabIndex = 5
+        Me.Label22.Text = "Lunatixz"
+        '
+        'PeppyDonatePic
+        '
+        Me.PeppyDonatePic.ImageLocation = "https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
+        Me.PeppyDonatePic.InitialImage = Global.PseudoTV_Manager.My.Resources.Resources.Donate
+        Me.PeppyDonatePic.Location = New System.Drawing.Point(388, 136)
+        Me.PeppyDonatePic.Name = "PeppyDonatePic"
+        Me.PeppyDonatePic.Size = New System.Drawing.Size(134, 29)
+        Me.PeppyDonatePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PeppyDonatePic.TabIndex = 4
+        Me.PeppyDonatePic.TabStop = False
+        '
+        'PeppyDonate
+        '
+        Me.PeppyDonate.AutoSize = True
+        Me.PeppyDonate.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.PeppyDonate.ForeColor = System.Drawing.Color.Navy
+        Me.PeppyDonate.Location = New System.Drawing.Point(401, 109)
+        Me.PeppyDonate.Name = "PeppyDonate"
+        Me.PeppyDonate.Size = New System.Drawing.Size(104, 24)
+        Me.PeppyDonate.TabIndex = 3
+        Me.PeppyDonate.Text = "Peppy6582"
+        '
+        'HelpLink
+        '
+        Me.HelpLink.AutoSize = True
+        Me.HelpLink.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.HelpLink.LinkColor = System.Drawing.Color.Navy
+        Me.HelpLink.Location = New System.Drawing.Point(8, 87)
+        Me.HelpLink.Name = "HelpLink"
+        Me.HelpLink.Size = New System.Drawing.Size(40, 24)
+        Me.HelpLink.TabIndex = 2
+        Me.HelpLink.TabStop = True
+        Me.HelpLink.Text = "Go!"
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.Label21.ForeColor = System.Drawing.Color.Navy
+        Me.Label21.Location = New System.Drawing.Point(8, 18)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(50, 24)
+        Me.Label21.TabIndex = 1
+        Me.Label21.Text = "Help"
+        '
+        'HelpList
+        '
+        Me.HelpList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.HelpList.FormattingEnabled = True
+        Me.HelpList.Items.AddRange(New Object() {"Settings", "Create YouTubeTV Channel/User - Channel", "Create YouTubeTV Playlist - Channel", "Create RSS - Channel"})
+        Me.HelpList.Location = New System.Drawing.Point(8, 63)
+        Me.HelpList.Name = "HelpList"
+        Me.HelpList.Size = New System.Drawing.Size(241, 21)
+        Me.HelpList.TabIndex = 0
         '
         'StatusStrip1
         '
@@ -1405,29 +1525,40 @@ Partial Class Form1
         'AaaToolStripMenuItem
         '
         Me.AaaToolStripMenuItem.Name = "AaaToolStripMenuItem"
-        Me.AaaToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AaaToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
         Me.AaaToolStripMenuItem.Text = "Settings"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
-        'GDataDemoLink
+        'Label23
         '
-        Me.GDataDemoLink.AutoSize = True
-        Me.GDataDemoLink.Location = New System.Drawing.Point(444, 89)
-        Me.GDataDemoLink.Name = "GDataDemoLink"
-        Me.GDataDemoLink.Size = New System.Drawing.Size(69, 13)
-        Me.GDataDemoLink.TabIndex = 56
-        Me.GDataDemoLink.TabStop = True
-        Me.GDataDemoLink.Text = "GData Demo"
-        Me.GDataDemoLink.Visible = False
+        Me.Label23.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.Label23.ForeColor = System.Drawing.Color.Navy
+        Me.Label23.Location = New System.Drawing.Point(351, 11)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(512, 84)
+        Me.Label23.TabIndex = 7
+        Me.Label23.Text = "Many hours have been put into PseudoTVLive and PseudoTVLive Manager. Donate?"
+        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!)
+        Me.Label24.ForeColor = System.Drawing.Color.Navy
+        Me.Label24.Location = New System.Drawing.Point(8, 42)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(220, 18)
+        Me.Label24.TabIndex = 8
+        Me.Label24.Text = "(Make a selection and click Go!)"
         '
         'Form1
         '
@@ -1457,6 +1588,10 @@ Partial Class Form1
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage4.PerformLayout()
         Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.TabPage6.ResumeLayout(False)
+        Me.TabPage6.PerformLayout()
+        CType(Me.LunaDonatePic, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PeppyDonatePic, System.ComponentModel.ISupportInitialize).EndInit()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         Me.MenuStrip1.ResumeLayout(False)
@@ -1588,5 +1723,15 @@ Partial Class Form1
     Friend WithEvents SubChannelType As System.Windows.Forms.ComboBox
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents GDataDemoLink As System.Windows.Forms.LinkLabel
+    Friend WithEvents TabPage6 As System.Windows.Forms.TabPage
+    Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents HelpList As System.Windows.Forms.ComboBox
+    Friend WithEvents HelpLink As System.Windows.Forms.LinkLabel
+    Friend WithEvents PeppyDonatePic As System.Windows.Forms.PictureBox
+    Friend WithEvents PeppyDonate As System.Windows.Forms.Label
+    Friend WithEvents LunaDonatePic As System.Windows.Forms.PictureBox
+    Friend WithEvents Label22 As System.Windows.Forms.Label
+    Friend WithEvents Label23 As System.Windows.Forms.Label
+    Friend WithEvents Label24 As System.Windows.Forms.Label
 
 End Class
