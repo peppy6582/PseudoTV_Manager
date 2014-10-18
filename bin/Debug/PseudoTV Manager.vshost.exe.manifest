@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PseudoTV Manager.exe" size="935936">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PseudoTV Manager.exe" size="935424">
       <assemblyIdentity name="PseudoTV Manager" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>xAI13cYE6mQfC4Od5c+eeBinnpQ=</dsig:DigestValue>
+        <dsig:DigestValue>9wFg5RfOQNWhMUryd7GoTB/wkLQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -291,22 +291,13 @@
       <dsig:DigestValue>ueNbVUpilInT3VHjB5U0l5Ew7L0=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="PseudoTV Manager.exe.config" size="433">
+  <file name="PseudoTV Manager.exe.config" size="445">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>ov399uZmQFWA7Jg/CsjdYdk6wok=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Settings.txt" size="0">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>2jmj7l5rSw0yVb/vlWAYkK/YBwk=</dsig:DigestValue>
+      <dsig:DigestValue>H6h2hcLMRrwzSbMaICBxmdpV1JY=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

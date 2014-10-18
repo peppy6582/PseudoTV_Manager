@@ -139,6 +139,8 @@ Partial Class Form1
         Me.PlayListType = New System.Windows.Forms.ComboBox()
         Me.TVGuideList = New System.Windows.Forms.ListView()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.LunaDonatePic = New System.Windows.Forms.PictureBox()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.PeppyDonatePic = New System.Windows.Forms.PictureBox()
@@ -154,8 +156,6 @@ Partial Class Form1
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.Label24 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1164,9 +1164,9 @@ Partial Class Form1
         Me.Label10.AutoSize = True
         Me.Label10.Location = New System.Drawing.Point(860, 132)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(115, 13)
+        Me.Label10.Size = New System.Drawing.Size(106, 13)
         Me.Label10.TabIndex = 24
-        Me.Label10.Text = "Reset Every X Minutes"
+        Me.Label10.Text = "Reset Every X Hours"
         '
         'ChannelName
         '
@@ -1405,6 +1405,28 @@ Partial Class Form1
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "About/Help"
         '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!)
+        Me.Label24.ForeColor = System.Drawing.Color.Navy
+        Me.Label24.Location = New System.Drawing.Point(8, 42)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(220, 18)
+        Me.Label24.TabIndex = 8
+        Me.Label24.Text = "(Make a selection and click Go!)"
+        '
+        'Label23
+        '
+        Me.Label23.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
+        Me.Label23.ForeColor = System.Drawing.Color.Navy
+        Me.Label23.Location = New System.Drawing.Point(351, 11)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(512, 84)
+        Me.Label23.TabIndex = 7
+        Me.Label23.Text = "Many hours have been put into PseudoTVLive and PseudoTVLive Manager. Donate?"
+        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'LunaDonatePic
         '
         Me.LunaDonatePic.ImageLocation = "https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
@@ -1537,28 +1559,6 @@ Partial Class Form1
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
-        '
-        'Label23
-        '
-        Me.Label23.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
-        Me.Label23.ForeColor = System.Drawing.Color.Navy
-        Me.Label23.Location = New System.Drawing.Point(351, 11)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(512, 84)
-        Me.Label23.TabIndex = 7
-        Me.Label23.Text = "Many hours have been put into PseudoTVLive and PseudoTVLive Manager. Donate?"
-        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label24
-        '
-        Me.Label24.AutoSize = True
-        Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!)
-        Me.Label24.ForeColor = System.Drawing.Color.Navy
-        Me.Label24.Location = New System.Drawing.Point(8, 42)
-        Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(220, 18)
-        Me.Label24.TabIndex = 8
-        Me.Label24.Text = "(Make a selection and click Go!)"
         '
         'Form1
         '
