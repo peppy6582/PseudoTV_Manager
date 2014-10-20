@@ -2392,7 +2392,8 @@ Public Class Form1
             ReturnArraySplit = Split(ReturnArray(x), "~")
 
             ShowName = ReturnArraySplit(0)
-            ShowNetwork = ReturnArraySplit(0)
+            'Updated ReturnArraySplit for ShowNetwork to reflect MyVideos78.db schema
+            ShowNetwork = ReturnArraySplit(1)
 
             Dim NetworkListed As Boolean = False
 
