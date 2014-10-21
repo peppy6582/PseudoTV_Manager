@@ -18,12 +18,13 @@ Public Class Form1
     'Public VideoDatabaseLocation = "C:\Users\Nate\AppData\Roaming\XBMC\userdata\Database\MyVideos60.db"
     'Public PseudoTvSettingsLocation = "C:\Users\Nate\AppData\Roaming\XBMC\userdata\addon_data\script.pseudotv\settings2.xml"
 
-
+    Public DataType As Integer = 0
     Public DatabaseType As Integer = 0
     Public MySQLConnectionString As String = ""
     Public VideoDatabaseLocation As String = ""
     Public PseudoTvSettingsLocation As String = ""
-
+    Public AddonDatabaseLocation As String = ""
+    Public PluginNotInclude As String = ""
 
     Public Function LookUpGenre(ByVal GenreName As String)
         'This looks up the Genre based on the name and returns the proper Genre ID
@@ -335,6 +336,48 @@ Public Class Form1
         Next
     End Sub
 
+    Private Sub RefreshPlugins()
+        PluginType.Items.Clear()
+
+        DataType = 1
+
+        Dim addonLike As String = "plugin.video"
+        Dim SelectArray(0)
+        SelectArray(0) = 1
+
+        'Grab the Plugin List
+        Dim ReturnArray() As String = DbReadRecord(AddonDatabaseLocation, "SELECT addon.addonID, addon.name FROM addon, package WHERE addon.addonID = package.addonID and addon.addonID LIKE '" & addonLike & "%'", SelectArray)
+
+
+
+        For x = 0 To ReturnArray.Count - 1
+
+            'Split them by ~'s.  This is how we seperate the rows in the single-element.
+            Dim str() As String = Split(ReturnArray(x), "~")
+
+            'Add the item to the Plugins List
+            PluginType.Items.Add(str(0))
+        Next
+
+        DataType = 0
+
+    End Sub
+
+    Private Sub PluginType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PluginType.SelectedIndexChanged
+
+        DataType = 1
+
+        Dim SelectArray(0)
+        SelectArray(0) = 0
+
+        Dim ReturnArray() As String = DbReadRecord(AddonDatabaseLocation, "SELECT addonID FROM addon WHERE name = '" & PluginType.SelectedItem & "'", SelectArray)
+
+        PlayListLocation.Text = "plugin://" & ReturnArray(0) & ""
+
+        DataType = 0
+
+    End Sub
+
     Public Sub RefreshMovieList()
 
         MovieList.Items.Clear()
@@ -422,17 +465,19 @@ Public Class Form1
                 FileLocations = Split(FileLocations, " | ")
 
                 'Now count the split and make sure it has the proper amount.
-                If UBound(FileLocations) = 2 Then
+                If UBound(FileLocations) = 3 Then
 
                     If FileLocations(0) = "0" Then
                         'This is for a standard SQLite Entry.
                         DatabaseType = 0
                         VideoDatabaseLocation = FileLocations(1)
                         PseudoTvSettingsLocation = FileLocations(2)
+                        AddonDatabaseLocation = FileLocations(3)
                     Else
                         DatabaseType = 1
                         MySQLConnectionString = FileLocations(1)
                         PseudoTvSettingsLocation = FileLocations(2)
+                        AddonDatabaseLocation = FileLocations(3)
                     End If
                 End If
 
@@ -453,7 +498,7 @@ Public Class Form1
         Dim x As Integer = ListTVBanners.SelectedIndex
 
         If ListTVBanners.Items.Count <= 0 Then
-            TVBannerPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/banner.png"
+            TVBannerPictureBox.ImageLocation = Application.StartupPath & "\Images\banner.png"
         Else
             TVBannerPictureBox.ImageLocation = ListTVBanners.Items(x)
             TVBannerPictureBox.Refresh()
@@ -493,7 +538,7 @@ Public Class Form1
         Dim x As Integer = ListTVPosters.SelectedIndex
 
         If ListTVPosters.Items.Count = 0 Then
-            TVPosterPictureBox.ImageLocation = "https://github.com/Lunatixz/script.pseudotv.live/raw/development/resources/images/poster.png"
+            TVPosterPictureBox.ImageLocation = Application.StartupPath & "\Images\poster.png"
         Else
             TVPosterPictureBox.ImageLocation = ListTVPosters.Items(x)
             TVPosterPictureBox.Refresh()
@@ -844,6 +889,7 @@ Public Class Form1
         If VideoDatabaseLocation <> "" Or MySQLConnectionString <> "" And PseudoTvSettingsLocation <> "" Then
             RefreshMovieList()
             RefreshTVShows()
+            RefreshPlugins()
             RefreshAllStudios()
             RefreshNetworkList()
             RefreshNetworkListMovies()
@@ -1301,6 +1347,9 @@ Public Class Form1
                 ElseIf PlayListNumber = 14 Then
                     'Extras
                     Option1 = 6
+                ElseIf PlayListNumber = 15 Then
+                    'Direct Plugin Type
+                    Option1 = 7
                 End If
 
                 'Now, we loop through the advanced rules to populate those properly.
@@ -1435,45 +1484,55 @@ Public Class Form1
                 ElseIf Option1 = 4 Then
                     PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
                     YouTubeType.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text - 1
-                    If TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 25 Then
-                        MediaLimitBox.SelectedIndex = 0
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 50 Then
-                        MediaLimitBox.SelectedIndex = 1
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 100 Then
-                        MediaLimitBox.SelectedIndex = 2
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 150 Then
-                        MediaLimitBox.SelectedIndex = 3
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 200 Then
-                        MediaLimitBox.SelectedIndex = 4
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 250 Then
-                        MediaLimitBox.SelectedIndex = 5
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 500 Then
-                        MediaLimitBox.SelectedIndex = 6
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 1000 Then
-                        MediaLimitBox.SelectedIndex = 7
-                    End If
+                    Dim index As Integer
+                    index = MediaLimitBox.FindString(TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text)
+                    MediaLimitBox.SelectedIndex = index
                     SortTypeBox.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
                 ElseIf Option1 = 5 Then
                     PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text
                     SubChannelType.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text - 1
-                    If TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 25 Then
-                        MediaLimitBox.SelectedIndex = 0
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 50 Then
-                        MediaLimitBox.SelectedIndex = 1
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 100 Then
-                        MediaLimitBox.SelectedIndex = 2
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 150 Then
-                        MediaLimitBox.SelectedIndex = 3
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 200 Then
-                        MediaLimitBox.SelectedIndex = 4
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 250 Then
-                        MediaLimitBox.SelectedIndex = 5
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 500 Then
-                        MediaLimitBox.SelectedIndex = 6
-                    ElseIf TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text = 1000 Then
-                        MediaLimitBox.SelectedIndex = 7
-                    End If
+                    Dim index As Integer
+                    index = MediaLimitBox.FindString(TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text)
+                    MediaLimitBox.SelectedIndex = index
                     SortTypeBox.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
+                ElseIf Option1 = 7 Then
+                    PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
+                    SortTypeBox.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
+                    Dim index As Integer
+                    index = MediaLimitBox.FindString(TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text)
+                    MediaLimitBox.SelectedIndex = index
+
+                    DataType = 1
+
+                    Dim ReturnPlugin As String = ""
+
+                    Dim SelectArray(0)
+                    SelectArray(0) = 0
+
+                    ReturnPlugin = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
+
+                    Dim ReturnProperPlugin As String = ReturnPlugin.Remove(0, 9)
+
+                    Dim ReturnArray() As String = DbReadRecord(AddonDatabaseLocation, "SELECT name FROM addon WHERE addonID = '" & ReturnProperPlugin & "'", SelectArray)
+
+                    DataType = 0
+
+                    Dim index2 As Integer
+                    index2 = PluginType.FindString(ReturnArray(0))
+                    PluginType.SelectedIndex = index2
+
+                    PluginNotInclude = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text
+
+                    If InStr(PluginNotInclude, ",") > 0 Then
+                        Dim PluginNotIncludeSplit() As String = Split(PluginNotInclude, ",")
+
+                        For X = 0 To UBound(PluginNotIncludeSplit)
+                            NotShows.Items.Add(PluginNotIncludeSplit(X))
+                        Next
+                    Else
+                        NotShows.Items.Add("Nothing Found")
+                    End If
+
                 Else
                     Option2.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
                 End If
@@ -1494,64 +1553,73 @@ Public Class Form1
     Private Sub PlayListType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PlayListType.SelectedIndexChanged
         'Clear the Sub-menu
         TVGuideSubMenu.Items.Clear()
+        With PlayListLocation
+            .Location = New System.Drawing.Point(267, 120)
+        End With
         PlayListLocation.Text = ""
+        Label6.Visible = False
+        Label6.Text = ""
+        Button5.Visible = False
+        PlayListLocation.Visible = False
+        PluginType.Visible = False
+        StrmUrl.Visible = False
+        StrmUrlBox.Visible = False
+        Option2.Visible = False
+        YouTubeType.Visible = False
+        ShowTitle.Visible = False
+        ShowTitleBox.Visible = False
+        ShowDesc.Visible = False
+        ShowDescBox.Visible = False
+        MediaLimit.Visible = False
+        MediaLimitBox.Visible = False
+        SortType.Visible = False
+        SortTypeBox.Visible = False
+        SubChannelType.Visible = False
+        TVGuideSubMenu.Visible = False
+        InterleavedList.Visible = False
+        Label7.Visible = False
+        SchedulingList.Visible = False
+        Label11.Visible = False
+        NotShows.Visible = False
+        Label12.Visible = False
+        AddExcludeBtn.Visible = False
+        PluginNotInclude = ""
 
         If PlayListType.SelectedIndex = 0 Or PlayListType.SelectedIndex = 7 Then
             Button5.Visible = True
             Label6.Text = "Location:"
             Label6.Visible = True
             PlayListLocation.Visible = True
-            StrmUrl.Visible = False
-            StrmUrlBox.Visible = False
-            Option2.Visible = False
-            YouTubeType.Visible = False
-            ShowTitle.Visible = False
-            ShowTitleBox.Visible = False
-            ShowDesc.Visible = False
-            ShowDescBox.Visible = False
-            MediaLimit.Visible = False
-            MediaLimitBox.Visible = False
-            SortType.Visible = False
-            SortTypeBox.Visible = False
-            SubChannelType.Visible = False
+        ElseIf PlayListType.SelectedIndex = 1 Or PlayListType.SelectedIndex = 2 Or PlayListType.SelectedIndex = 3 Or PlayListType.SelectedIndex = 4 Or PlayListType.SelectedIndex = 5 Or PlayListType.SelectedIndex = 6 Then
+            Option2.Visible = True
+            TVGuideSubMenu.Visible = True
+            InterleavedList.Visible = True
+            Label7.Visible = True
+            SchedulingList.Visible = True
+            Label11.Visible = True
+            NotShows.Visible = True
+            Label12.Visible = True
+            Button8.Visible = True
+            Button9.Visible = True
+            Button10.Visible = True
+            Button11.Visible = True
+            Button12.Visible = True
         ElseIf PlayListType.SelectedIndex = 8 Then
-            Button5.Visible = False
             Label6.Text = "Channel id:"
             Label6.Visible = True
             PlayListLocation.Visible = True
             StrmUrl.Visible = True
             StrmUrlBox.Visible = True
-            Option2.Visible = False
-            YouTubeType.Visible = False
             ShowTitle.Text = "XMLTV Filename:"
             ShowTitle.Visible = True
             ShowTitleBox.Visible = True
-            ShowDesc.Visible = False
-            ShowDescBox.Visible = False
-            MediaLimit.Visible = False
-            MediaLimitBox.Visible = False
-            SortType.Visible = False
-            SortTypeBox.Visible = False
-            SubChannelType.Visible = False
         ElseIf PlayListType.SelectedIndex = 9 Then
-            Button5.Visible = False
             Label6.Text = "Duration:"
             Label6.Visible = True
             PlayListLocation.Visible = True
             StrmUrl.Text = "Source path:"
             StrmUrl.Visible = True
             StrmUrlBox.Visible = True
-            Option2.Visible = False
-            YouTubeType.Visible = False
-            ShowTitle.Visible = False
-            ShowTitleBox.Visible = False
-            ShowDesc.Visible = False
-            ShowDescBox.Visible = False
-            MediaLimit.Visible = False
-            MediaLimitBox.Visible = False
-            SortType.Visible = False
-            SortTypeBox.Visible = False
-            SubChannelType.Visible = False
         ElseIf PlayListType.SelectedIndex = 10 Then
             Button5.Visible = False
             YouTubeType.SelectedIndex = 0
@@ -1580,27 +1648,10 @@ Public Class Form1
             End With
             SortTypeBox.SelectedIndex = 0
             SortTypeBox.Visible = True
-            StrmUrl.Visible = False
-            StrmUrlBox.Visible = False
-            Option2.Visible = False
-            ShowTitle.Visible = False
-            ShowTitleBox.Visible = False
-            ShowDesc.Visible = False
-            ShowDescBox.Visible = False
-            SubChannelType.Visible = False
         ElseIf PlayListType.SelectedIndex = 11 Then
-            Button5.Visible = False
             Label6.Text = "Source path:"
             Label6.Visible = True
             PlayListLocation.Visible = True
-            StrmUrl.Visible = False
-            StrmUrlBox.Visible = False
-            Option2.Visible = False
-            YouTubeType.Visible = False
-            ShowTitle.Visible = False
-            ShowTitleBox.Visible = False
-            ShowDesc.Visible = False
-            ShowDescBox.Visible = False
             With MediaLimit
                 .Location = New System.Drawing.Point(160, 160)
             End With
@@ -1619,19 +1670,15 @@ Public Class Form1
             End With
             SortTypeBox.SelectedIndex = 0
             SortTypeBox.Visible = True
-            SubChannelType.Visible = False
+            Button8.Visible = False
+            Button9.Visible = False
+            Button10.Visible = False
+            Button11.Visible = False
+            Button12.Visible = False
         ElseIf PlayListType.SelectedIndex = 13 Then
-            Button5.Visible = False
             Label6.Text = "LastFM Username:"
             Label6.Visible = True
             PlayListLocation.Visible = True
-            StrmUrl.Visible = False
-            StrmUrlBox.Visible = False
-            Option2.Visible = False
-            ShowTitle.Visible = False
-            ShowTitleBox.Visible = False
-            ShowDesc.Visible = False
-            ShowDescBox.Visible = False
             With MediaLimit
                 .Location = New System.Drawing.Point(160, 160)
             End With
@@ -1658,16 +1705,7 @@ Public Class Form1
             SubChannelType.Visible = True
             SubChannelType.SelectedIndex = 0
         ElseIf PlayListType.SelectedIndex = 14 Then
-            Button5.Visible = False
             Label6.Visible = False
-            PlayListLocation.Visible = True
-            StrmUrl.Visible = False
-            StrmUrlBox.Visible = False
-            Option2.Visible = False
-            ShowTitle.Visible = False
-            ShowTitleBox.Visible = False
-            ShowDesc.Visible = False
-            ShowDescBox.Visible = False
             With MediaLimit
                 .Location = New System.Drawing.Point(160, 160)
             End With
@@ -1693,23 +1731,50 @@ Public Class Form1
             End With
             SubChannelType.Visible = True
             SubChannelType.SelectedIndex = 0
-        Else
-            Button5.Visible = False
+        ElseIf PlayListType.SelectedIndex = 15 Then
+            NotShows.Items.Clear()
             Label6.Visible = False
-            PlayListLocation.Visible = False
-            StrmUrl.Visible = False
-            StrmUrlBox.Visible = False
+            With PlayListLocation
+                .Location = New System.Drawing.Point(220, 120)
+            End With
+            PlayListLocation.Visible = True
+            With PluginType
+                .Location = New System.Drawing.Point(227, 86)
+            End With
+            PluginType.SelectedIndex = 0
+            PluginType.Visible = True
+            With MediaLimit
+                .Location = New System.Drawing.Point(160, 160)
+            End With
+            MediaLimit.Visible = True
+            With MediaLimitBox
+                .Location = New System.Drawing.Point(162, 180)
+            End With
+            MediaLimitBox.SelectedIndex = 0
+            MediaLimitBox.Visible = True
+            With SortType
+                .Location = New System.Drawing.Point(225, 160)
+            End With
+            SortType.Visible = True
+            With SortTypeBox
+                .Location = New System.Drawing.Point(227, 180)
+            End With
+            SortTypeBox.SelectedIndex = 0
+            SortTypeBox.Visible = True
+            NotShows.Visible = True
+            Label12.Text = "Do not include these items"
+            Label12.Visible = True
+            AddExcludeBtn.Visible = True
+            Button8.Visible = False
+            Button9.Visible = False
+            Button10.Visible = False
+            Button11.Visible = False
+            Button12.Visible = False
+
+        Else
             Option2.Visible = True
-            YouTubeType.Visible = False
-            ShowTitle.Visible = False
-            ShowTitleBox.Visible = False
-            ShowDesc.Visible = False
-            ShowDescBox.Visible = False
-            MediaLimit.Visible = False
-            MediaLimitBox.Visible = False
-            SortType.Visible = False
-            SortTypeBox.Visible = False
-            SubChannelType.Visible = False
+            PlayListLocation.Visible = False
+
         End If
 
         Option2.Items.Clear()
@@ -1810,6 +1875,8 @@ Public Class Form1
         'Loop through config file.
         'Grab all comments MINUS the ones for selected #
         'Append this & our new content to the file.
+
+        SaveExcludeBtn.Visible = False
 
         If TVGuideList.SelectedItems.Count > 0 Then
 
@@ -1958,12 +2025,15 @@ Public Class Form1
             'Loop through shows not to play
             '<setting id="Channel_1_rule_1_id" value="2" />
             '<setting id="Channel_1_rule_1_opt_1" value=ShowName />
-            For x = 0 To NotShows.Items.Count - 1
-                rulecount = rulecount + 1
-                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "2" & Chr(34) & " />"
-                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & NotShows.Items(x) & Chr(34) & " />"
-            Next
 
+            If PlayListType.SelectedIndex <> 15 Then
+                For x = 0 To NotShows.Items.Count - 1
+                    rulecount = rulecount + 1
+                    AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "2" & Chr(34) & " />"
+                    AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & NotShows.Items(x) & Chr(34) & " />"
+                Next
+            Else
+            End If
             'Interleaved loop
             For x = 0 To InterleavedList.Items.Count - 1
                 rulecount = rulecount + 1
@@ -2004,6 +2074,8 @@ Public Class Form1
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & "1" & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
             ElseIf PlayListType.SelectedIndex = 13 Then
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & SubChannelType.SelectedIndex + 1 & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
+            ElseIf PlayListType.SelectedIndex = 15 Then
+                TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & ChangeExcludePlugin.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
             Else
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & Option2.Text & Chr(34) & " />"
             End If
@@ -2765,4 +2837,29 @@ Public Class Form1
     Private Sub Label23_Click(sender As Object, e As EventArgs) Handles Label23.Click
 
     End Sub
+
+    Private Sub AddExcludeBtn_Click(sender As Object, e As EventArgs) Handles AddExcludeBtn.Click
+        ChangeExcludePlugin.Text = PluginNotInclude
+        ChangeExcludePlugin.Visible = True
+        SaveExcludeBtn.Visible = True
+    End Sub
+
+    Private Sub SaveExcludeBtn_Click(sender As Object, e As EventArgs) Handles SaveExcludeBtn.Click
+        TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text = ChangeExcludePlugin.Text
+        ChangeExcludePlugin.Visible = False
+
+        NotShows.Items.Clear()
+
+        If InStr(PluginNotInclude, ",") > 0 Then
+            Dim PluginNotIncludeSplit() As String = Split(PluginNotInclude, ",")
+
+            For X = 0 To UBound(PluginNotIncludeSplit)
+                NotShows.Items.Add(PluginNotIncludeSplit(X))
+            Next
+        Else
+            NotShows.Items.Add("Nothing Found")
+        End If
+
+    End Sub
+
 End Class

@@ -82,6 +82,10 @@ Partial Class Form1
         Me.GenresListSubList = New System.Windows.Forms.ListBox()
         Me.GenresList = New System.Windows.Forms.ListView()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.SaveExcludeBtn = New System.Windows.Forms.Button()
+        Me.ChangeExcludePlugin = New System.Windows.Forms.TextBox()
+        Me.AddExcludeBtn = New System.Windows.Forms.Button()
+        Me.PluginType = New System.Windows.Forms.ComboBox()
         Me.GDataDemoLink = New System.Windows.Forms.LinkLabel()
         Me.SubChannelType = New System.Windows.Forms.ComboBox()
         Me.SortTypeBox = New System.Windows.Forms.ComboBox()
@@ -266,6 +270,7 @@ Partial Class Form1
         '
         'TVBannerPictureBox
         '
+        Me.TVBannerPictureBox.InitialImage = CType(resources.GetObject("TVBannerPictureBox.InitialImage"), System.Drawing.Image)
         Me.TVBannerPictureBox.Location = New System.Drawing.Point(592, 104)
         Me.TVBannerPictureBox.Name = "TVBannerPictureBox"
         Me.TVBannerPictureBox.Size = New System.Drawing.Size(339, 50)
@@ -276,7 +281,7 @@ Partial Class Form1
         'ListTVBanners
         '
         Me.ListTVBanners.FormattingEnabled = True
-        Me.ListTVBanners.Location = New System.Drawing.Point(237, 298)
+        Me.ListTVBanners.Location = New System.Drawing.Point(235, 295)
         Me.ListTVBanners.Name = "ListTVBanners"
         Me.ListTVBanners.Size = New System.Drawing.Size(349, 121)
         Me.ListTVBanners.TabIndex = 22
@@ -304,18 +309,18 @@ Partial Class Form1
         'ListTVPosters
         '
         Me.ListTVPosters.FormattingEnabled = True
-        Me.ListTVPosters.Location = New System.Drawing.Point(235, 475)
+        Me.ListTVPosters.Location = New System.Drawing.Point(236, 472)
         Me.ListTVPosters.Name = "ListTVPosters"
         Me.ListTVPosters.Size = New System.Drawing.Size(351, 134)
         Me.ListTVPosters.TabIndex = 19
         '
         'Button19
         '
-        Me.Button19.Location = New System.Drawing.Point(243, 104)
+        Me.Button19.Location = New System.Drawing.Point(365, 136)
         Me.Button19.Name = "Button19"
-        Me.Button19.Size = New System.Drawing.Size(62, 26)
+        Me.Button19.Size = New System.Drawing.Size(62, 21)
         Me.Button19.TabIndex = 18
-        Me.Button19.Text = "Button19"
+        Me.Button19.Text = "Refresh"
         Me.Button19.UseVisualStyleBackColor = True
         '
         'Button6
@@ -358,13 +363,14 @@ Partial Class Form1
         'ListTVGenres
         '
         Me.ListTVGenres.FormattingEnabled = True
-        Me.ListTVGenres.Location = New System.Drawing.Point(238, 163)
+        Me.ListTVGenres.Location = New System.Drawing.Point(235, 160)
         Me.ListTVGenres.Name = "ListTVGenres"
         Me.ListTVGenres.Size = New System.Drawing.Size(282, 108)
         Me.ListTVGenres.TabIndex = 13
         '
         'TVPosterPictureBox
         '
+        Me.TVPosterPictureBox.InitialImage = CType(resources.GetObject("TVPosterPictureBox.InitialImage"), System.Drawing.Image)
         Me.TVPosterPictureBox.Location = New System.Drawing.Point(592, 170)
         Me.TVPosterPictureBox.Name = "TVPosterPictureBox"
         Me.TVPosterPictureBox.Size = New System.Drawing.Size(339, 465)
@@ -384,7 +390,7 @@ Partial Class Form1
         '
         'SaveTVShow
         '
-        Me.SaveTVShow.Location = New System.Drawing.Point(311, 102)
+        Me.SaveTVShow.Location = New System.Drawing.Point(235, 100)
         Me.SaveTVShow.Name = "SaveTVShow"
         Me.SaveTVShow.Size = New System.Drawing.Size(61, 28)
         Me.SaveTVShow.TabIndex = 10
@@ -432,7 +438,7 @@ Partial Class Form1
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!)
-        Me.Label2.Location = New System.Drawing.Point(234, 136)
+        Me.Label2.Location = New System.Drawing.Point(231, 136)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(72, 24)
         Me.Label2.TabIndex = 3
@@ -496,7 +502,7 @@ Partial Class Form1
         '
         'AddMoviePosterButton
         '
-        Me.AddMoviePosterButton.Location = New System.Drawing.Point(492, 586)
+        Me.AddMoviePosterButton.Location = New System.Drawing.Point(483, 586)
         Me.AddMoviePosterButton.Name = "AddMoviePosterButton"
         Me.AddMoviePosterButton.Size = New System.Drawing.Size(39, 23)
         Me.AddMoviePosterButton.TabIndex = 29
@@ -505,18 +511,18 @@ Partial Class Form1
         '
         'MoviePosterSelect
         '
-        Me.MoviePosterSelect.Location = New System.Drawing.Point(244, 586)
+        Me.MoviePosterSelect.Location = New System.Drawing.Point(237, 586)
         Me.MoviePosterSelect.Name = "MoviePosterSelect"
-        Me.MoviePosterSelect.Size = New System.Drawing.Size(99, 23)
+        Me.MoviePosterSelect.Size = New System.Drawing.Size(73, 23)
         Me.MoviePosterSelect.TabIndex = 28
-        Me.MoviePosterSelect.Text = "Select for PTVL"
+        Me.MoviePosterSelect.Text = "Save image"
         Me.MoviePosterSelect.UseVisualStyleBackColor = True
         '
         'Label19
         '
         Me.Label19.AutoSize = True
         Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.25!)
-        Me.Label19.Location = New System.Drawing.Point(242, 298)
+        Me.Label19.Location = New System.Drawing.Point(232, 298)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(174, 29)
         Me.Label19.TabIndex = 27
@@ -526,14 +532,14 @@ Partial Class Form1
         'ListMoviePosters
         '
         Me.ListMoviePosters.FormattingEnabled = True
-        Me.ListMoviePosters.Location = New System.Drawing.Point(244, 330)
+        Me.ListMoviePosters.Location = New System.Drawing.Point(237, 329)
         Me.ListMoviePosters.Name = "ListMoviePosters"
         Me.ListMoviePosters.Size = New System.Drawing.Size(285, 251)
         Me.ListMoviePosters.TabIndex = 26
         '
         'Button18
         '
-        Me.Button18.Location = New System.Drawing.Point(534, 47)
+        Me.Button18.Location = New System.Drawing.Point(523, 47)
         Me.Button18.Name = "Button18"
         Me.Button18.Size = New System.Drawing.Size(33, 29)
         Me.Button18.TabIndex = 25
@@ -552,9 +558,9 @@ Partial Class Form1
         '
         'Button17
         '
-        Me.Button17.Location = New System.Drawing.Point(249, 265)
+        Me.Button17.Location = New System.Drawing.Point(237, 107)
         Me.Button17.Name = "Button17"
-        Me.Button17.Size = New System.Drawing.Size(84, 30)
+        Me.Button17.Size = New System.Drawing.Size(44, 30)
         Me.Button17.TabIndex = 23
         Me.Button17.Text = "Save"
         Me.Button17.UseVisualStyleBackColor = True
@@ -564,16 +570,16 @@ Partial Class Form1
         Me.txtMovieNetwork.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.txtMovieNetwork.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtMovieNetwork.FormattingEnabled = True
-        Me.txtMovieNetwork.Location = New System.Drawing.Point(247, 47)
+        Me.txtMovieNetwork.Location = New System.Drawing.Point(237, 47)
         Me.txtMovieNetwork.Name = "txtMovieNetwork"
         Me.txtMovieNetwork.Size = New System.Drawing.Size(280, 28)
         Me.txtMovieNetwork.TabIndex = 22
         '
         'MovieLocation
         '
-        Me.MovieLocation.Location = New System.Drawing.Point(247, 81)
+        Me.MovieLocation.Location = New System.Drawing.Point(237, 81)
         Me.MovieLocation.Name = "MovieLocation"
-        Me.MovieLocation.Size = New System.Drawing.Size(282, 20)
+        Me.MovieLocation.Size = New System.Drawing.Size(280, 20)
         Me.MovieLocation.TabIndex = 21
         '
         'MovieLabel
@@ -587,7 +593,7 @@ Partial Class Form1
         '
         'Button15
         '
-        Me.Button15.Location = New System.Drawing.Point(492, 114)
+        Me.Button15.Location = New System.Drawing.Point(478, 150)
         Me.Button15.Name = "Button15"
         Me.Button15.Size = New System.Drawing.Size(39, 21)
         Me.Button15.TabIndex = 19
@@ -596,7 +602,7 @@ Partial Class Form1
         '
         'Button16
         '
-        Me.Button16.Location = New System.Drawing.Point(447, 114)
+        Me.Button16.Location = New System.Drawing.Point(433, 150)
         Me.Button16.Name = "Button16"
         Me.Button16.Size = New System.Drawing.Size(39, 21)
         Me.Button16.TabIndex = 18
@@ -606,7 +612,7 @@ Partial Class Form1
         'MovieGenresList
         '
         Me.MovieGenresList.FormattingEnabled = True
-        Me.MovieGenresList.Location = New System.Drawing.Point(247, 138)
+        Me.MovieGenresList.Location = New System.Drawing.Point(237, 174)
         Me.MovieGenresList.Name = "MovieGenresList"
         Me.MovieGenresList.Size = New System.Drawing.Size(282, 121)
         Me.MovieGenresList.TabIndex = 17
@@ -615,7 +621,7 @@ Partial Class Form1
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(244, 106)
+        Me.Label13.Location = New System.Drawing.Point(232, 142)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(92, 29)
         Me.Label13.TabIndex = 16
@@ -635,6 +641,7 @@ Partial Class Form1
         '
         'MoviePicture
         '
+        Me.MoviePicture.InitialImage = CType(resources.GetObject("MoviePicture.InitialImage"), System.Drawing.Image)
         Me.MoviePicture.Location = New System.Drawing.Point(573, 67)
         Me.MoviePicture.Name = "MoviePicture"
         Me.MoviePicture.Size = New System.Drawing.Size(404, 542)
@@ -785,6 +792,10 @@ Partial Class Form1
         'TabPage4
         '
         Me.TabPage4.BackColor = System.Drawing.Color.Gray
+        Me.TabPage4.Controls.Add(Me.SaveExcludeBtn)
+        Me.TabPage4.Controls.Add(Me.ChangeExcludePlugin)
+        Me.TabPage4.Controls.Add(Me.AddExcludeBtn)
+        Me.TabPage4.Controls.Add(Me.PluginType)
         Me.TabPage4.Controls.Add(Me.GDataDemoLink)
         Me.TabPage4.Controls.Add(Me.SubChannelType)
         Me.TabPage4.Controls.Add(Me.SortTypeBox)
@@ -845,6 +856,44 @@ Partial Class Form1
         Me.TabPage4.Size = New System.Drawing.Size(992, 662)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "TV Guide"
+        '
+        'SaveExcludeBtn
+        '
+        Me.SaveExcludeBtn.Location = New System.Drawing.Point(935, 224)
+        Me.SaveExcludeBtn.Name = "SaveExcludeBtn"
+        Me.SaveExcludeBtn.Size = New System.Drawing.Size(49, 22)
+        Me.SaveExcludeBtn.TabIndex = 60
+        Me.SaveExcludeBtn.Text = "Save"
+        Me.SaveExcludeBtn.UseVisualStyleBackColor = True
+        Me.SaveExcludeBtn.Visible = False
+        '
+        'ChangeExcludePlugin
+        '
+        Me.ChangeExcludePlugin.Location = New System.Drawing.Point(610, 201)
+        Me.ChangeExcludePlugin.Name = "ChangeExcludePlugin"
+        Me.ChangeExcludePlugin.Size = New System.Drawing.Size(374, 20)
+        Me.ChangeExcludePlugin.TabIndex = 59
+        Me.ChangeExcludePlugin.Visible = False
+        '
+        'AddExcludeBtn
+        '
+        Me.AddExcludeBtn.Location = New System.Drawing.Point(910, 610)
+        Me.AddExcludeBtn.Name = "AddExcludeBtn"
+        Me.AddExcludeBtn.Size = New System.Drawing.Size(39, 22)
+        Me.AddExcludeBtn.TabIndex = 58
+        Me.AddExcludeBtn.Text = "Add"
+        Me.AddExcludeBtn.UseVisualStyleBackColor = True
+        Me.AddExcludeBtn.Visible = False
+        '
+        'PluginType
+        '
+        Me.PluginType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.PluginType.FormattingEnabled = True
+        Me.PluginType.Location = New System.Drawing.Point(227, 86)
+        Me.PluginType.Name = "PluginType"
+        Me.PluginType.Size = New System.Drawing.Size(211, 21)
+        Me.PluginType.TabIndex = 57
+        Me.PluginType.Visible = False
         '
         'GDataDemoLink
         '
@@ -993,6 +1042,7 @@ Partial Class Form1
         Me.TVGuideSubMenu.TabIndex = 42
         Me.TVGuideSubMenu.UseCompatibleStateImageBehavior = False
         Me.TVGuideSubMenu.View = System.Windows.Forms.View.Details
+        Me.TVGuideSubMenu.Visible = False
         '
         'ContextMenuStrip1
         '
@@ -1042,6 +1092,7 @@ Partial Class Form1
         Me.Button11.TabIndex = 38
         Me.Button11.Text = "Del"
         Me.Button11.UseVisualStyleBackColor = True
+        Me.Button11.Visible = False
         '
         'Button12
         '
@@ -1051,6 +1102,7 @@ Partial Class Form1
         Me.Button12.TabIndex = 37
         Me.Button12.Text = "Add"
         Me.Button12.UseVisualStyleBackColor = True
+        Me.Button12.Visible = False
         '
         'Button9
         '
@@ -1060,6 +1112,7 @@ Partial Class Form1
         Me.Button9.TabIndex = 36
         Me.Button9.Text = "Del"
         Me.Button9.UseVisualStyleBackColor = True
+        Me.Button9.Visible = False
         '
         'Button10
         '
@@ -1069,6 +1122,7 @@ Partial Class Form1
         Me.Button10.TabIndex = 35
         Me.Button10.Text = "Add"
         Me.Button10.UseVisualStyleBackColor = True
+        Me.Button10.Visible = False
         '
         'Button8
         '
@@ -1078,15 +1132,17 @@ Partial Class Form1
         Me.Button8.TabIndex = 34
         Me.Button8.Text = "Del"
         Me.Button8.UseVisualStyleBackColor = True
+        Me.Button8.Visible = False
         '
         'Button7
         '
-        Me.Button7.Location = New System.Drawing.Point(362, 610)
+        Me.Button7.Location = New System.Drawing.Point(361, 610)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(39, 22)
         Me.Button7.TabIndex = 33
         Me.Button7.Text = "Add"
         Me.Button7.UseVisualStyleBackColor = True
+        Me.Button7.Visible = False
         '
         'Button2
         '
@@ -1100,10 +1156,11 @@ Partial Class Form1
         'NotShows
         '
         Me.NotShows.FormattingEnabled = True
-        Me.NotShows.Location = New System.Drawing.Point(780, 291)
+        Me.NotShows.Location = New System.Drawing.Point(778, 290)
         Me.NotShows.Name = "NotShows"
-        Me.NotShows.Size = New System.Drawing.Size(171, 303)
+        Me.NotShows.Size = New System.Drawing.Size(171, 316)
         Me.NotShows.TabIndex = 31
+        Me.NotShows.Visible = False
         '
         'Label12
         '
@@ -1113,6 +1170,7 @@ Partial Class Form1
         Me.Label12.Size = New System.Drawing.Size(135, 13)
         Me.Label12.TabIndex = 30
         Me.Label12.Text = "Don't Include these shows:"
+        Me.Label12.Visible = False
         '
         'SchedulingList
         '
@@ -1123,6 +1181,7 @@ Partial Class Form1
         Me.SchedulingList.TabIndex = 29
         Me.SchedulingList.UseCompatibleStateImageBehavior = False
         Me.SchedulingList.View = System.Windows.Forms.View.Details
+        Me.SchedulingList.Visible = False
         '
         'Label11
         '
@@ -1132,6 +1191,7 @@ Partial Class Form1
         Me.Label11.Size = New System.Drawing.Size(102, 13)
         Me.Label11.TabIndex = 28
         Me.Label11.Text = "Channel Scheduling"
+        Me.Label11.Visible = False
         '
         'InterleavedList
         '
@@ -1142,6 +1202,7 @@ Partial Class Form1
         Me.InterleavedList.TabIndex = 27
         Me.InterleavedList.UseCompatibleStateImageBehavior = False
         Me.InterleavedList.View = System.Windows.Forms.View.Details
+        Me.InterleavedList.Visible = False
         '
         'Label7
         '
@@ -1151,6 +1212,7 @@ Partial Class Form1
         Me.Label7.Size = New System.Drawing.Size(107, 13)
         Me.Label7.TabIndex = 26
         Me.Label7.Text = "Interleaved Channels"
+        Me.Label7.Visible = False
         '
         'ResetDays
         '
@@ -1452,7 +1514,6 @@ Partial Class Form1
         'PeppyDonatePic
         '
         Me.PeppyDonatePic.ImageLocation = "https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
-        Me.PeppyDonatePic.InitialImage = Global.PseudoTV_Manager.My.Resources.Resources.Donate
         Me.PeppyDonatePic.Location = New System.Drawing.Point(388, 136)
         Me.PeppyDonatePic.Name = "PeppyDonatePic"
         Me.PeppyDonatePic.Size = New System.Drawing.Size(134, 29)
@@ -1733,5 +1794,9 @@ Partial Class Form1
     Friend WithEvents Label22 As System.Windows.Forms.Label
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents Label24 As System.Windows.Forms.Label
+    Friend WithEvents PluginType As System.Windows.Forms.ComboBox
+    Friend WithEvents AddExcludeBtn As System.Windows.Forms.Button
+    Friend WithEvents ChangeExcludePlugin As System.Windows.Forms.TextBox
+    Friend WithEvents SaveExcludeBtn As System.Windows.Forms.Button
 
 End Class
