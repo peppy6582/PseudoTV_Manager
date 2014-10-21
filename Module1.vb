@@ -4,6 +4,8 @@ Imports System.Data
 Imports MySql.Data.MySqlClient
 
 Module Module1
+
+
     Public Function ReadFile(ByVal FilePath As String)
         'Reads the file and returns it back as a string variable.
         Dim fileText As String = File.ReadAllText(FilePath)
@@ -24,6 +26,9 @@ Module Module1
     Public Function DbReadRecord(ByVal DBLocation, ByVal SQLStatement, ByVal ColumnArray())
         'Connect to the data-base
 
+        Dim VideoDatabaseData As String = "Data Source=" & Form1.VideoDatabaseLocation
+        Dim PluginDatabaseData As String = "Data Source=" & Form1.AddonDatabaseLocation
+
         Dim ArrayResponse() As String = {""}
 
 
@@ -31,7 +36,11 @@ Module Module1
             'This is a standard, SQLite database.
             Dim SQLconnect As New SQLite.SQLiteConnection()
             Dim SQLcommand As SQLite.SQLiteCommand = Nothing
-            SQLconnect.ConnectionString = "Data Source=" & Form1.VideoDatabaseLocation
+            If Form1.DataType = 0 Then
+                SQLconnect.ConnectionString = VideoDatabaseData
+            ElseIf Form1.DataType = 1 Then
+                SQLconnect.ConnectionString = PluginDatabaseData
+            End If
             Try
                 SQLconnect.Open()
                 SQLcommand = SQLconnect.CreateCommand
@@ -111,17 +120,26 @@ Module Module1
         End If
 
 
-        Return ArrayResponse
+            Return ArrayResponse
 
     End Function
 
     Public Sub DbExecute(ByVal SQLQuery As String)
+
+        Dim VideoDatabaseData As String = "Data Source=" & Form1.VideoDatabaseLocation
+        Dim PluginDatabaseData As String = "Data Source=" & Form1.AddonDatabaseLocation
+
         If Form1.DatabaseType = 0 Then
             'These are standard SQLite databases.
             'Open the connection.
             Dim SQLconnect As New SQLite.SQLiteConnection()
             Dim SQLcommand As SQLite.SQLiteCommand = Nothing
-            SQLconnect.ConnectionString = "Data Source=" & Form1.VideoDatabaseLocation
+
+            If Form1.DataType = 0 Then
+                SQLconnect.ConnectionString = VideoDatabaseData
+            ElseIf Form1.DataType = 1 Then
+                SQLconnect.ConnectionString = PluginDatabaseData
+            End If
 
             Try
                 SQLconnect.Open()

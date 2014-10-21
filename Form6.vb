@@ -22,6 +22,16 @@ Public Class Form6
         End If
     End Sub
 
+    Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
+        OpenFileDialog1.ShowDialog()
+
+        Dim Filename = OpenFileDialog1.FileName
+
+        If OpenFileDialog1.FileName <> "OpenFileDialog1" Then
+            TextBox8.Text = Filename
+        End If
+    End Sub
+
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
 
         Dim SettingsFile As String = Application.StartupPath() & "\" & "Settings.txt"
@@ -32,19 +42,20 @@ Public Class Form6
             System.IO.File.Create(SettingsFile)
         End If
 
-        'Verify that both files indeed exist at least
-        If System.IO.File.Exists(TextBox1.Text) = True And System.IO.File.Exists(TextBox2.Text) = True Then
+        'Verify that all 3 files indeed exist at least
+        If System.IO.File.Exists(TextBox1.Text) = True And System.IO.File.Exists(TextBox2.Text) = True And System.IO.File.Exists(TextBox8.Text) = True Then
 
             If TestMYSQLite(TextBox1.Text) = True Then
 
                 'Save them to the settings file
-                Dim FilePaths As String = "0" & " | " & TextBox1.Text & " | " & TextBox2.Text
+                Dim FilePaths As String = "0" & " | " & TextBox1.Text & " | " & TextBox2.Text & " | " & TextBox8.Text
                 SaveFile(SettingsFile, FilePaths)
 
                 'Now, update the variables in the Main form with the proper paths
                 Form1.DatabaseType = 0
                 Form1.VideoDatabaseLocation = TextBox1.Text
                 Form1.PseudoTvSettingsLocation = TextBox2.Text
+                Form1.AddonDatabaseLocation = TextBox8.Text
 
                 'Refresh everything
                 Form1.RefreshALL()
@@ -61,13 +72,14 @@ Public Class Form6
 
             If TestMYSQL(ConnectionString) = True Then
 
-                Dim FilePaths As String = "1" & " | " & ConnectionString & " | " & TextBox2.Text
+                Dim FilePaths As String = "1" & " | " & ConnectionString & " | " & TextBox2.Text & " | " & TextBox8.Text
                 SaveFile(SettingsFile, FilePaths)
 
                 'Now, update the variables in the Main form with the proper paths
                 Form1.DatabaseType = 1
                 Form1.MySQLConnectionString = ConnectionString
                 Form1.PseudoTvSettingsLocation = TextBox2.Text
+                Form1.AddonDatabaseLocation = TextBox8.Text
 
                 'Refresh everything
                 Form1.RefreshALL()
@@ -87,6 +99,7 @@ Public Class Form6
         If Form1.VideoDatabaseLocation <> "" Then
             TextBox1.Text = Form1.VideoDatabaseLocation
             TextBox2.Text = Form1.PseudoTvSettingsLocation
+            TextBox8.Text = Form1.AddonDatabaseLocation
         End If
 
         If Form1.MySQLConnectionString <> "" Then

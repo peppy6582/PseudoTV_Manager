@@ -45,6 +45,10 @@ Partial Class Form6
         Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.TextBox8 = New System.Windows.Forms.TextBox()
+        Me.AddonDbLocDef = New System.Windows.Forms.Label()
+        Me.AddonDbLoc = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -90,7 +94,7 @@ Partial Class Form6
         'Button2
         '
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(422, 313)
+        Me.Button2.Location = New System.Drawing.Point(418, 280)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(30, 18)
         Me.Button2.TabIndex = 7
@@ -99,7 +103,7 @@ Partial Class Form6
         '
         'TextBox2
         '
-        Me.TextBox2.Location = New System.Drawing.Point(12, 312)
+        Me.TextBox2.Location = New System.Drawing.Point(8, 279)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(406, 20)
         Me.TextBox2.TabIndex = 6
@@ -107,7 +111,7 @@ Partial Class Form6
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(12, 283)
+        Me.Label3.Location = New System.Drawing.Point(8, 250)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(252, 26)
         Me.Label3.TabIndex = 5
@@ -117,7 +121,7 @@ Partial Class Form6
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(12, 267)
+        Me.Label4.Location = New System.Drawing.Point(8, 234)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(188, 16)
         Me.Label4.TabIndex = 4
@@ -125,7 +129,7 @@ Partial Class Form6
         '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(194, 339)
+        Me.Button3.Location = New System.Drawing.Point(185, 373)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(75, 23)
         Me.Button3.TabIndex = 8
@@ -143,7 +147,7 @@ Partial Class Form6
         Me.TabControl1.Location = New System.Drawing.Point(1, 3)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(462, 261)
+        Me.TabControl1.Size = New System.Drawing.Size(462, 228)
         Me.TabControl1.TabIndex = 9
         '
         'TabPage1
@@ -157,7 +161,7 @@ Partial Class Form6
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(454, 235)
+        Me.TabPage1.Size = New System.Drawing.Size(454, 202)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "SQLite (Default)"
         '
@@ -177,7 +181,7 @@ Partial Class Form6
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(454, 235)
+        Me.TabPage2.Size = New System.Drawing.Size(454, 202)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "MySQL"
         '
@@ -262,11 +266,52 @@ Partial Class Form6
         Me.TextBox3.Size = New System.Drawing.Size(215, 20)
         Me.TextBox3.TabIndex = 0
         '
+        'Button4
+        '
+        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button4.Location = New System.Drawing.Point(418, 348)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(30, 18)
+        Me.Button4.TabIndex = 13
+        Me.Button4.Text = "..."
+        Me.Button4.UseVisualStyleBackColor = True
+        '
+        'TextBox8
+        '
+        Me.TextBox8.Location = New System.Drawing.Point(8, 347)
+        Me.TextBox8.Name = "TextBox8"
+        Me.TextBox8.Size = New System.Drawing.Size(406, 20)
+        Me.TextBox8.TabIndex = 12
+        '
+        'AddonDbLocDef
+        '
+        Me.AddonDbLocDef.AutoSize = True
+        Me.AddonDbLocDef.Location = New System.Drawing.Point(8, 318)
+        Me.AddonDbLocDef.Name = "AddonDbLocDef"
+        Me.AddonDbLocDef.Size = New System.Drawing.Size(399, 26)
+        Me.AddonDbLocDef.TabIndex = 11
+        Me.AddonDbLocDef.Text = "Typically located :" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "C:\Users\Username\AppData\Roaming\XBMC\userdata\Database\Add" & _
+    "ons16.db " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'AddonDbLoc
+        '
+        Me.AddonDbLoc.AutoSize = True
+        Me.AddonDbLoc.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AddonDbLoc.Location = New System.Drawing.Point(8, 302)
+        Me.AddonDbLoc.Name = "AddonDbLoc"
+        Me.AddonDbLoc.Size = New System.Drawing.Size(172, 16)
+        Me.AddonDbLoc.TabIndex = 10
+        Me.AddonDbLoc.Text = "Addons Database Location"
+        '
         'Form6
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(462, 371)
+        Me.ClientSize = New System.Drawing.Size(462, 404)
+        Me.Controls.Add(Me.Button4)
+        Me.Controls.Add(Me.TextBox8)
+        Me.Controls.Add(Me.AddonDbLocDef)
+        Me.Controls.Add(Me.AddonDbLoc)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
@@ -309,4 +354,8 @@ Partial Class Form6
     Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents TextBox7 As System.Windows.Forms.TextBox
+    Friend WithEvents Button4 As System.Windows.Forms.Button
+    Friend WithEvents TextBox8 As System.Windows.Forms.TextBox
+    Friend WithEvents AddonDbLocDef As System.Windows.Forms.Label
+    Friend WithEvents AddonDbLoc As System.Windows.Forms.Label
 End Class
