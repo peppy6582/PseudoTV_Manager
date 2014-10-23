@@ -18,7 +18,6 @@ Public Class Form1
     'Public VideoDatabaseLocation = "C:\Users\Nate\AppData\Roaming\XBMC\userdata\Database\MyVideos60.db"
     'Public PseudoTvSettingsLocation = "C:\Users\Nate\AppData\Roaming\XBMC\userdata\addon_data\script.pseudotv\settings2.xml"
 
-    Public DataType As Integer = 0
     Public DatabaseType As Integer = 0
     Public MySQLConnectionString As String = ""
     Public VideoDatabaseLocation As String = ""
@@ -339,14 +338,12 @@ Public Class Form1
     Private Sub RefreshPlugins()
         PluginType.Items.Clear()
 
-        DataType = 1
-
         Dim addonLike As String = "plugin.video"
         Dim SelectArray(0)
         SelectArray(0) = 1
 
         'Grab the Plugin List
-        Dim ReturnArray() As String = DbReadRecord(AddonDatabaseLocation, "SELECT addon.addonID, addon.name FROM addon, package WHERE addon.addonID = package.addonID and addon.addonID LIKE '" & addonLike & "%'", SelectArray)
+        Dim ReturnArray() As String = ReadPluginRecord(AddonDatabaseLocation, "SELECT DISTINCT addon.addonID, addon.name FROM addon, package WHERE addon.addonID = package.addonID and addon.addonID LIKE '" & addonLike & "%'", SelectArray)
 
 
 
@@ -359,22 +356,17 @@ Public Class Form1
             PluginType.Items.Add(str(0))
         Next
 
-        DataType = 0
-
     End Sub
 
     Private Sub PluginType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PluginType.SelectedIndexChanged
 
-        DataType = 1
 
         Dim SelectArray(0)
         SelectArray(0) = 0
 
-        Dim ReturnArray() As String = DbReadRecord(AddonDatabaseLocation, "SELECT addonID FROM addon WHERE name = '" & PluginType.SelectedItem & "'", SelectArray)
+        Dim ReturnArray() As String = ReadPluginRecord(AddonDatabaseLocation, "SELECT addonID FROM addon WHERE name = '" & PluginType.SelectedItem & "'", SelectArray)
 
         PlayListLocation.Text = "plugin://" & ReturnArray(0) & ""
-
-        DataType = 0
 
     End Sub
 
@@ -1502,8 +1494,6 @@ Public Class Form1
                     index = MediaLimitBox.FindString(TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text)
                     MediaLimitBox.SelectedIndex = index
 
-                    DataType = 1
-
                     Dim ReturnPlugin As String = ""
 
                     Dim SelectArray(0)
@@ -1513,9 +1503,7 @@ Public Class Form1
 
                     Dim ReturnProperPlugin As String = ReturnPlugin.Remove(0, 9)
 
-                    Dim ReturnArray() As String = DbReadRecord(AddonDatabaseLocation, "SELECT name FROM addon WHERE addonID = '" & ReturnProperPlugin & "'", SelectArray)
-
-                    DataType = 0
+                    Dim ReturnArray() As String = ReadPluginRecord(AddonDatabaseLocation, "SELECT name FROM addon WHERE addonID = '" & ReturnProperPlugin & "'", SelectArray)
 
                     Dim index2 As Integer
                     index2 = PluginType.FindString(ReturnArray(0))
@@ -1741,7 +1729,6 @@ Public Class Form1
             With PluginType
                 .Location = New System.Drawing.Point(227, 86)
             End With
-            PluginType.SelectedIndex = 0
             PluginType.Visible = True
             With MediaLimit
                 .Location = New System.Drawing.Point(160, 160)

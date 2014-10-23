@@ -23,6 +23,88 @@ Module Module1
 
     End Sub
 
+    Public Function ReadPluginRecord(ByVal DBLocation, ByVal SQLStatement, ByVal ColumnArray())
+        'Connect to the data-base
+
+        Dim PluginDatabaseData As String = "Data Source=" & Form1.AddonDatabaseLocation
+
+        Dim ArrayResponse() As String = {""}
+        'This is a standard, SQLite database.
+        Dim SQLconnect As New SQLite.SQLiteConnection()
+        Dim SQLcommand As SQLite.SQLiteCommand = Nothing
+        SQLconnect.ConnectionString = "Data Source=" & Form1.AddonDatabaseLocation
+
+        Try
+            SQLconnect.Open()
+            SQLcommand = SQLconnect.CreateCommand
+            SQLcommand.CommandText = SQLStatement
+            Dim SQLreader As SQLite.SQLiteDataReader = SQLcommand.ExecuteReader()
+
+            Dim x As Integer = 0
+
+            While SQLreader.Read()
+                ReDim Preserve ArrayResponse(x)
+                Dim StringResponse As String = ""
+
+
+                For y = 0 To (UBound(ColumnArray))
+                    If y > 0 Then
+                        StringResponse = StringResponse & "~" & SQLreader(ColumnArray(y))
+                    Else
+                        StringResponse = SQLreader(ColumnArray(y))
+                    End If
+                Next
+
+                ArrayResponse(x) = StringResponse
+
+                x = x + 1
+
+            End While
+
+        Catch myerror As SQLite.SQLiteException
+            MessageBox.Show("Error Connecting to Database: " & myerror.Message)
+
+        Finally
+            SQLcommand.Dispose()
+            SQLconnect.Close()
+
+        End Try
+
+        Return ArrayResponse
+    End Function
+
+    Public Sub PluginExecute(ByVal SQLQuery As String)
+
+        Dim PluginDatabaseData As String = "Data Source=" & Form1.AddonDatabaseLocation
+
+        'These are standard SQLite databases.
+        'Open the connection.
+        Dim SQLconnect As New SQLite.SQLiteConnection()
+        Dim SQLcommand As SQLite.SQLiteCommand = Nothing
+
+        SQLconnect.ConnectionString = "Data Source=" & Form1.AddonDatabaseLocation
+
+
+        Try
+            SQLconnect.Open()
+
+            'Set the command.
+            SQLcommand = SQLconnect.CreateCommand
+
+            'Execute the command.
+            SQLcommand.CommandText = SQLQuery
+            SQLcommand.ExecuteNonQuery()
+
+        Catch myerror As SQLite.SQLiteException
+            MessageBox.Show("Error Connecting to Database: " & myerror.Message)
+        Finally
+            'Dispose of and close the connection.
+            SQLcommand.Dispose()
+            SQLconnect.Close()
+        End Try
+
+    End Sub
+
     Public Function DbReadRecord(ByVal DBLocation, ByVal SQLStatement, ByVal ColumnArray())
         'Connect to the data-base
 
@@ -36,11 +118,8 @@ Module Module1
             'This is a standard, SQLite database.
             Dim SQLconnect As New SQLite.SQLiteConnection()
             Dim SQLcommand As SQLite.SQLiteCommand = Nothing
-            If Form1.DataType = 0 Then
-                SQLconnect.ConnectionString = VideoDatabaseData
-            ElseIf Form1.DataType = 1 Then
-                SQLconnect.ConnectionString = PluginDatabaseData
-            End If
+            SQLconnect.ConnectionString = "Data Source=" & Form1.VideoDatabaseLocation
+
             Try
                 SQLconnect.Open()
                 SQLcommand = SQLconnect.CreateCommand
@@ -120,26 +199,18 @@ Module Module1
         End If
 
 
-            Return ArrayResponse
+        Return ArrayResponse
 
     End Function
 
     Public Sub DbExecute(ByVal SQLQuery As String)
-
-        Dim VideoDatabaseData As String = "Data Source=" & Form1.VideoDatabaseLocation
-        Dim PluginDatabaseData As String = "Data Source=" & Form1.AddonDatabaseLocation
 
         If Form1.DatabaseType = 0 Then
             'These are standard SQLite databases.
             'Open the connection.
             Dim SQLconnect As New SQLite.SQLiteConnection()
             Dim SQLcommand As SQLite.SQLiteCommand = Nothing
-
-            If Form1.DataType = 0 Then
-                SQLconnect.ConnectionString = VideoDatabaseData
-            ElseIf Form1.DataType = 1 Then
-                SQLconnect.ConnectionString = PluginDatabaseData
-            End If
+            SQLconnect.ConnectionString = "Data Source=" & Form1.VideoDatabaseLocation
 
             Try
                 SQLconnect.Open()

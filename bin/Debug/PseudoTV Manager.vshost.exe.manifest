@@ -43,30 +43,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MySql.Data.dll" size="376832">
-      <assemblyIdentity name="MySql.Data" version="6.5.4.0" publicKeyToken="C5687FC88969C44D" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MySql.Data.dll" size="456192">
+      <assemblyIdentity name="MySql.Data" version="6.9.4.0" publicKeyToken="C5687FC88969C44D" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Y1q7wIbKpBImggf7NEI8ZNjguKA=</dsig:DigestValue>
+        <dsig:DigestValue>xzTzkfUwq9CQYNrXgp2fR979Ug4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PseudoTV Manager.exe" size="2592768">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PseudoTV Manager.exe" size="2593280">
       <assemblyIdentity name="PseudoTV Manager" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-<<<<<<< HEAD
-        <dsig:DigestValue>reD2e1IaK89pw7wIVVAejAHdkqI=</dsig:DigestValue>
-=======
-        <dsig:DigestValue>FwzW7MduF8FuiILycY073WU/rVg=</dsig:DigestValue>
->>>>>>> origin/PseudoTV_Live_Dev
+        <dsig:DigestValue>aNJ8uXDf7Sw2m9KM9RhjyP9EOUo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -103,13 +99,13 @@
       <dsig:DigestValue>ueNbVUpilInT3VHjB5U0l5Ew7L0=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="PseudoTV Manager.exe.config" size="433">
+  <file name="PseudoTV Manager.exe.config" size="445">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>ov399uZmQFWA7Jg/CsjdYdk6wok=</dsig:DigestValue>
+      <dsig:DigestValue>H6h2hcLMRrwzSbMaICBxmdpV1JY=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
