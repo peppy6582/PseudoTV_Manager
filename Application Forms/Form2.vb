@@ -167,4 +167,8 @@
             Form2_Load(Nothing, Nothing)
         End If
     End Sub
+
+    Private Sub GenreList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles GenreList.SelectedIndexChanged
+
+    End Sub
 End Class

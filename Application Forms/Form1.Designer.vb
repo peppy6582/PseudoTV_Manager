@@ -82,8 +82,8 @@ Partial Class Form1
         Me.GenresListSubList = New System.Windows.Forms.ListBox()
         Me.GenresList = New System.Windows.Forms.ListView()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.DelExcludeBtn = New System.Windows.Forms.Button()
         Me.SaveExcludeBtn = New System.Windows.Forms.Button()
-        Me.ChangeExcludePlugin = New System.Windows.Forms.TextBox()
         Me.AddExcludeBtn = New System.Windows.Forms.Button()
         Me.PluginType = New System.Windows.Forms.ComboBox()
         Me.GDataDemoLink = New System.Windows.Forms.LinkLabel()
@@ -792,8 +792,8 @@ Partial Class Form1
         'TabPage4
         '
         Me.TabPage4.BackColor = System.Drawing.Color.Gray
+        Me.TabPage4.Controls.Add(Me.DelExcludeBtn)
         Me.TabPage4.Controls.Add(Me.SaveExcludeBtn)
-        Me.TabPage4.Controls.Add(Me.ChangeExcludePlugin)
         Me.TabPage4.Controls.Add(Me.AddExcludeBtn)
         Me.TabPage4.Controls.Add(Me.PluginType)
         Me.TabPage4.Controls.Add(Me.GDataDemoLink)
@@ -857,6 +857,16 @@ Partial Class Form1
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "TV Guide"
         '
+        'DelExcludeBtn
+        '
+        Me.DelExcludeBtn.Location = New System.Drawing.Point(910, 610)
+        Me.DelExcludeBtn.Name = "DelExcludeBtn"
+        Me.DelExcludeBtn.Size = New System.Drawing.Size(39, 22)
+        Me.DelExcludeBtn.TabIndex = 61
+        Me.DelExcludeBtn.Text = "Del"
+        Me.DelExcludeBtn.UseVisualStyleBackColor = True
+        Me.DelExcludeBtn.Visible = False
+        '
         'SaveExcludeBtn
         '
         Me.SaveExcludeBtn.Location = New System.Drawing.Point(935, 224)
@@ -867,17 +877,9 @@ Partial Class Form1
         Me.SaveExcludeBtn.UseVisualStyleBackColor = True
         Me.SaveExcludeBtn.Visible = False
         '
-        'ChangeExcludePlugin
-        '
-        Me.ChangeExcludePlugin.Location = New System.Drawing.Point(610, 201)
-        Me.ChangeExcludePlugin.Name = "ChangeExcludePlugin"
-        Me.ChangeExcludePlugin.Size = New System.Drawing.Size(374, 20)
-        Me.ChangeExcludePlugin.TabIndex = 59
-        Me.ChangeExcludePlugin.Visible = False
-        '
         'AddExcludeBtn
         '
-        Me.AddExcludeBtn.Location = New System.Drawing.Point(910, 610)
+        Me.AddExcludeBtn.Location = New System.Drawing.Point(866, 610)
         Me.AddExcludeBtn.Name = "AddExcludeBtn"
         Me.AddExcludeBtn.Size = New System.Drawing.Size(39, 22)
         Me.AddExcludeBtn.TabIndex = 58
@@ -1086,7 +1088,7 @@ Partial Class Form1
         '
         'Button11
         '
-        Me.Button11.Location = New System.Drawing.Point(825, 610)
+        Me.Button11.Location = New System.Drawing.Point(821, 610)
         Me.Button11.Name = "Button11"
         Me.Button11.Size = New System.Drawing.Size(39, 22)
         Me.Button11.TabIndex = 38
@@ -1096,7 +1098,7 @@ Partial Class Form1
         '
         'Button12
         '
-        Me.Button12.Location = New System.Drawing.Point(778, 610)
+        Me.Button12.Location = New System.Drawing.Point(776, 610)
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(39, 22)
         Me.Button12.TabIndex = 37
@@ -1796,7 +1798,7 @@ Partial Class Form1
     Friend WithEvents Label24 As System.Windows.Forms.Label
     Friend WithEvents PluginType As System.Windows.Forms.ComboBox
     Friend WithEvents AddExcludeBtn As System.Windows.Forms.Button
-    Friend WithEvents ChangeExcludePlugin As System.Windows.Forms.TextBox
     Friend WithEvents SaveExcludeBtn As System.Windows.Forms.Button
+    Friend WithEvents DelExcludeBtn As System.Windows.Forms.Button
 
 End Class

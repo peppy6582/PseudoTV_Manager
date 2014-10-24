@@ -1571,6 +1571,7 @@ Public Class Form1
         NotShows.Visible = False
         Label12.Visible = False
         AddExcludeBtn.Visible = False
+        DelExcludeBtn.Visible = False
         PluginNotInclude = ""
 
         If PlayListType.SelectedIndex = 0 Or PlayListType.SelectedIndex = 7 Then
@@ -1752,6 +1753,7 @@ Public Class Form1
             Label12.Text = "Do not include these items"
             Label12.Visible = True
             AddExcludeBtn.Visible = True
+            DelExcludeBtn.Visible = True
             Button8.Visible = False
             Button9.Visible = False
             Button10.Visible = False
@@ -2012,14 +2014,12 @@ Public Class Form1
             'Loop through shows not to play
             '<setting id="Channel_1_rule_1_id" value="2" />
             '<setting id="Channel_1_rule_1_opt_1" value=ShowName />
-
             If PlayListType.SelectedIndex <> 15 Then
                 For x = 0 To NotShows.Items.Count - 1
                     rulecount = rulecount + 1
                     AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "2" & Chr(34) & " />"
                     AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & NotShows.Items(x) & Chr(34) & " />"
                 Next
-            Else
             End If
             'Interleaved loop
             For x = 0 To InterleavedList.Items.Count - 1
@@ -2062,7 +2062,7 @@ Public Class Form1
             ElseIf PlayListType.SelectedIndex = 13 Then
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & SubChannelType.SelectedIndex + 1 & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
             ElseIf PlayListType.SelectedIndex = 15 Then
-                TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & ChangeExcludePlugin.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
+                TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & PluginNotInclude & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
             Else
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & Option2.Text & Chr(34) & " />"
             End If
@@ -2826,26 +2826,29 @@ Public Class Form1
     End Sub
 
     Private Sub AddExcludeBtn_Click(sender As Object, e As EventArgs) Handles AddExcludeBtn.Click
-        ChangeExcludePlugin.Text = PluginNotInclude
-        ChangeExcludePlugin.Visible = True
-        SaveExcludeBtn.Visible = True
+        Dim Response = InputBox("Enter Exclude String", "Exclude")
+
+        If Response <> "" Then
+            NotShows.Items.Add(Response)
+        End If
+
+        Dim items As String() = NotShows.Items.OfType(Of Object)().[Select](Function(item) item.ToString()).ToArray()
+        Dim result As String = String.Join(",", items)
+
+        PluginNotInclude = result
+
     End Sub
 
-    Private Sub SaveExcludeBtn_Click(sender As Object, e As EventArgs) Handles SaveExcludeBtn.Click
-        TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text = ChangeExcludePlugin.Text
-        ChangeExcludePlugin.Visible = False
+    Private Sub DelExcludeBtn_Click(sender As Object, e As EventArgs) Handles DelExcludeBtn.Click
 
-        NotShows.Items.Clear()
-
-        If InStr(PluginNotInclude, ",") > 0 Then
-            Dim PluginNotIncludeSplit() As String = Split(PluginNotInclude, ",")
-
-            For X = 0 To UBound(PluginNotIncludeSplit)
-                NotShows.Items.Add(PluginNotIncludeSplit(X))
-            Next
-        Else
-            NotShows.Items.Add("Nothing Found")
+        If NotShows.SelectedItems.Count > 0 Then
+            NotShows.Items.RemoveAt(NotShows.SelectedIndex)
         End If
+
+        Dim items As String() = NotShows.Items.OfType(Of Object)().[Select](Function(item) item.ToString()).ToArray()
+        Dim result As String = String.Join(",", items)
+
+        PluginNotInclude = result
 
     End Sub
 
