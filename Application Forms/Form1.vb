@@ -1518,7 +1518,6 @@ Public Class Form1
                             NotShows.Items.Add(PluginNotIncludeSplit(X))
                         Next
                     Else
-                        NotShows.Items.Add("Nothing Found")
                     End If
 
                 Else
