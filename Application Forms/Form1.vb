@@ -1511,13 +1511,15 @@ Public Class Form1
 
                     PluginNotInclude = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text
 
-                    If InStr(PluginNotInclude, ",") > 0 Then
+                    If InStr(PluginNotInclude, ",") >= 0 Then
                         Dim PluginNotIncludeSplit() As String = Split(PluginNotInclude, ",")
 
                         For X = 0 To UBound(PluginNotIncludeSplit)
                             NotShows.Items.Add(PluginNotIncludeSplit(X))
                         Next
+
                     Else
+
                     End If
 
                 Else
@@ -2825,20 +2827,21 @@ Public Class Form1
     End Sub
 
     Private Sub AddExcludeBtn_Click(sender As Object, e As EventArgs) Handles AddExcludeBtn.Click
-        Dim Response = InputBox("Enter Exclude String", "Exclude")
+        Dim Response = InputBox("Enter Exclude String")
 
         If Response <> "" Then
             NotShows.Items.Add(Response)
         End If
 
-        Dim items As String() = NotShows.Items.OfType(Of Object)().[Select](Function(item) item.ToString()).ToArray()
-        Dim result As String = String.Join(",", items)
-
-        PluginNotInclude = result
+        If PluginNotInclude = "" Then
+            PluginNotInclude = Response
+        Else
+            PluginNotInclude = PluginNotInclude & "," & Response
+        End If
 
     End Sub
 
-    Private Sub DelExcludeBtn_Click(sender As Object, e As EventArgs) Handles DelExcludeBtn.Click
+    Private Sub DelExclutn_Click(sender As Object, e As EventArgs) Handles DelExcludeBtn.Click
 
         If NotShows.SelectedItems.Count > 0 Then
             NotShows.Items.RemoveAt(NotShows.SelectedIndex)
@@ -2851,4 +2854,7 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DebuggerBox_TextChanged(sender As Object, e As EventArgs)
+
+    End Sub
 End Class
