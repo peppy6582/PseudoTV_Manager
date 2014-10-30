@@ -795,9 +795,7 @@ Partial Class Form1
         Me.TabPage4.Controls.Add(Me.DelExcludeBtn)
         Me.TabPage4.Controls.Add(Me.SaveExcludeBtn)
         Me.TabPage4.Controls.Add(Me.AddExcludeBtn)
-        Me.TabPage4.Controls.Add(Me.PluginType)
         Me.TabPage4.Controls.Add(Me.GDataDemoLink)
-        Me.TabPage4.Controls.Add(Me.SubChannelType)
         Me.TabPage4.Controls.Add(Me.SortTypeBox)
         Me.TabPage4.Controls.Add(Me.SortType)
         Me.TabPage4.Controls.Add(Me.MediaLimitBox)
@@ -850,6 +848,8 @@ Partial Class Form1
         Me.TabPage4.Controls.Add(Me.Label5)
         Me.TabPage4.Controls.Add(Me.PlayListType)
         Me.TabPage4.Controls.Add(Me.TVGuideList)
+        Me.TabPage4.Controls.Add(Me.PluginType)
+        Me.TabPage4.Controls.Add(Me.SubChannelType)
         Me.TabPage4.ForeColor = System.Drawing.SystemColors.ControlText
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
@@ -1008,7 +1008,7 @@ Partial Class Form1
         Me.YouTubeType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.YouTubeType.FormattingEnabled = True
         Me.YouTubeType.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.YouTubeType.Items.AddRange(New Object() {"Channel/User", "Playlist", "New Subs", "Favorites", "Search (Safe)", "Blank", "Blank", "Multi", "Raw"})
+        Me.YouTubeType.Items.AddRange(New Object() {"Channel/User", "Playlist", "New Subs", "Favorites", "Search (Safe)", "Blank", "Multi Youtube Playlist", "Multi Youtube Channel", "Raw"})
         Me.YouTubeType.Location = New System.Drawing.Point(227, 86)
         Me.YouTubeType.Name = "YouTubeType"
         Me.YouTubeType.Size = New System.Drawing.Size(211, 21)
