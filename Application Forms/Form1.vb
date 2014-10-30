@@ -2645,48 +2645,82 @@ Public Class Form1
                 .Location = New System.Drawing.Point(270, 120)
             End With
             PlayListLocation.Visible = True
+            NotShows.Visible = False
+            AddExcludeBtn.Visible = False
+            DelExcludeBtn.Visible = False
+            Label12.Visible = False
         ElseIf YouTubeType.SelectedIndex = 1 Then
             Label6.Text = "Playlist:"
             With PlayListLocation
                 .Location = New System.Drawing.Point(220, 120)
             End With
             PlayListLocation.Visible = True
+            NotShows.Visible = False
+            AddExcludeBtn.Visible = False
+            DelExcludeBtn.Visible = False
+            Label12.Visible = False
         ElseIf YouTubeType.SelectedIndex = 2 Or YouTubeType.SelectedIndex = 3 Then
             Label6.Text = "Username:"
             With PlayListLocation
                 .Location = New System.Drawing.Point(245, 120)
             End With
             PlayListLocation.Visible = True
+            NotShows.Visible = False
+            AddExcludeBtn.Visible = False
+            DelExcludeBtn.Visible = False
+            Label12.Visible = False
         ElseIf YouTubeType.SelectedIndex = 4 Then
             Label6.Text = "Search String:"
             With PlayListLocation
                 .Location = New System.Drawing.Point(270, 120)
             End With
             PlayListLocation.Visible = True
+            NotShows.Visible = False
+            AddExcludeBtn.Visible = False
+            DelExcludeBtn.Visible = False
+            Label12.Visible = False
         ElseIf YouTubeType.SelectedIndex = 6 Then
             Label6.Text = ""
             With PlayListLocation
                 .Location = New System.Drawing.Point(295, 120)
             End With
             PlayListLocation.Visible = False
+            NotShows.Visible = True
+            AddExcludeBtn.Visible = True
+            DelExcludeBtn.Visible = True
+            Label12.Text = "Add/Remove Playlists"
+            Label12.Visible = True
         ElseIf YouTubeType.SelectedIndex = 7 Then
             Label6.Text = ""
             With PlayListLocation
                 .Location = New System.Drawing.Point(295, 120)
             End With
             PlayListLocation.Visible = False
+            NotShows.Visible = True
+            AddExcludeBtn.Visible = True
+            DelExcludeBtn.Visible = True
+            Label12.Text = "Add/Remove Channels"
+            Label12.Visible = True
         ElseIf YouTubeType.SelectedIndex = 8 Then
             Label6.Text = "GData Url:"
             With PlayListLocation
                 .Location = New System.Drawing.Point(245, 120)
             End With
             PlayListLocation.Visible = True
+            NotShows.Visible = False
+            AddExcludeBtn.Visible = False
+            DelExcludeBtn.Visible = False
+            Label12.Visible = False
             GDataDemoLink.Links.Remove(GDataDemoLink.Links(0))
             GDataDemoLink.Links.Add(0, GDataDemoLink.Text = "GDataDemo", "http://gdata.youtube.com/demo/index.html")
             GDataDemoLink.Visible = True
         Else
             Label6.Text = "Nothing Here"
             PlayListLocation.Visible = False
+            NotShows.Visible = False
+            AddExcludeBtn.Visible = False
+            DelExcludeBtn.Visible = False
+            Label12.Visible = False
         End If
 
     End Sub
