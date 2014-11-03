@@ -5,6 +5,7 @@ Imports System
 Imports System.IO
 Imports System.Diagnostics
 Imports System.Uri
+Imports System.Text.RegularExpressions
 
 Public Class Form1
     'For sorting columns in listviews
@@ -25,6 +26,9 @@ Public Class Form1
     Public AddonDatabaseLocation As String = ""
     Public PluginNotInclude As String = ""
     Public YouTubeMulti As String = ""
+    Public Plugin As String = ""
+    Public PluginSplit() As String = {}
+    Public PluginExtension As String = ""
 
 
     Public Function LookUpGenre(ByVal GenreName As String)
@@ -343,17 +347,6 @@ Public Class Form1
             'Add the item to the Plugins List
             PluginType.Items.Add(str(0))
         Next
-
-    End Sub
-
-    Private Sub PluginType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PluginType.SelectedIndexChanged
-
-        Dim SelectArray(0)
-        SelectArray(0) = 0
-
-        Dim ReturnArray() As String = ReadPluginRecord(AddonDatabaseLocation, "SELECT addonID FROM addon WHERE name = '" & PluginType.SelectedItem & "'", SelectArray)
-
-        PlayListLocation.Text = "plugin://" & ReturnArray(0) & ""
 
     End Sub
 
@@ -1486,13 +1479,10 @@ Public Class Form1
                     MediaLimitBox.SelectedIndex = index
                     SortTypeBox.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
                 ElseIf Option1 = 7 Then
-                    PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
                     SortTypeBox.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
                     Dim index As Integer
                     index = MediaLimitBox.FindString(TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text)
                     MediaLimitBox.SelectedIndex = index
-
-                    Dim Plugin As String = ""
 
                     Dim SelectArray(0)
                     SelectArray(0) = 0
@@ -1502,6 +1492,7 @@ Public Class Form1
                     Dim plugMatch As Boolean = Plugin Like "plugin://*/*"
 
                     If plugMatch = True Then
+
                         Dim ReturnPluginSplit() As String = Split(Plugin, "plugin://")
 
                         For X = 1 To UBound(ReturnPluginSplit)
@@ -1512,6 +1503,7 @@ Public Class Form1
                     Else
                         Dim ReturnPluginSplit() As String = Split(Plugin, "plugin://", 2)
                         Plugin = ReturnPluginSplit(1)
+                        PluginExtension = ""
                     End If
 
                     Dim ReturnedPlugin() As String = ReadPluginRecord(AddonDatabaseLocation, "SELECT name FROM addon WHERE addonID = '" & Plugin & "'", SelectArray)
@@ -1519,6 +1511,8 @@ Public Class Form1
                     Dim index2 As Integer
                     index2 = PluginType.FindString(ReturnedPlugin(0))
                     PluginType.SelectedIndex = index2
+
+                    PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
 
                     PluginNotInclude = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text
 
@@ -1542,6 +1536,16 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub PluginType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PluginType.SelectedIndexChanged
+
+        Dim SelectArray(0)
+        SelectArray(0) = 0
+
+        Dim ReturnArray() As String = ReadPluginRecord(AddonDatabaseLocation, "SELECT addonID FROM addon WHERE name = '" & PluginType.SelectedItem & "'", SelectArray)
+
+        PlayListLocation.Text = "plugin://" & ReturnArray(0)
+
+    End Sub
 
     Private Sub Option2_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Option2.SelectedIndexChanged
         If PlayListType.SelectedIndex >= 0 And Option2.Text <> "" Then
@@ -1601,6 +1605,8 @@ Public Class Form1
             Label12.Visible = True
             Button11.Visible = True
             Button12.Visible = True
+
+            'LiveTV
         ElseIf PlayListType.SelectedIndex = 8 Then
             Label6.Text = "Channel id:"
             Label6.Visible = True
@@ -1614,6 +1620,19 @@ Public Class Form1
             Label12.Visible = False
             AddExcludeBtn.Visible = False
             DelExcludeBtn.Visible = False
+            TVGuideSubMenu.Visible = False
+            InterleavedList.Visible = False
+            Label7.Visible = False
+            SchedulingList.Visible = False
+            Label11.Visible = False
+            Button7.Visible = False
+            Button8.Visible = False
+            Button9.Visible = False
+            Button10.Visible = False
+            Button11.Visible = False
+            Button12.Visible = False
+
+            'Internet TV
         ElseIf PlayListType.SelectedIndex = 9 Then
             Label6.Text = "Duration:"
             Label6.Visible = True
@@ -1622,11 +1641,18 @@ Public Class Form1
             StrmUrl.Visible = True
             StrmUrlBox.Visible = True
             TVGuideSubMenu.Visible = False
+            InterleavedList.Visible = False
+            Label7.Visible = False
+            SchedulingList.Visible = False
+            Label11.Visible = False
+            Button7.Visible = False
             Button8.Visible = False
             Button9.Visible = False
             Button10.Visible = False
             Button11.Visible = False
             Button12.Visible = False
+
+            'YouTube TV
         ElseIf PlayListType.SelectedIndex = 10 Then
             NotShows.Items.Clear()
             Button5.Visible = False
@@ -1658,11 +1684,17 @@ Public Class Form1
             SortTypeBox.Visible = True
             NotShows.Visible = False
             TVGuideSubMenu.Visible = False
-            Label12.Visible = False
+            Button7.Visible = True
+            Button8.Visible = True
+            Button9.Visible = True
+            Button10.Visible = True
             Button11.Visible = False
             Button12.Visible = False
+            Label12.Visible = False
             AddExcludeBtn.Visible = False
             DelExcludeBtn.Visible = False
+
+            'RSS
         ElseIf PlayListType.SelectedIndex = 11 Then
             Label6.Text = "Source path:"
             Label6.Visible = True
@@ -1698,9 +1730,12 @@ Public Class Form1
             Button12.Visible = True
             Button8.Visible = True
             Button9.Visible = True
+            Button7.Visible = True
             Button10.Visible = True
             Button11.Visible = False
             Button12.Visible = False
+
+            'LastFM/MyMusicTV
         ElseIf PlayListType.SelectedIndex = 13 Then
             Label6.Text = "LastFM Username:"
             Label6.Visible = True
@@ -1731,6 +1766,8 @@ Public Class Form1
             SubChannelType.Visible = True
             SubChannelType.SelectedIndex = 0
             TVGuideSubMenu.Visible = False
+
+            'Cinema or Popcorn
         ElseIf PlayListType.SelectedIndex = 14 Then
             Label6.Visible = False
             With MediaLimit
@@ -1759,6 +1796,8 @@ Public Class Form1
             SubChannelType.Visible = True
             SubChannelType.SelectedIndex = 0
             TVGuideSubMenu.Visible = False
+
+            'Direct Plugin
         ElseIf PlayListType.SelectedIndex = 15 Then
             NotShows.Items.Clear()
             Label6.Visible = False
