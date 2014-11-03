@@ -85,9 +85,7 @@ Partial Class Form1
         Me.DelExcludeBtn = New System.Windows.Forms.Button()
         Me.SaveExcludeBtn = New System.Windows.Forms.Button()
         Me.AddExcludeBtn = New System.Windows.Forms.Button()
-        Me.PluginType = New System.Windows.Forms.ComboBox()
         Me.GDataDemoLink = New System.Windows.Forms.LinkLabel()
-        Me.SubChannelType = New System.Windows.Forms.ComboBox()
         Me.SortTypeBox = New System.Windows.Forms.ComboBox()
         Me.SortType = New System.Windows.Forms.Label()
         Me.MediaLimitBox = New System.Windows.Forms.ComboBox()
@@ -142,6 +140,8 @@ Partial Class Form1
         Me.Label5 = New System.Windows.Forms.Label()
         Me.PlayListType = New System.Windows.Forms.ComboBox()
         Me.TVGuideList = New System.Windows.Forms.ListView()
+        Me.PluginType = New System.Windows.Forms.ComboBox()
+        Me.SubChannelType = New System.Windows.Forms.ComboBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label23 = New System.Windows.Forms.Label()
@@ -887,16 +887,6 @@ Partial Class Form1
         Me.AddExcludeBtn.UseVisualStyleBackColor = True
         Me.AddExcludeBtn.Visible = False
         '
-        'PluginType
-        '
-        Me.PluginType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.PluginType.FormattingEnabled = True
-        Me.PluginType.Location = New System.Drawing.Point(227, 86)
-        Me.PluginType.Name = "PluginType"
-        Me.PluginType.Size = New System.Drawing.Size(211, 21)
-        Me.PluginType.TabIndex = 57
-        Me.PluginType.Visible = False
-        '
         'GDataDemoLink
         '
         Me.GDataDemoLink.AutoSize = True
@@ -907,17 +897,6 @@ Partial Class Form1
         Me.GDataDemoLink.TabStop = True
         Me.GDataDemoLink.Text = "GData Demo"
         Me.GDataDemoLink.Visible = False
-        '
-        'SubChannelType
-        '
-        Me.SubChannelType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.SubChannelType.FormattingEnabled = True
-        Me.SubChannelType.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.SubChannelType.Location = New System.Drawing.Point(227, 86)
-        Me.SubChannelType.Name = "SubChannelType"
-        Me.SubChannelType.Size = New System.Drawing.Size(211, 21)
-        Me.SubChannelType.TabIndex = 55
-        Me.SubChannelType.Visible = False
         '
         'SortTypeBox
         '
@@ -948,7 +927,7 @@ Partial Class Form1
         Me.MediaLimitBox.FormattingEnabled = True
         Me.MediaLimitBox.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.MediaLimitBox.Items.AddRange(New Object() {"25", "50", "100", "150", "200", "250", "500", "1000"})
-        Me.MediaLimitBox.Location = New System.Drawing.Point(413, 222)
+        Me.MediaLimitBox.Location = New System.Drawing.Point(409, 220)
         Me.MediaLimitBox.Name = "MediaLimitBox"
         Me.MediaLimitBox.Size = New System.Drawing.Size(61, 21)
         Me.MediaLimitBox.TabIndex = 52
@@ -1114,7 +1093,6 @@ Partial Class Form1
         Me.Button9.TabIndex = 36
         Me.Button9.Text = "Del"
         Me.Button9.UseVisualStyleBackColor = True
-        Me.Button9.Visible = False
         '
         'Button10
         '
@@ -1124,7 +1102,6 @@ Partial Class Form1
         Me.Button10.TabIndex = 35
         Me.Button10.Text = "Add"
         Me.Button10.UseVisualStyleBackColor = True
-        Me.Button10.Visible = False
         '
         'Button8
         '
@@ -1134,7 +1111,6 @@ Partial Class Form1
         Me.Button8.TabIndex = 34
         Me.Button8.Text = "Del"
         Me.Button8.UseVisualStyleBackColor = True
-        Me.Button8.Visible = False
         '
         'Button7
         '
@@ -1144,7 +1120,6 @@ Partial Class Form1
         Me.Button7.TabIndex = 33
         Me.Button7.Text = "Add"
         Me.Button7.UseVisualStyleBackColor = True
-        Me.Button7.Visible = False
         '
         'Button2
         '
@@ -1183,7 +1158,6 @@ Partial Class Form1
         Me.SchedulingList.TabIndex = 29
         Me.SchedulingList.UseCompatibleStateImageBehavior = False
         Me.SchedulingList.View = System.Windows.Forms.View.Details
-        Me.SchedulingList.Visible = False
         '
         'Label11
         '
@@ -1193,7 +1167,6 @@ Partial Class Form1
         Me.Label11.Size = New System.Drawing.Size(102, 13)
         Me.Label11.TabIndex = 28
         Me.Label11.Text = "Channel Scheduling"
-        Me.Label11.Visible = False
         '
         'InterleavedList
         '
@@ -1204,7 +1177,6 @@ Partial Class Form1
         Me.InterleavedList.TabIndex = 27
         Me.InterleavedList.UseCompatibleStateImageBehavior = False
         Me.InterleavedList.View = System.Windows.Forms.View.Details
-        Me.InterleavedList.Visible = False
         '
         'Label7
         '
@@ -1214,7 +1186,6 @@ Partial Class Form1
         Me.Label7.Size = New System.Drawing.Size(107, 13)
         Me.Label7.TabIndex = 26
         Me.Label7.Text = "Interleaved Channels"
-        Me.Label7.Visible = False
         '
         'ResetDays
         '
@@ -1450,6 +1421,27 @@ Partial Class Form1
         Me.TVGuideList.TabIndex = 1
         Me.TVGuideList.UseCompatibleStateImageBehavior = False
         Me.TVGuideList.View = System.Windows.Forms.View.Details
+        '
+        'PluginType
+        '
+        Me.PluginType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.PluginType.FormattingEnabled = True
+        Me.PluginType.Location = New System.Drawing.Point(227, 86)
+        Me.PluginType.Name = "PluginType"
+        Me.PluginType.Size = New System.Drawing.Size(211, 21)
+        Me.PluginType.TabIndex = 57
+        Me.PluginType.Visible = False
+        '
+        'SubChannelType
+        '
+        Me.SubChannelType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.SubChannelType.FormattingEnabled = True
+        Me.SubChannelType.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.SubChannelType.Location = New System.Drawing.Point(227, 86)
+        Me.SubChannelType.Name = "SubChannelType"
+        Me.SubChannelType.Size = New System.Drawing.Size(211, 21)
+        Me.SubChannelType.TabIndex = 55
+        Me.SubChannelType.Visible = False
         '
         'TabPage6
         '

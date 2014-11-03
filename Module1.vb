@@ -190,6 +190,7 @@ Module Module1
 
             Catch myerror As MySqlException
                 MessageBox.Show("Error Connecting to Database: " & myerror.Message)
+                Form6.Visible = True
             Finally
                 SQLcommand.Dispose()
                 SQLconnect.Close()
