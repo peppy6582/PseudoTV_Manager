@@ -2,7 +2,7 @@
 
 [Update]
 Name=PTVLive Manager
-ProductVersion=0.5
+ProductVersion=0.4
 URL=https://github.com/peppy6582/PseudoTV_Manager/releases/download/0.5/PTVLive.Manager.exe
 Size=5219934
 MD5=f6fc040ad4e1666fa5a3db707dfbb183
