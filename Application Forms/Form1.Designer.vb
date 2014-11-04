@@ -160,6 +160,7 @@ Partial Class Form1
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.UpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.TVBannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1580,40 +1581,45 @@ Partial Class Form1
         Me.MenuStrip1.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.MenuStrip1.Dock = System.Windows.Forms.DockStyle.None
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.UpdatesToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(1, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.MenuStrip1.Size = New System.Drawing.Size(45, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(199, 24)
         Me.MenuStrip1.TabIndex = 2
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AaaToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopLeft
         Me.FileToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
-        Me.FileToolStripMenuItem.Text = "&File"
+        Me.FileToolStripMenuItem.Text = "File"
         Me.FileToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.TopLeft
         '
         'AaaToolStripMenuItem
         '
         Me.AaaToolStripMenuItem.Name = "AaaToolStripMenuItem"
-        Me.AaaToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
+        Me.AaaToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.AaaToolStripMenuItem.Text = "Settings"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        '
+        'UpdatesToolStripMenuItem
+        '
+        Me.UpdatesToolStripMenuItem.Name = "UpdatesToolStripMenuItem"
+        Me.UpdatesToolStripMenuItem.Size = New System.Drawing.Size(62, 20)
+        Me.UpdatesToolStripMenuItem.Text = "Updates"
         '
         'Form1
         '
@@ -1792,5 +1798,6 @@ Partial Class Form1
     Friend WithEvents AddExcludeBtn As System.Windows.Forms.Button
     Friend WithEvents SaveExcludeBtn As System.Windows.Forms.Button
     Friend WithEvents DelExcludeBtn As System.Windows.Forms.Button
+    Friend WithEvents UpdatesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

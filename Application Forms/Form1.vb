@@ -2925,4 +2925,8 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub UpdatesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdatesToolStripMenuItem.Click
+        Dim Updater As String = Application.StartupPath() & "\" & "PTVLManager Updater.exe"
+        Process.Start(Updater)
+    End Sub
 End Class
