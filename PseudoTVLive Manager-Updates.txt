@@ -1,0 +1,13 @@
+;aiu;
+
+[Update]
+Name=PTVLive Manager
+ProductVersion=0.5
+URL=https://github.com/peppy6582/PseudoTV_Manager/releases/download/0.5/PTVLive.Manager.exe
+Size=5219934
+MD5=f6fc040ad4e1666fa5a3db707dfbb183
+ServerFileName=PTVLive Manager.exe
+Flags=Critical
+RegistryKey=HKUD\Software\PTVL\PTVLive Manager\Version
+Version=1.0.0.0
+Description=Fixed all of the missing item boxes and buttons
