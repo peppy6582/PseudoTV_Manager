@@ -20,6 +20,7 @@ Public Class Form1
     Public UserDataFolder As String
     Public PluginNotInclude As String
     Public YouTubeMulti As String
+    Dim ResetHours As Integer
 
 
     Public Function LookUpGenre(ByVal GenreName As String)
@@ -1391,7 +1392,7 @@ Public Class Form1
 
                             If RuleValue = 13 Then
                                 'MsgBox(RuleValue)
-                                ResetDays.Text = OptionValue
+                                ResetDays.Text = (OptionValue / 60)
                                 Exit For
                             ElseIf RuleValue = 1 Then
                                 ChannelName.Text = OptionValue
@@ -1455,6 +1456,10 @@ Public Class Form1
 
                 If Option1 = 1 Then
                     PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
+                    SortTypeBox.SelectedIndex = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(8).Text
+                    Dim index As Integer
+                    index = MediaLimitBox.FindString(TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(7).Text)
+                    MediaLimitBox.SelectedIndex = index
                 ElseIf Option1 = 2 Then
                     PlayListLocation.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(2).Text
                     StrmUrlBox.Text = TVGuideList.Items(TVGuideList.SelectedIndices(0)).SubItems(6).Text
@@ -1589,7 +1594,7 @@ Public Class Form1
         DelExcludeBtn.Visible = False
         PluginNotInclude = ""
 
-        If PlayListType.SelectedIndex = 0 Or PlayListType.SelectedIndex = 7 Then
+        If PlayListType.SelectedIndex = 0 Then
             Button5.Visible = True
             Label6.Text = "Location:"
             Label6.Visible = True
@@ -1608,6 +1613,38 @@ Public Class Form1
             Button10.Visible = True
             Button11.Visible = True
             Button12.Visible = True
+        ElseIf PlayListType.SelectedIndex = 7 Then
+            Label6.Text = "Location:"
+            Label6.Visible = True
+            PlayListLocation.Visible = True
+            With PlayListLocation
+                .Location = New System.Drawing.Point(270, 120)
+            End With
+            PlayListLocation.Visible = True
+            With MediaLimit
+                .Location = New System.Drawing.Point(160, 160)
+            End With
+            MediaLimit.Visible = True
+            With MediaLimitBox
+                .Location = New System.Drawing.Point(162, 180)
+            End With
+            MediaLimitBox.SelectedIndex = 0
+            MediaLimitBox.Visible = True
+            With SortType
+                .Location = New System.Drawing.Point(225, 160)
+            End With
+            SortType.Visible = True
+            With SortTypeBox
+                .Location = New System.Drawing.Point(227, 180)
+            End With
+            SortTypeBox.SelectedIndex = 0
+            SortTypeBox.Visible = True
+            NotShows.Visible = True
+            NotShows.Visible = False
+            AddExcludeBtn.Visible = False
+            DelExcludeBtn.Visible = False
+            Label12.Visible = False
+            Button5.Visible = True
         ElseIf PlayListType.SelectedIndex = 8 Then
             Label6.Text = "Channel id:"
             Label6.Visible = True
@@ -2018,9 +2055,10 @@ Public Class Form1
             '<setting id="Channel_1_rule_1_opt_1" value=ResetDays />
 
             If IsNumeric(ResetDays.Text) Then
+                ResetHours = (Convert.ToInt32(ResetDays.Text) * 60)
                 rulecount = rulecount + 1
                 AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_id" & Chr(34) & " value=" & Chr(34) & "13" & Chr(34) & " />"
-                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & ResetDays.Text & Chr(34) & " />"
+                AppendInfo = AppendInfo & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_rule_" & rulecount & "_opt_1" & Chr(34) & " value=" & Chr(34) & ResetHours & Chr(34) & " />"
             End If
 
             'Theres a channel name
@@ -2071,8 +2109,10 @@ Public Class Form1
             Dim TopAppend
             TopAppend = vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_type" & Chr(34) & " value=" & Chr(34) & PlayListType.SelectedIndex & Chr(34) & " />"
 
-            If PlayListType.SelectedIndex = 0 Or PlayListType.SelectedIndex = 7 Then
+            If PlayListType.SelectedIndex = 0 Then
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />"
+            ElseIf PlayListType.SelectedIndex = 7 Then
+                TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & MediaLimitBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & SortTypeBox.SelectedIndex & Chr(34) & " />"
             ElseIf PlayListType.SelectedIndex = 8 Or PlayListType.SelectedIndex = 9 Then
                 TopAppend = TopAppend & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_1" & Chr(34) & " value=" & Chr(34) & PlayListLocation.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_2" & Chr(34) & " value=" & Chr(34) & StrmUrlBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_3" & Chr(34) & " value=" & Chr(34) & ShowTitleBox.Text & Chr(34) & " />" & vbCrLf & vbTab & "<setting id=" & Chr(34) & "Channel_" & ChannelNum & "_4" & Chr(34) & " value=" & Chr(34) & ShowDescBox.Text & Chr(34) & " />"
             ElseIf PlayListType.SelectedIndex = 10 Then
